@@ -34,4 +34,7 @@ public class Instrument {
     @Column(name = "DS_MANUFACURE_DATE")
     private LocalDate manufactureDate;
 
+    @Column(name = "DS_AVAILABLE")
+    private boolean available;
+
 }
