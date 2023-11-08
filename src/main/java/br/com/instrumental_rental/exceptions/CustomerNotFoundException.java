@@ -1,4 +1,15 @@
 package br.com.instrumental_rental.exceptions;
 
-public class CustomerNotFoundException {
+public class CustomerNotFoundException extends Exception {
+
+    private String code;
+
+    private String message;
+
+    public CustomerNotFoundException(String code, String message) {
+        super(message);
+        this.code = code;
+    }
+
+    public String getCode() {return code;}
 }
