@@ -1,9 +1,6 @@
 package br.com.instrumental_rental.repository.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -12,10 +9,12 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "TB_CUSTOMER")
 @SequenceGenerator(name = "SEQ_CUSTOMER")
+
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode
 public class Customer {
 
     @Id
