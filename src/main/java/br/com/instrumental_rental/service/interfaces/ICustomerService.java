@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ICustomerService extends IService<Customer, Exception> {
 
-    List<Customer> findCustomerByName(String name);
+    List<Customer> findCustomerByName(String name) throws CustomerNotFoundException;
 
     List<Customer> findAll() throws CustomerNotFoundException;
 
