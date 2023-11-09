@@ -1,7 +1,6 @@
 package br.com.instrumental_rental.repository.interfaces;
 
 import br.com.instrumental_rental.repository.entities.Attendant;
-import org.apache.catalina.LifecycleState;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

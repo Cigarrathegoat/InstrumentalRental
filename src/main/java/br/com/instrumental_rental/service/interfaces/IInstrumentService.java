@@ -9,7 +9,7 @@ public interface IInstrumentService extends IService<Instrument, Exception> {
 
     List<Instrument> findInstrumentByModel(String model) throws InstrumentNotFoundException;
 
-    List<Instrument> findAll() throws InstrumentNotFoundException;
+    List<Instrument> findAll();
 
     Instrument update(Instrument instrument) throws InstrumentNotFoundException;
 

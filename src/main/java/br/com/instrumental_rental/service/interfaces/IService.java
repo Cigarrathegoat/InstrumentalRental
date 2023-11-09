@@ -8,7 +8,7 @@ public interface IService<T, E extends Exception> {
 
     void delete(T t) throws E;
 
-    List<T> findAll() throws E;
+    List<T> findAll();
 
     T update(T t) throws E;
 }
