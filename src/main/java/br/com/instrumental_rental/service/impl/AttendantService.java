@@ -19,7 +19,11 @@ public class AttendantService implements IAttendantService {
 
     @Override
     public List<Attendant> findAttendantByName(String name) throws AttendantNotFoundException {
-        return attendantRepository.findAttendantByName(name);
+        var attendantSought = attendantRepository.findAttendantByName(name);
+        if (attendantSought.isEmpty()) {
+            throw new AttendantNotFoundException("A01", "Attendant not found");
+        }
+        return attendantSought;
     }
 
     @Override
@@ -50,6 +54,7 @@ public class AttendantService implements IAttendantService {
                         "A01", "Attendant not found"
                 ));
         attendantToUpdate.setName(attendant.getName());
+        attendantRepository.save(attendantToUpdate);
         return attendantToUpdate;
     }
 }
