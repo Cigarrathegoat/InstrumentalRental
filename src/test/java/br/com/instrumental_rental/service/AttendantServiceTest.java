@@ -17,7 +17,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class AttendantServiceTest {
 
@@ -86,5 +86,15 @@ public class AttendantServiceTest {
         );
         Assertions.assertEquals("A01", thrown.getCode());
         Assertions.assertEquals("Attendant not found", thrown.getMessage());
+    }
+
+    @Test
+    void testDeleteSuccess() throws AttendantNotFoundException {
+        var builder = AttendantBuilder.attendantBuilder("1", "Mark");
+      when(attendantRepository.findById(builder.getAttendantId()))
+              .thenReturn(Optional.of(builder));
+      attendantService.delete(builder);
+      verify(attendantRepository).findById(builder.getAttendantId());
+      verify(attendantRepository).delete(builder);
     }
 }
