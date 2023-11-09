@@ -4,6 +4,7 @@ import br.com.instrumental_rental.exceptions.AttendantNotFoundException;
 import br.com.instrumental_rental.models.AttendantBuilder;
 import br.com.instrumental_rental.repository.entities.Attendant;
 import br.com.instrumental_rental.repository.interfaces.IAttendantRepository;
+import br.com.instrumental_rental.repository.interfaces.IInstrumentRepository;
 import br.com.instrumental_rental.service.impl.AttendantService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,15 +17,16 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
-public class AttendantServiceTest {
+public class InstrumentServiceTest {
 
     @Mock
-    IAttendantRepository attendantRepository;
+    IInstrumentRepository instrumentRepository;
 
     @InjectMocks
-    AttendantService attendantService;
+    InstrumentService instrumentService;
 
     @BeforeEach
     void setUp() {
@@ -90,11 +92,11 @@ public class AttendantServiceTest {
     @Test
     void testDeleteSuccess() throws AttendantNotFoundException {
         var builder = AttendantBuilder.attendantBuilder("1", "Mark");
-      when(attendantRepository.findById(builder.getAttendantId()))
-              .thenReturn(Optional.of(builder));
-      attendantService.delete(builder);
-      verify(attendantRepository).findById(builder.getAttendantId());
-      verify(attendantRepository).delete(builder);
+        when(attendantRepository.findById(builder.getAttendantId()))
+                .thenReturn(Optional.of(builder));
+        attendantService.delete(builder);
+        verify(attendantRepository).findById(builder.getAttendantId());
+        verify(attendantRepository).delete(builder);
     }
 
     @Test
