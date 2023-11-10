@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.util.Assert;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -54,6 +55,32 @@ public class CustomerServiceTest {
         when(customerRepository.findCustomerByName(builder.getName()))
                 .thenReturn(List.of(builder));
         List<Customer> result = customerService.findCustomerByName(builder.getName());
+        Assertions.assertNotNull(result);
+    }
+
+    @Test
+    void testFindCustomerByNameCustomerNotFoundException() throws CustomerNotFoundException {
+        var builder = CustomerBuilder.customerBuilder(
+                "1", "john", LocalDate.parse("1992-08-23"),
+                BigDecimal.valueOf(500));
+        when(customerRepository.findCustomerByName(builder.getName()))
+                .thenReturn(List.of());
+        CustomerNotFoundException thrown = Assertions.assertThrows(
+                CustomerNotFoundException.class, () -> {
+                    customerService.findCustomerByName(builder.getName());
+                }
+        );
+        Assertions.assertEquals("C01", thrown.getCode());
+        Assertions.assertEquals("Customer not found", thrown.getMessage());
+    }
+
+    @Test
+    void testFindAllSuccess() {
+        var builder = CustomerBuilder.customerBuilder(
+                "1", "john", LocalDate.parse("1992-08-23"),
+                BigDecimal.valueOf(500));
+        when(customerRepository.findAll()).thenReturn(List.of(builder));
+        List<Customer> result = customerService.findAll();
         Assertions.assertNotNull(result);
     }
 }

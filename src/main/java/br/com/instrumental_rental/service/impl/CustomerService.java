@@ -3,6 +3,7 @@ package br.com.instrumental_rental.service.impl;
 import br.com.instrumental_rental.exceptions.CustomerNotFoundException;
 import br.com.instrumental_rental.repository.entities.Customer;
 import br.com.instrumental_rental.repository.interfaces.ICustomerRepository;
+import br.com.instrumental_rental.service.AbstractValidateService;
 import br.com.instrumental_rental.service.interfaces.ICustomerService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +18,17 @@ public class CustomerService implements ICustomerService {
     @Autowired
     ICustomerRepository customerRepository;
 
+    @Autowired
+    AbstractValidateService abstractValidateService;
+
     @Override
     public List<Customer> findCustomerByName(String name) throws CustomerNotFoundException {
-        return customerRepository.findCustomerByName(name);
+        var customerSought = customerRepository.findCustomerByName(name);
+        if (customerSought.isEmpty()) {
+            throw new CustomerNotFoundException("C01", "Customer not found");
+        } else {
+            return customerSought;
+        }
     }
 
     @Override

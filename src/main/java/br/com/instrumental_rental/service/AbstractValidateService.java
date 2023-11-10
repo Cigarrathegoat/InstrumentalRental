@@ -15,4 +15,6 @@ public abstract class AbstractValidateService<T> {
     public static boolean isValidInt(int number) {
         return String.valueOf(number).length() == 4;
     }
+
+
 }
