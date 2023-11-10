@@ -16,8 +16,10 @@ import org.springframework.util.Assert;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.logging.Logger;
 
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class CustomerServiceTest {
@@ -82,5 +84,68 @@ public class CustomerServiceTest {
         when(customerRepository.findAll()).thenReturn(List.of(builder));
         List<Customer> result = customerService.findAll();
         Assertions.assertNotNull(result);
+    }
+
+    @Test
+    void testUpdateSuccess() throws CustomerNotFoundException {
+        var builder = CustomerBuilder.customerBuilder(
+                "1", "john", LocalDate.parse("1992-08-23"),
+                BigDecimal.valueOf(500)
+        );
+        var builderUpdated = CustomerBuilder.customerBuilder(
+                "1", "john", LocalDate.parse("1992-08-25"),
+                BigDecimal.valueOf(600)
+        );
+        when(customerRepository.findById(builder.getCustomerId()))
+                .thenReturn(Optional.of(builder));
+        when(customerRepository.save(builderUpdated)).thenReturn(builderUpdated);
+        Customer result = customerService.update(builder);
+        Assertions.assertNotNull(result);
+    }
+
+    @Test
+    void testUpdateCustomerNotFoundException() throws CustomerNotFoundException {
+        var builder = CustomerBuilder.customerBuilder(
+                "1", "john", LocalDate.parse("1992-08-23"),
+                BigDecimal.valueOf(500)
+        );
+        when(customerRepository.findById(builder.getCustomerId()))
+                .thenReturn(Optional.empty());
+        CustomerNotFoundException thrown = Assertions.assertThrows(
+                CustomerNotFoundException.class, () -> {
+                    customerService.update(builder);
+                }
+        );
+        Assertions.assertEquals("C01", thrown.getCode());
+        Assertions.assertEquals("Customer not found", thrown.getMessage());
+    }
+
+    @Test
+    void testDeleteSuccess() throws CustomerNotFoundException {
+        var builder = CustomerBuilder.customerBuilder(
+                "1", "john", LocalDate.parse("1992-08-23"),
+                BigDecimal.valueOf(500));
+        when(customerRepository.findById(builder.getCustomerId()))
+                .thenReturn(Optional.of(builder));
+        customerService.delete(builder);
+        verify(customerRepository).findById(builder.getCustomerId());
+        verify(customerRepository).delete(builder);
+    }
+
+    @Test
+    void testDeleteCustomerNotFoundException() throws CustomerNotFoundException {
+        var builder = CustomerBuilder.customerBuilder(
+                "1", "john", LocalDate.parse("1992-08-23"),
+                BigDecimal.valueOf(500)
+        );
+        when(customerRepository.findById(builder.getCustomerId()))
+                .thenReturn(Optional.empty());
+        CustomerNotFoundException thrown = Assertions.assertThrows(
+                CustomerNotFoundException.class, () -> {
+                    customerService.delete(builder);
+                }
+        );
+        Assertions.assertEquals("C01", thrown.getCode());
+        Assertions.assertEquals("Customer not found", thrown.getMessage());
     }
 }

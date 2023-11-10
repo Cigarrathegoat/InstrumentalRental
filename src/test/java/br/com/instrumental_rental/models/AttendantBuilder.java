@@ -8,7 +8,8 @@ public class AttendantBuilder {
         return Attendant.builder().attendantId(id).name(name).build();
     }
 
-    public static Attendant attendantBuilderNoId(String name) {
+    public static Attendant attendantBuilderNoId(String name)
+    {
         return Attendant.builder().name(name).build();
     }
 }
