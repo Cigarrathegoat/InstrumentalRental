@@ -1,5 +1,6 @@
 package br.com.instrumental_rental.service;
 
+import br.com.instrumental_rental.exceptions.CustomerNotFoundException;
 import br.com.instrumental_rental.models.CustomerBuilder;
 import br.com.instrumental_rental.repository.entities.Customer;
 import br.com.instrumental_rental.repository.interfaces.ICustomerRepository;
@@ -13,6 +14,7 @@ import org.mockito.MockitoAnnotations;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.logging.Logger;
 
 import static org.mockito.Mockito.when;
@@ -42,5 +44,16 @@ public class CustomerServiceTest {
         when(customerRepository.save(builderNoId)).thenReturn(builder);
         Customer saved = customerService.save(builderNoId);
         Assertions.assertNotNull(saved);
+    }
+
+    @Test
+    void testFindCustomerByNameSuccess() throws CustomerNotFoundException {
+        var builder = CustomerBuilder.customerBuilder(
+                "1", "john", LocalDate.parse("1992-08-23"),
+                BigDecimal.valueOf(500));
+        when(customerRepository.findCustomerByName(builder.getName()))
+                .thenReturn(List.of(builder));
+        List<Customer> result = customerService.findCustomerByName(builder.getName());
+        Assertions.assertNotNull(result);
     }
 }
