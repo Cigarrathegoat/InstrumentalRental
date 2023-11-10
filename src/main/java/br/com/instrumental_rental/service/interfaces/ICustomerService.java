@@ -9,9 +9,4 @@ public interface ICustomerService extends IService<Customer, Exception> {
 
     List<Customer> findCustomerByName(String name) throws CustomerNotFoundException;
 
-    List<Customer> findAll();
-
-    void delete(Customer customer) throws CustomerNotFoundException;
-
-    Customer update(Customer customer) throws CustomerNotFoundException;
 }

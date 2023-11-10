@@ -8,10 +8,4 @@ import java.util.List;
 public interface IInstrumentService extends IService<Instrument, Exception> {
 
     List<Instrument> findInstrumentByModel(String model) throws InstrumentNotFoundException;
-
-    List<Instrument> findAll();
-
-    Instrument update(Instrument instrument) throws InstrumentNotFoundException;
-
-    void delete(Instrument instrument) throws InstrumentNotFoundException;
 }
