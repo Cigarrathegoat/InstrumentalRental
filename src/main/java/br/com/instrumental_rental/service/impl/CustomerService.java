@@ -62,6 +62,7 @@ public class CustomerService implements ICustomerService {
         customerToUpdate.setName(customer.getName());
         customerToUpdate.setAccountBalance(customer.getAccountBalance());
         customerToUpdate.setDateOfBirth(customer.getDateOfBirth());
+        customerRepository.save(customerToUpdate);
         return customerToUpdate;
     }
 }
