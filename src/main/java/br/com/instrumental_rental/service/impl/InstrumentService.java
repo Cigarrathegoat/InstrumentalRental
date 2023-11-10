@@ -43,6 +43,7 @@ public class InstrumentService implements IInstrumentService {
         if (instrumentToUpdate.isEmpty()) {
             throw new InstrumentNotFoundException("I01", "Instrument not found");
         } else {
+            instrumentToUpdate.get().setType(instrument.getType());
             instrumentToUpdate.get().setMake(instrument.getMake());
             instrumentToUpdate.get().setModel(instrument.getModel());
             instrumentToUpdate.get().setPrice(instrument.getPrice());

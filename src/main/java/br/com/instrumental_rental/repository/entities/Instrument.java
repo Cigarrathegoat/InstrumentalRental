@@ -22,6 +22,9 @@ public class Instrument {
     @Column(name = "ID_INSTRUMENT")
     private String instrumentId;
 
+    @Column(name = "DS_TYPE")
+    private String type;
+
     @Column(name = "DS_MAKE")
     private String make;
 
