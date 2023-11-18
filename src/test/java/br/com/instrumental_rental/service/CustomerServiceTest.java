@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.util.Assert;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -32,7 +33,9 @@ public class CustomerServiceTest {
     CustomerService customerService;
 
     @BeforeEach
-    void setUp() { MockitoAnnotations.openMocks(this); }
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
+    }
 
     @Test
     void testSaveSuccess() {
@@ -167,5 +170,22 @@ public class CustomerServiceTest {
                 .thenReturn(Optional.of(builder));
         BigDecimal newBalance = customerService.addToBalance(builder.getCustomerId(), addition);
         Assertions.assertEquals(BigDecimal.valueOf(800), newBalance);
+    }
+
+    @Test
+    void testAddToBalanceCustomerNotFoundException() throws CustomerNotFoundException {
+        final BigDecimal addition = BigDecimal.valueOf(300);
+        var builder = CustomerBuilder.customerBuilder(
+                "01", "John", LocalDate.parse("1992-08-23"),
+                BigDecimal.valueOf(500));
+        when(customerRepository.findById(builder.getCustomerId()))
+                .thenReturn(Optional.empty());
+        CustomerNotFoundException thrown = Assertions.assertThrows(
+                CustomerNotFoundException.class, () -> {
+                    customerService.addToBalance(builder.getCustomerId(), addition);
+                }
+        );
+        Assertions.assertEquals("C01", thrown.getCode());
+        Assertions.assertEquals("Customer not found", thrown.getMessage());
     }
 }
