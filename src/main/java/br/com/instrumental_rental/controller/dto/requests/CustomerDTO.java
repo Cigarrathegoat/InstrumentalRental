@@ -23,8 +23,6 @@ public class CustomerDTO {
 
     private List<Contact> contacts;
 
-    private LocalDate dateOBirth;
-
-    private BigDecimal accountBalance;
+    private LocalDate dateOfBirth;
 
 }

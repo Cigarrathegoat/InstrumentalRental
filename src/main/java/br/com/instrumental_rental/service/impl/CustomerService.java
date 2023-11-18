@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -35,6 +36,18 @@ public class CustomerService implements ICustomerService {
         } else {
             return customerSought;
         }
+    }
+
+    @Override
+    public BigDecimal addToBalance(String customerId, BigDecimal addition)
+            throws CustomerNotFoundException {
+        var customerFound = customerRepository.findById(customerId)
+                .orElseThrow(() -> new CustomerNotFoundException(
+                                "C01", "Customer not found"
+                        )
+                );
+        customerFound.setAccountBalance(customerFound.getAccountBalance().add(addition));
+        return customerFound.getAccountBalance();
     }
 
     @Override
@@ -66,8 +79,9 @@ public class CustomerService implements ICustomerService {
                         )
                 );
         customerToUpdate.setName(customer.getName());
-        customerToUpdate.setAccountBalance(customer.getAccountBalance());
+        customerToUpdate.setAddress(customer.getAddress());
         customerToUpdate.setDateOfBirth(customer.getDateOfBirth());
+        customerToUpdate.setContacts(customer.getContacts());
         customerRepository.save(customerToUpdate);
         return customerToUpdate;
     }
