@@ -145,4 +145,27 @@ public class CustomerServiceTest {
         Assertions.assertEquals("C01", thrown.getCode());
         Assertions.assertEquals("Customer not found", thrown.getMessage());
     }
+
+    /*public BigDecimal addToBalance(String customerId, BigDecimal addition)
+            throws CustomerNotFoundException {
+        var customerFound = customerRepository.findById(customerId)
+                .orElseThrow(() -> new CustomerNotFoundException(
+                                "C01", "Customer not found"
+                        )
+                );
+        customerFound.setAccountBalance(customerFound.getAccountBalance().add(addition));
+        return customerFound.getAccountBalance();
+    }*/
+
+    @Test
+    void testAddToBalanceSuccess() throws CustomerNotFoundException {
+        final BigDecimal addition = BigDecimal.valueOf(300);
+        var builder = CustomerBuilder.customerBuilder(
+                "01", "John", LocalDate.parse("1992-08-23"),
+                BigDecimal.valueOf(500));
+        when(customerRepository.findById(builder.getCustomerId()))
+                .thenReturn(Optional.of(builder));
+        BigDecimal newBalance = customerService.addToBalance(builder.getCustomerId(), addition);
+        Assertions.assertEquals(BigDecimal.valueOf(800), newBalance);
+    }
 }
