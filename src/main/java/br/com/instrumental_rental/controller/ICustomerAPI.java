@@ -7,7 +7,6 @@ import br.com.instrumental_rental.controller.dto.responses.responses.CustomerLis
 import br.com.instrumental_rental.controller.dto.responses.responses.CustomerResponseDTO;
 import br.com.instrumental_rental.controller.dto.responses.responses.DeleteResponseDTO;
 import br.com.instrumental_rental.exceptions.CustomerNotFoundException;
-import br.com.instrumental_rental.repository.entities.Customer;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
