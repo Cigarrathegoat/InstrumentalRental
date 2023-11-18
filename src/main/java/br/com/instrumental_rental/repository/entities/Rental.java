@@ -24,10 +24,17 @@ public class Rental {
     @Column(name = "ID_RENTAL")
     private String rentalId;
 
-    @Column(name = "ID_CUSTOMER")
+    @Column(name = "ID_CUSTOMER")//the name of the column of course
+    @JoinColumn(name = "CUSTOMER_ID")
+    //the name that will show on the Rental Table referring to the customerId column maybe don't put joincolumn here 'cause if it's somewhere else we're good for obvious reasons, plus it's easier to maintain
     private Customer customer;
 
+    @Column(name = "ID_ATTENDANT")
+    @JoinColumn(name = "ATTENDANT_ID")
+    private Attendant attendant;
+
     @Column(name = "ID_INSTRUMENT")
+    @JoinColumn(name = "INSTRUMENT_ID")
     private Instrument instrument;
 
     @Column(name = "DS_START_DATE")
@@ -38,9 +45,6 @@ public class Rental {
 
     @Column(name = "DS_PRICE")
     private BigDecimal price;
-
-    @Column(name = "ID_ATTENDANT")
-    private Attendant attendant;
 
 
 }

@@ -14,6 +14,7 @@ import org.mockito.MockitoAnnotations;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -41,7 +42,8 @@ public class InstrumentServiceTest {
     void testSaveSuccess() {
         var builder = InstrumentBuilder.instrumentBuilder(
                 "1", "microphone", "Yamaha", "Supermic 4000",
-                BigDecimal.valueOf(4000), LocalDate.parse("2000-01-01"));
+                BigDecimal.valueOf(4000), LocalDate.parse("2000-12-31",
+                        DateTimeFormatter.ofPattern("yyyy-MM-dd")));
         var builderNoId = InstrumentBuilder.instrumentNoIdBuilder("microphone",
                 "Yamaha", "Supermic 4000",
                 BigDecimal.valueOf(4000), LocalDate.parse("2000-01-01")
@@ -49,6 +51,8 @@ public class InstrumentServiceTest {
         when(instrumentRepository.save(builderNoId)).thenReturn(builder);
         Instrument saved = instrumentService.save(builderNoId);
         Assertions.assertEquals(builder, saved);
+        //Assertions.assertEquals("31/12/2002", saved.getCreatedDate.toString)
+        //Assertions.assertEquals(BigDecimal.valueOf(5000), experienceGained)
     }
 
     @Test

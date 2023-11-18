@@ -18,8 +18,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
 
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class CustomerServiceTest {
 
@@ -122,13 +121,12 @@ public class CustomerServiceTest {
     @Test
     void testDeleteSuccess() throws CustomerNotFoundException {
         var builder = CustomerBuilder.customerBuilder(
-                "1", "john", LocalDate.parse("1992-08-23"),
-                BigDecimal.valueOf(500));
+                "1", "john", LocalDate.parse("1992-08-23"), BigDecimal.valueOf(500));
         when(customerRepository.findById(builder.getCustomerId()))
                 .thenReturn(Optional.of(builder));
         customerService.delete(builder);
-        verify(customerRepository).findById(builder.getCustomerId());
-        verify(customerRepository).delete(builder);
+        verify(customerRepository, times(1)).findById(builder.getCustomerId());
+        verify(customerRepository, times(1)).delete(builder);
     }
 
     @Test

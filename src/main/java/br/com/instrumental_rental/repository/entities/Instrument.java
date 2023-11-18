@@ -5,6 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "TB_INSTRUMENT")
@@ -39,5 +40,10 @@ public class Instrument {
 
     @Column(name = "DS_AVAILABLE")
     private boolean available;
+
+    @Column(name = "ID_RENTAL")
+    @JoinColumn(name = "RENTAL_DS")
+    @OneToMany(mappedBy = "instrument")
+    private List<Rental> rental;
 
 }

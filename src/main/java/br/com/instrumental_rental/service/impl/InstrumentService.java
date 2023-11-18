@@ -39,22 +39,19 @@ public class InstrumentService implements IInstrumentService {
 
     @Override
     public Instrument update(Instrument instrument) throws InstrumentNotFoundException {
-        var instrumentToUpdate = instrumentRepository.findById(instrument.getInstrumentId());
-        if (instrumentToUpdate.isEmpty()) {
-            throw new InstrumentNotFoundException("I01", "Instrument not found");
-        } else {
-            instrumentToUpdate.get().setType(instrument.getType());
-            instrumentToUpdate.get().setMake(instrument.getMake());
-            instrumentToUpdate.get().setModel(instrument.getModel());
-            instrumentToUpdate.get().setPrice(instrument.getPrice());
-            instrumentToUpdate.get().setManufactureDate(instrument.getManufactureDate());
-            instrumentToUpdate.get().setAvailable(instrument.isAvailable());
-            save(instrumentToUpdate.get());
-            return instrumentToUpdate.get();
-        }
+        var instrumentToUpdate = instrumentRepository.findById(instrument.getInstrumentId())
+                .orElseThrow(() -> new InstrumentNotFoundException(
+                        "I01", "Instrument not found"
+                ));
+        instrumentToUpdate.setType(instrument.getType());
+        instrumentToUpdate.setMake(instrument.getMake());
+        instrumentToUpdate.setModel(instrument.getModel());
+        instrumentToUpdate.setPrice(instrument.getPrice());
+        instrumentToUpdate.setManufactureDate(instrument.getManufactureDate());
+        instrumentToUpdate.setAvailable(instrument.isAvailable());
+        save(instrumentToUpdate);
+        return instrumentToUpdate;
     }
-
-
 
     @Override
     public void delete(Instrument instrument) throws InstrumentNotFoundException {
@@ -64,7 +61,5 @@ public class InstrumentService implements IInstrumentService {
                                 "I01", "Instrument not found")
                 );
         instrumentRepository.delete(instrumentToDelete);
-
-
     }
 }

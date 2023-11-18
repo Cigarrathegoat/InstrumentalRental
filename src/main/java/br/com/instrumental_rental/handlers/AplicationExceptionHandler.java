@@ -4,7 +4,6 @@ import br.com.instrumental_rental.controller.dto.responses.errors.ErrorResponseD
 import br.com.instrumental_rental.controller.dto.responses.errors.ErrorSpecificationDTO;
 import br.com.instrumental_rental.exceptions.CustomerNotFoundException;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.hql.internal.ast.ErrorReporter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

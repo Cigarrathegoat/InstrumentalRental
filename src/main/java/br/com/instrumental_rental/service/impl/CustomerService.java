@@ -5,6 +5,7 @@ import br.com.instrumental_rental.repository.entities.Customer;
 import br.com.instrumental_rental.repository.interfaces.ICustomerRepository;
 import br.com.instrumental_rental.service.AbstractValidateService;
 import br.com.instrumental_rental.service.interfaces.ICustomerService;
+import br.com.instrumental_rental.service.interfaces.IInstrumentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,11 +16,16 @@ import java.util.List;
 @Slf4j
 public class CustomerService implements ICustomerService {
 
-    @Autowired
-    ICustomerRepository customerRepository;
+    private ICustomerRepository customerRepository;
+
+    private IInstrumentService instrumentService;
 
     @Autowired
-    AbstractValidateService abstractValidateService;
+    public CustomerService(ICustomerRepository customerRepository,
+                           IInstrumentService instrumentService) {
+        this.customerRepository = customerRepository;
+        this.instrumentService = instrumentService;
+    }
 
     @Override
     public List<Customer> findCustomerByName(String name) throws CustomerNotFoundException {
@@ -45,8 +51,8 @@ public class CustomerService implements ICustomerService {
     public void delete(Customer customer) throws CustomerNotFoundException {
         var customerToDelete = customerRepository.findById(customer.getCustomerId())
                 .orElseThrow(() -> new CustomerNotFoundException(
-                        "C01", "Customer not found"
-                )
+                                "C01", "Customer not found"
+                        )
                 );
         customerRepository.delete(customerToDelete);
 
