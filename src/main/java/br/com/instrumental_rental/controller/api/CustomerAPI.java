@@ -56,15 +56,24 @@ public class CustomerAPI implements ICustomerAPI {
                 ).build();
     }
 
-    @
+
 
     @GetMapping("/list")
     public CustomerListResponseDTO listAll() {
-        return null;
+
+        List<Customer> customerList = customerServiceAttribute.findAll();
+        List<CustomerDTO> customerDTOList = customerMapperAttribute.convertoToListDto(
+                customerList
+        );
+        return CustomerListResponseDTO.builder()
+                .data(customerDTOList
+                ).build();/*TODO: make this method like the one above*/
+
     }
 
     @Override
     public CustomerResponseDTO update() throws CustomerNotFoundException {
+        
         return null;
     }
 
