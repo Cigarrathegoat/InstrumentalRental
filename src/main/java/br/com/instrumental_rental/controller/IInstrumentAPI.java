@@ -29,4 +29,10 @@ public interface IInstrumentAPI {
     @ApiResponses(value = {@ApiResponse(code = 200, message = "success")})
     public InstrumentListResponseDTO findAll();
 
+    @ApiOperation(value = "update Instrument object",
+    response = InstrumentResponseDTO.class)
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "success"),
+    @ApiResponse(code = 404, response = ErrorSpecificationDTO.class, message = "not found")})
+    public InstrumentResponseDTO update(String instrumentID, InstrumentDTO instrumentDTO)
+        throws InstrumentNotFoundException;
 }
