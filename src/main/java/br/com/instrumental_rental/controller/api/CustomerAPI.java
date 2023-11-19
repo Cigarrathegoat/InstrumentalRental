@@ -9,7 +9,6 @@ import br.com.instrumental_rental.controller.dto.responses.responses.CustomerRes
 import br.com.instrumental_rental.controller.dto.responses.responses.DeleteResponseDTO;
 import br.com.instrumental_rental.exceptions.CustomerNotFoundException;
 import br.com.instrumental_rental.repository.entities.Customer;
-import br.com.instrumental_rental.service.impl.CustomerService;
 import br.com.instrumental_rental.service.interfaces.ICustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

@@ -13,9 +13,20 @@ public interface IInstrumentAPI {
 
     @ApiOperation(value = "Add Instrument object",
     response = InstrumentResponseDTO.class)
-    @ApiResponses(value = {@ApiResponse(code = 200, message = "success")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "success"),
     @ApiResponse(code = 404, response = ErrorSpecificationDTO.class, message = "not found")})
-    InstrumentResponseDTO add(InstrumentDTO instrumentDTO) throws InstrumentNotFoundException;
+    public InstrumentResponseDTO add(InstrumentDTO instrumentDTO) throws InstrumentNotFoundException;
 
-    @
+    @ApiOperation(value = "find Instrument object",
+    response = InstrumentResponseDTO.class)
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "success"),
+    @ApiResponse(code = 404, response = ErrorSpecificationDTO.class, message = "not found")})
+    public InstrumentResponseDTO find(String instrumentName)
+        throws InstrumentNotFoundException;
+
+    @ApiOperation(value = "find all Instrument objects",
+    response = InstrumentResponseDTO.class)
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "success")})
+    public InstrumentListResponseDTO findAll();
+
 }
