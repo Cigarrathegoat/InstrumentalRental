@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class RentaResponseDTO {
+public class RentalResponseDTO {
 
     public RentalDTO data;
 }
