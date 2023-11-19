@@ -5,11 +5,14 @@ import br.com.instrumental_rental.controller.dto.requests.CustomerDTO;
 import br.com.instrumental_rental.controller.dto.responses.errors.ErrorSpecificationDTO;
 import br.com.instrumental_rental.controller.dto.responses.responses.AttendantListResponseDTO;
 import br.com.instrumental_rental.controller.dto.responses.responses.AttendantResponseDTO;
+import br.com.instrumental_rental.controller.dto.responses.responses.DeleteResponseDTO;
 import br.com.instrumental_rental.exceptions.AttendantNotFoundException;
 import br.com.instrumental_rental.exceptions.CustomerNotFoundException;
+import br.com.instrumental_rental.repository.entities.Attendant;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import org.springframework.http.ResponseEntity;
 
 public interface IAttendantAPI {
 
@@ -36,5 +39,12 @@ public interface IAttendantAPI {
     response = AttendantListResponseDTO.class)
     @ApiResponses(value = {@ApiResponse(code = 200, message = "success")})
     public AttendantResponseDTO update(Long attendantId, CustomerDTO customerDTO)
-        throws CustomerNotFoundException;
+        throws AttendantNotFoundException;
+
+    @ApiOperation(value = "delete Attendant object",
+            response = DeleteResponseDTO.class)
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "success"),
+    @ApiResponse(code = 404, response = ErrorSpecificationDTO.class, message = "not found")})
+    public ResponseEntity<DeleteResponseDTO> delete(Long attendantId)
+        throws AttendantNotFoundException;
 }
