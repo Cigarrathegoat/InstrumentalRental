@@ -1,6 +1,7 @@
 package br.com.instrumental_rental.controller;
 
 import br.com.instrumental_rental.controller.dto.requests.AttendantDTO;
+import br.com.instrumental_rental.controller.dto.requests.CustomerDTO;
 import br.com.instrumental_rental.controller.dto.responses.errors.ErrorSpecificationDTO;
 import br.com.instrumental_rental.controller.dto.responses.responses.AttendantListResponseDTO;
 import br.com.instrumental_rental.controller.dto.responses.responses.AttendantResponseDTO;
@@ -26,8 +27,14 @@ public interface IAttendantAPI {
     public AttendantListResponseDTO find(String attendantName)
         throws AttendantNotFoundException;
 
-    @ApiOperation(value = "find all Customer objects",
+    @ApiOperation(value = "find all Attendant objects",
     response = AttendantListResponseDTO.class)
     @ApiResponses(value = {@ApiResponse(code = 200, message = "success")})
     public AttendantListResponseDTO findAll();
+
+    @ApiOperation(value = "update Attendant object",
+    response = AttendantListResponseDTO.class)
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "success")})
+    public AttendantResponseDTO update(Long attendantId, CustomerDTO customerDTO)
+        throws CustomerNotFoundException;
 }
