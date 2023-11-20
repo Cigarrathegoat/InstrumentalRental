@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -27,6 +28,9 @@ public class CustomerDTO {
 
     private List<Contact> contacts;
 
+    @NotBlank(message = "name field must not be empty")
+    @Pattern(regexp = "^[0-9]+$", message = "please enter only numeric digits in the Date of birth field")
+    @Range(min = 8, max = 8, message = "please enter a valid date")
     private LocalDate dateOfBirth;
 
 }
