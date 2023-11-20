@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Range;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
@@ -17,6 +18,6 @@ public class AccountBalanceDTO {
 
     @NotNull(message = "Please deposit a minimum balance of $100.00.")
     @Positive(message = "Please deposit a minimum balance of $100.00.")
-    @Range(min= 100, message = "Please deposit a minimum balance of $100.00.")
+    @Min(value = 100, message = "Please deposit a minimum balance of $100.00.")
     private long accountBalance;
 }
