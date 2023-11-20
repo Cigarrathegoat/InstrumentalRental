@@ -1,4 +1,4 @@
-package br.com.instrumental_rental.controller.dto;
+package br.com.instrumental_rental.controller;
 
 import br.com.instrumental_rental.controller.dto.requests.RentalDTO;
 import br.com.instrumental_rental.controller.dto.responses.errors.ErrorSpecificationDTO;
@@ -15,7 +15,7 @@ public interface IRentalAPI {
 
     @ApiOperation(value = "add Rental object",
     response = RentalResponseDTO.class)
-    @ApiResponses(value = {@ApiResponse(code = 200, message "success"),
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "success"),
     @ApiResponse(code = 404, response = ErrorSpecificationDTO.class, message = "not found")})
     public RentalResponseDTO add(RentalDTO rentalDTO)
         throws RentalNotFoundException;
