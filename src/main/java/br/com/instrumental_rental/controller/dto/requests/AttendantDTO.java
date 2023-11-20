@@ -22,5 +22,6 @@ public class AttendantDTO {
     @Pattern(regexp = "^[a-zA-Z]+$", message = "Field must only have letters")
     private String name;
 
+    @NotBlank(message = "Contacts field must not be blank")
     private List<ContactsDTO> contacts;
 }
