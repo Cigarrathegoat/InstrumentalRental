@@ -44,18 +44,17 @@ public class CustomerAPI implements ICustomerAPI {
                 ).build();
     }
 
-    @GetMapping("/find/{super-people}")
-    public CustomerResponseDTO find(@PathVariable("super_people") String customerName)
+    //TODO ask Segundo what exactly happens in this method
+    @GetMapping("/find/{numberProvided}")
+    public CustomerResponseDTO find(@PathVariable("numberProvided") String numberProvided)
             throws CustomerNotFoundException {
 
         return CustomerResponseDTO.builder()
                 .data(customerMapperAttribute.convertToDto(
                                 customerServiceAttribute
-                                        .findCustomerByNumberProvided(customerName)
+                                        .findCustomerByNumberProvided(numberProvided)
                         )
                 ).build();
-
-
     }
 
     @GetMapping("/list")
