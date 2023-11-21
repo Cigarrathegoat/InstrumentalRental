@@ -2,10 +2,7 @@ package br.com.instrumental_rental.handlers;
 
 import br.com.instrumental_rental.controller.dto.responses.errors.ErrorResponseDTO;
 import br.com.instrumental_rental.controller.dto.responses.errors.ErrorSpecificationDTO;
-import br.com.instrumental_rental.exceptions.AttendantNotFoundException;
-import br.com.instrumental_rental.exceptions.CustomerNotFoundException;
-import br.com.instrumental_rental.exceptions.InstrumentNotFoundException;
-import br.com.instrumental_rental.exceptions.RentalNotFoundException;
+import br.com.instrumental_rental.exceptions.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -68,4 +65,18 @@ public class ApplicationExceptionHandler {
                 );
     }
 
+    @ExceptionHandler(WithdrawalGreaterThanBalanceException.class)
+    public ResponseEntity<ErrorResponseDTO> WithdrawalGreaterThanBalanceExceptionHandler(
+            WithdrawalGreaterThanBalanceException exception) {
+        log.info("withdrawal amount greater than balance available");
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(ErrorResponseDTO.builder()
+                        .data(ErrorSpecificationDTO.builder()
+                                .errorCode("400")
+                                .errorMessage("Withdrawal amount greater than balance available")
+                                .build()
+                        ).build()
+                );
+    }
 }
