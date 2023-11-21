@@ -1,6 +1,7 @@
 package br.com.instrumental_rental.service;
 
 import br.com.instrumental_rental.exceptions.CustomerNotFoundException;
+import br.com.instrumental_rental.exceptions.WithdrawalGreaterThanBalanceException;
 import br.com.instrumental_rental.models.CustomerBuilder;
 import br.com.instrumental_rental.repository.entities.Customer;
 import br.com.instrumental_rental.repository.interfaces.ICustomerRepository;
@@ -11,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.util.Assert;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -159,17 +161,6 @@ public class CustomerServiceTest {
         Assertions.assertEquals("Customer not found", thrown.getMessage());
     }
 
-    /*public BigDecimal addToBalance(String customerId, BigDecimal addition)
-            throws CustomerNotFoundException {
-        var customerFound = customerRepository.findById(customerId)
-                .orElseThrow(() -> new CustomerNotFoundException(
-                                "C01", "Customer not found"
-                        )
-                );
-        customerFound.setAccountBalance(customerFound.getAccountBalance().add(addition));
-        return customerFound.getAccountBalance();
-    }*/
-
     @Test
     void testAddToBalanceSuccess() throws CustomerNotFoundException {
         final BigDecimal addition = BigDecimal.valueOf(300);
@@ -199,5 +190,39 @@ public class CustomerServiceTest {
         );
         Assertions.assertEquals("C01", thrown.getCode());
         Assertions.assertEquals("Customer not found", thrown.getMessage());
+    }
+
+    @Test
+    void testWithdrawSuccess() throws CustomerNotFoundException,
+            WithdrawalGreaterThanBalanceException {
+        final BigDecimal withdrawalAmount = BigDecimal.valueOf(500);
+        var builder = CustomerBuilder.customerBuilder(
+                "01", "John", LocalDate.parse("1992-08-23"),
+                "123456789", "1234567",
+                BigDecimal.valueOf(500));
+        var builderAfterWithdrawal = CustomerBuilder.customerBuilder(
+                "01", "John", LocalDate.parse("1992-08-23"),
+                "123456789", "1234567",
+                BigDecimal.valueOf(0)
+        );
+        when(customerRepository.findById(builder.getCustomerId()))
+                .thenReturn(Optional.of(builder));
+        BigDecimal result = customerService.withdraw(builder.getCustomerId(), withdrawalAmount);
+        Assertions.assertEquals(builderAfterWithdrawal.getAccountBalance(), result);
+    }
+
+    @Test
+    void testWithdrawalCustomerNotFoundException() throws CustomerNotFoundException,
+            WithdrawalGreaterThanBalanceException {
+        var builder = CustomerBuilder.customerBuilder(
+                "01", "John", LocalDate.parse("1992-08-23"),
+                "123456789", "1234567",
+                BigDecimal.valueOf(500));
+        when(customerRepository.findById(builder.getCustomerId())).thenReturn(null);
+        CustomerNotFoundException thrown = Assertions.assertThrows(
+                CustomerNotFoundException.class, () -> {
+                    customerService.withdraw(builder.getCustomerId(), )
+                }
+        )
     }
 }
