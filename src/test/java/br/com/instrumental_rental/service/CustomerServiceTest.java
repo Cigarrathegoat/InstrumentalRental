@@ -182,4 +182,9 @@ public class CustomerServiceTest {
         Assertions.assertEquals("C01", thrown.getCode());
         Assertions.assertEquals("Customer not found", thrown.getMessage());
     }
+
+    @Test
+    void testWithdrawalWithdrawalGreaterthanBalanceException() throws CustomerNotFoundException,
+            WithdrawalGreaterThanBalanceException {
+    }
 }
