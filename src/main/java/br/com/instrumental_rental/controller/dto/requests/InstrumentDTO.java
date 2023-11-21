@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -14,7 +16,10 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class InstrumentDTO {
 
+    @NotBlank(message = "field cannot be left blank")
+    @Pattern(regexp = "^[a-zA-Z]+&", message = "please use only letters")
     private String type;
+
 
     private String make;
 
