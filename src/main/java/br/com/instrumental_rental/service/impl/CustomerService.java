@@ -1,6 +1,7 @@
 package br.com.instrumental_rental.service.impl;
 
 import br.com.instrumental_rental.exceptions.CustomerNotFoundException;
+import br.com.instrumental_rental.exceptions.WithdrawalGreaterThanBalanceException;
 import br.com.instrumental_rental.repository.entities.Customer;
 import br.com.instrumental_rental.repository.interfaces.ICustomerRepository;
 import br.com.instrumental_rental.service.AbstractValidateService;
@@ -52,16 +53,20 @@ public class CustomerService implements ICustomerService {
 
     @Override
     public BigDecimal withdraw(String customerId, BigDecimal withdrawal)
-            throws CustomerNotFoundException {
+            throws CustomerNotFoundException, WithdrawalGreaterThanBalanceException {
         var customerFound = customerRepository.findById(customerId)
                 .orElseThrow(() -> new CustomerNotFoundException(
                                 "C01", "Customer not found"
                         )
                 );
         if (withdrawal.compareTo(customerFound.getAccountBalance()) > 0) {
-            throw new WithdrawalGreaterThanBalance exception()
-
+            throw new WithdrawalGreaterThanBalanceException(
+                    "W01", "Withdrawal cannot be greater than account balance");
+        } else {
+            customerFound.setAccountBalance(
+                    customerFound.getAccountBalance().subtract(withdrawal));
         }
+        return customerFound.getAccountBalance();
     }
 
     @Override
