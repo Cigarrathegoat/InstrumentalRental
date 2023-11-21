@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface ICustomerService extends IService<Customer, Exception> {
 
-    List<Customer> findCustomerByName(String name) throws CustomerNotFoundException;
+    Customer findCustomerByNumberProvided(String number) throws CustomerNotFoundException;
 
     BigDecimal addToBalance(String customerId, BigDecimal addition)
             throws CustomerNotFoundException;

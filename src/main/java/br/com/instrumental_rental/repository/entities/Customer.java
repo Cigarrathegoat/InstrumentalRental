@@ -26,6 +26,15 @@ public class Customer {
     @Column(name = "DS_NAME")
     private String name;
 
+    @Column(name = "DS_DATE_OF_BIRTH")
+    private LocalDate dateOfBirth;
+
+    @Column(name = "DS_SOCIAL_SECURITY")
+    private String socialSecurityNumber;//9 digits
+
+    @Column(name = "DS_DRIVERS-LICENSE")
+    private String driversLicenseNumber;//7 digits
+
     @Column(name = "DS_ADDRESS")
     @JoinColumn(name = "ADDRESS_DS")
     @OneToMany(mappedBy = "customer")
@@ -36,8 +45,7 @@ public class Customer {
     @OneToMany(mappedBy = "customer")
     private List<Contact> contacts;
 
-    @Column(name = "DS_DATE_OF_BIRTH")
-    private LocalDate dateOfBirth;
+
 
     @Column(name = "DS_ACCOUNT_BALANCE")
     private BigDecimal accountBalance;

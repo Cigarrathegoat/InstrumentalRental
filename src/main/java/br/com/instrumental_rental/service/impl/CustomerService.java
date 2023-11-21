@@ -29,9 +29,37 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
-    public List<Customer> findCustomerByName(String name) throws CustomerNotFoundException {
-        var customerSought = customerRepository.findCustomerByName(name);
-        if (customerSought.isEmpty()) {
+    public Customer findCustomerByNumberProvided(String number) throws CustomerNotFoundException {
+        if (number.length() == 7) {
+            var customerSought = customerRepository.findCustomerByDriversLicenseNumber(number);
+            if (customerSought == null) {
+                throw new CustomerNotFoundException("C01", "Customer not found");
+            } else {
+                return customerSought;
+            }
+        } else if (number.length() == 9) {
+            var customerSought = customerRepository.findCustomerBySocialSecurityNumber(number);
+            if (customerSought == null) {
+                throw new CustomerNotFoundException("C01", "Customer not found");
+            } else {
+                return customerSought;
+            }
+        }
+    }
+
+    private Customer findCustomerByDriversLicenseNumber(String number)
+            throws CustomerNotFoundException {
+        var customerSought = customerRepository.findCustomerByDriversLicenseNumber(number);
+        if (customerSought == null) {
+            throw new CustomerNotFoundException("C01", "Customer not found");
+        } else {
+            return customerSought;
+        }
+    }
+    private Customer findCustomerBySocialSecurityNumber(String number)
+    throws CustomerNotFoundException{
+        var customerSought = customerRepository.findCustomerBySocialSecurityNumber(number);
+        if (customerSought == null) {
             throw new CustomerNotFoundException("C01", "Customer not found");
         } else {
             return customerSought;

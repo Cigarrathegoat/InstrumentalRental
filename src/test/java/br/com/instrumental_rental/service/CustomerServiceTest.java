@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.util.Assert;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -57,7 +56,7 @@ public class CustomerServiceTest {
                 BigDecimal.valueOf(500));
         when(customerRepository.findCustomerByName(builder.getName()))
                 .thenReturn(List.of(builder));
-        List<Customer> result = customerService.findCustomerByName(builder.getName());
+        List<Customer> result = customerService.findCustomerByNumberProvided(builder.getName());
         Assertions.assertNotNull(result);
     }
 
@@ -70,7 +69,7 @@ public class CustomerServiceTest {
                 .thenReturn(List.of());
         CustomerNotFoundException thrown = Assertions.assertThrows(
                 CustomerNotFoundException.class, () -> {
-                    customerService.findCustomerByName(builder.getName());
+                    customerService.findCustomerByNumberProvided(builder.getName());
                 }
         );
         Assertions.assertEquals("C01", thrown.getCode());

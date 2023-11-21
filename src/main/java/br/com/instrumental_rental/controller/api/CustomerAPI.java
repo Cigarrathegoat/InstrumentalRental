@@ -50,7 +50,7 @@ public class CustomerAPI implements ICustomerAPI {
 
         return CustomerListResponseDTO.builder()
                 .data(customerMapperAttribute.convertoToListDto(
-                                customerServiceAttribute.findCustomerByName(customerName)
+                                customerServiceAttribute.findCustomerByNumberProvided(customerName)
                         )
                 ).build();
     }
