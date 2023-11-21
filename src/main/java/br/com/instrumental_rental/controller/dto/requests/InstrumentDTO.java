@@ -31,6 +31,8 @@ public class InstrumentDTO {
     @Pattern(regexp = "^[0-9]+$", message = "only numeral digits please")
     private BigDecimal price;
 
+    @NotBlank(message = "field cannot be left blank")
+    @Pattern(regexp = "^\\d{2}-\\d{2}-\\d{4}$", message = "the date must be in mm-dd-YYYY format")
     private LocalDate manufactureDate;
 
     private boolean available;

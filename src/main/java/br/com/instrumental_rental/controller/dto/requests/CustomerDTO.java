@@ -30,7 +30,7 @@ public class CustomerDTO {
 
     @NotBlank(message = "name field must not be empty")
     @Pattern(regexp = "^[0-9]+$", message = "please enter only numeric digits in the Date of birth field")
-    @Range(min = 8, max = 8, message = "please enter a valid date")
+    @Range(min = 8, max = 8, message = "please enter a valid date in the mm-dd-yyyy format")
     private LocalDate dateOfBirth;
 
 }
