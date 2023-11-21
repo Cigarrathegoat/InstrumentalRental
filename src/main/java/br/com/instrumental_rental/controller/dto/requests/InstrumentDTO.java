@@ -21,10 +21,10 @@ public class InstrumentDTO {
     private String type;
 
     @NotBlank(message = "field cannot be left blank")
-    @Pattern(regexp = "^[a-zA-Z]+$", "must only use letters")
+    @Pattern(regexp = "^[a-zA-Z]+$", message = "must only use letters")
     private String make;
 
-
+    @NotBlank(message = "field cannot be left blank")
     private String model;
 
     private BigDecimal price;
