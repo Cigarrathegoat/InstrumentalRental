@@ -20,8 +20,10 @@ public class InstrumentDTO {
     @Pattern(regexp = "^[a-zA-Z]+&", message = "please use only letters")
     private String type;
 
-
+    @NotBlank(message = "field cannot be left blank")
+    @Pattern(regexp = "^[a-zA-Z]+$", "must only use letters")
     private String make;
+
 
     private String model;
 
