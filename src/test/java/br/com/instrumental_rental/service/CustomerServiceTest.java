@@ -52,15 +52,16 @@ public class CustomerServiceTest {
     }
 
     @Test
-    void testFindCustomerByNameSuccess() throws CustomerNotFoundException {
+    void testFindCustomerByNumberProvidedSuccess() throws CustomerNotFoundException {
         var builder = CustomerBuilder.customerBuilder(
                 "1", "john", LocalDate.parse("1992-08-23"),
                 "123456789", "1234567",
                 BigDecimal.valueOf(500));
-        when(customerRepository.findCustomerByName(builder.getName()))
-                .thenReturn(List.of(builder));
-        List<Customer> result = customerService.findCustomerByNumberProvided(builder.getName());
-        Assertions.assertNotNull(result);
+        when(customerRepository.findCustomerByNumberProvided(builder.getDriversLicenseNumber()))
+                .thenReturn(builder);
+        Customer result = customerService.findCustomerByNumberProvided(
+                builder.getDriversLicenseNumber());
+        Assertions.assertEquals(builder, result);
     }
 
     @Test
@@ -69,8 +70,8 @@ public class CustomerServiceTest {
                 "1", "john", LocalDate.parse("1992-08-23"),
                 "123456789", "1234567",
                 BigDecimal.valueOf(500));
-        when(customerRepository.findCustomerByName(builder.getName()))
-                .thenReturn(List.of());
+        when(customerRepository.findCustomerByNumberProvided(builder.getSocialSecurityNumber()))
+                .thenReturn(null);
         CustomerNotFoundException thrown = Assertions.assertThrows(
                 CustomerNotFoundException.class, () -> {
                     customerService.findCustomerByNumberProvided(builder.getName());

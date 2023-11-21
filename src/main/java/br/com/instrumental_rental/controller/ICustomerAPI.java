@@ -25,7 +25,7 @@ public interface ICustomerAPI {
     response = CustomerDTO.class)
     @ApiResponses(value = {@ApiResponse(code = 200, message = "success"),
     @ApiResponse(code = 404, response = ErrorSpecificationDTO.class, message = "not found")})
-    public CustomerListResponseDTO find(String customerName)
+    public CustomerResponseDTO find(String number)
         throws CustomerNotFoundException;
 
     @ApiOperation(value = "list all Customer objects",

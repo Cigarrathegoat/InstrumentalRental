@@ -12,6 +12,4 @@ public interface ICustomerRepository extends JpaRepository<Customer, String> {
             "WHERE c.socialSecurityNumber = :numberProvided OR c.driversLicenseNumber = :numberProvided")
     Customer findCustomerByNumberProvided(String numberProvided);
 
-    @Query(value = "select * from TB_CUSTOMER where DS_DRIVERS_LICENSE = :driversLicenseNumber")
-    Customer findCustomerByDriversLicenseNumber(String driversLicenseNumber);
 }
