@@ -27,6 +27,8 @@ public class InstrumentDTO {
     @NotBlank(message = "field cannot be left blank")
     private String model;
 
+    @NotBlank(message = "field cannot be left blank")
+    @Pattern(regexp = "^[0-9]+$", message = "only numeral digits please")
     private BigDecimal price;
 
     private LocalDate manufactureDate;
