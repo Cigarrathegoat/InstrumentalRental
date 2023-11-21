@@ -38,16 +38,30 @@ public class CustomerServiceTest {
         MockitoAnnotations.openMocks(this);
     }
 
+    Customer builder = CustomerBuilder.customerBuilder(
+            "01", "John", LocalDate.parse("1992-08-23"),
+            "123456789", "1234567",
+            BigDecimal.valueOf(500));
+    Customer builderNoId = CustomerBuilder.customerNoIdBuilder(
+            "john", LocalDate.parse("1992-08-23"),
+            "123456789", "1234567",
+            BigDecimal.valueOf(500));
+
+    Customer builderUpdated = CustomerBuilder.customerBuilder(
+            "1", "john", LocalDate.parse("1992-08-25"),
+            "123456789", "1234567",
+            BigDecimal.valueOf(600)
+    );
+    Customer builderAfterWithdrawal = CustomerBuilder.customerBuilder(
+            "01", "John", LocalDate.parse("1992-08-23"),
+            "123456789", "1234567",
+            BigDecimal.valueOf(0)
+    );
+    final BigDecimal addition = BigDecimal.valueOf(300);
+    final BigDecimal withdrawalAmount = BigDecimal.valueOf(500);
+
     @Test
     void testSaveSuccess() {
-        var builder = CustomerBuilder.customerBuilder(
-                "1", "john", LocalDate.parse("1992-08-23"),
-                "123456789", "1234567",
-                BigDecimal.valueOf(500));
-        var builderNoId = CustomerBuilder.customerNoIdBuilder(
-                "john", LocalDate.parse("1992-08-23"),
-                "123456789", "1234567",
-                BigDecimal.valueOf(500));
         when(customerRepository.save(builderNoId)).thenReturn(builder);
         Customer saved = customerService.save(builderNoId);
         Assertions.assertNotNull(saved);
@@ -55,10 +69,6 @@ public class CustomerServiceTest {
 
     @Test
     void testFindCustomerByNumberProvidedSuccess() throws CustomerNotFoundException {
-        var builder = CustomerBuilder.customerBuilder(
-                "1", "john", LocalDate.parse("1992-08-23"),
-                "123456789", "1234567",
-                BigDecimal.valueOf(500));
         when(customerRepository.findCustomerByNumberProvided(builder.getDriversLicenseNumber()))
                 .thenReturn(builder);
         Customer result = customerService.findCustomerByNumberProvided(
@@ -68,10 +78,6 @@ public class CustomerServiceTest {
 
     @Test
     void testFindCustomerByNameCustomerNotFoundException() throws CustomerNotFoundException {
-        var builder = CustomerBuilder.customerBuilder(
-                "1", "john", LocalDate.parse("1992-08-23"),
-                "123456789", "1234567",
-                BigDecimal.valueOf(500));
         when(customerRepository.findCustomerByNumberProvided(builder.getSocialSecurityNumber()))
                 .thenReturn(null);
         CustomerNotFoundException thrown = Assertions.assertThrows(
@@ -85,10 +91,6 @@ public class CustomerServiceTest {
 
     @Test
     void testFindAllSuccess() {
-        var builder = CustomerBuilder.customerBuilder(
-                "1", "john", LocalDate.parse("1992-08-23"),
-                "123456789", "1234567",
-                BigDecimal.valueOf(500));
         when(customerRepository.findAll()).thenReturn(List.of(builder));
         List<Customer> result = customerService.findAll();
         Assertions.assertNotNull(result);
@@ -96,16 +98,6 @@ public class CustomerServiceTest {
 
     @Test
     void testUpdateSuccess() throws CustomerNotFoundException {
-        var builder = CustomerBuilder.customerBuilder(
-                "1", "john", LocalDate.parse("1992-08-23"),
-                "123456789", "1234567",
-                BigDecimal.valueOf(500)
-        );
-        var builderUpdated = CustomerBuilder.customerBuilder(
-                "1", "john", LocalDate.parse("1992-08-25"),
-                "123456789", "1234567",
-                BigDecimal.valueOf(600)
-        );
         when(customerRepository.findById(builder.getCustomerId()))
                 .thenReturn(Optional.of(builder));
         when(customerRepository.save(builderUpdated)).thenReturn(builderUpdated);
@@ -115,11 +107,6 @@ public class CustomerServiceTest {
 
     @Test
     void testUpdateCustomerNotFoundException() throws CustomerNotFoundException {
-        var builder = CustomerBuilder.customerBuilder(
-                "1", "john", LocalDate.parse("1992-08-23"),
-                "123456789", "1234567",
-                BigDecimal.valueOf(500)
-        );
         when(customerRepository.findById(builder.getCustomerId()))
                 .thenReturn(Optional.empty());
         CustomerNotFoundException thrown = Assertions.assertThrows(
@@ -133,9 +120,6 @@ public class CustomerServiceTest {
 
     @Test
     void testDeleteSuccess() throws CustomerNotFoundException {
-        var builder = CustomerBuilder.customerBuilder(
-                "1", "john", LocalDate.parse("1992-08-23"),
-                "123456789", "1234567",BigDecimal.valueOf(500));
         when(customerRepository.findById(builder.getCustomerId()))
                 .thenReturn(Optional.of(builder));
         customerService.delete(builder);
@@ -145,11 +129,6 @@ public class CustomerServiceTest {
 
     @Test
     void testDeleteCustomerNotFoundException() throws CustomerNotFoundException {
-        var builder = CustomerBuilder.customerBuilder(
-                "1", "john", LocalDate.parse("1992-08-23"),
-                "123456789", "1234567",
-                BigDecimal.valueOf(500)
-        );
         when(customerRepository.findById(builder.getCustomerId()))
                 .thenReturn(Optional.empty());
         CustomerNotFoundException thrown = Assertions.assertThrows(
@@ -163,11 +142,6 @@ public class CustomerServiceTest {
 
     @Test
     void testAddToBalanceSuccess() throws CustomerNotFoundException {
-        final BigDecimal addition = BigDecimal.valueOf(300);
-        var builder = CustomerBuilder.customerBuilder(
-                "01", "John", LocalDate.parse("1992-08-23"),
-                "123456789", "1234567",
-                BigDecimal.valueOf(500));
         when(customerRepository.findById(builder.getCustomerId()))
                 .thenReturn(Optional.of(builder));
         BigDecimal newBalance = customerService.addToBalance(builder.getCustomerId(), addition);
@@ -176,11 +150,6 @@ public class CustomerServiceTest {
 
     @Test
     void testAddToBalanceCustomerNotFoundException() throws CustomerNotFoundException {
-        final BigDecimal addition = BigDecimal.valueOf(300);
-        var builder = CustomerBuilder.customerBuilder(
-                "01", "John", LocalDate.parse("1992-08-23"),
-                "123456789", "1234567",
-                BigDecimal.valueOf(500));
         when(customerRepository.findById(builder.getCustomerId()))
                 .thenReturn(Optional.empty());
         CustomerNotFoundException thrown = Assertions.assertThrows(
@@ -195,16 +164,6 @@ public class CustomerServiceTest {
     @Test
     void testWithdrawSuccess() throws CustomerNotFoundException,
             WithdrawalGreaterThanBalanceException {
-        final BigDecimal withdrawalAmount = BigDecimal.valueOf(500);
-        var builder = CustomerBuilder.customerBuilder(
-                "01", "John", LocalDate.parse("1992-08-23"),
-                "123456789", "1234567",
-                BigDecimal.valueOf(500));
-        var builderAfterWithdrawal = CustomerBuilder.customerBuilder(
-                "01", "John", LocalDate.parse("1992-08-23"),
-                "123456789", "1234567",
-                BigDecimal.valueOf(0)
-        );
         when(customerRepository.findById(builder.getCustomerId()))
                 .thenReturn(Optional.of(builder));
         BigDecimal result = customerService.withdraw(builder.getCustomerId(), withdrawalAmount);
@@ -214,15 +173,13 @@ public class CustomerServiceTest {
     @Test
     void testWithdrawalCustomerNotFoundException() throws CustomerNotFoundException,
             WithdrawalGreaterThanBalanceException {
-        var builder = CustomerBuilder.customerBuilder(
-                "01", "John", LocalDate.parse("1992-08-23"),
-                "123456789", "1234567",
-                BigDecimal.valueOf(500));
-        when(customerRepository.findById(builder.getCustomerId())).thenReturn(null);
+        when(customerRepository.findById(builder.getCustomerId())).thenReturn(Optional.empty());
         CustomerNotFoundException thrown = Assertions.assertThrows(
                 CustomerNotFoundException.class, () -> {
-                    customerService.withdraw(builder.getCustomerId(), )
+                    customerService.withdraw(builder.getCustomerId(), withdrawalAmount);
                 }
-        )
+        );
+        Assertions.assertEquals("C01", thrown.getCode());
+        Assertions.assertEquals("Customer not found", thrown.getMessage());
     }
 }
