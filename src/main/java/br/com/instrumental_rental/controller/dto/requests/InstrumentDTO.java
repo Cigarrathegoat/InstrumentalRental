@@ -32,8 +32,7 @@ public class InstrumentDTO {
     private BigDecimal price;
 
     @NotBlank(message = "field cannot be left blank")
-    @Pattern(regexp = "^\\d{2}-\\d{2}-\\d{4}$", message = "the date must be in mm-dd-YYYY format")
+    @Pattern(regexp = "^\\d{2}-\\d{2}-\\d{4}$", message = "date must be in mm-dd-YYYY format")
     private LocalDate manufactureDate;
 
-    private boolean available;
 }
