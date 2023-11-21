@@ -40,9 +40,11 @@ public class CustomerServiceTest {
     void testSaveSuccess() {
         var builder = CustomerBuilder.customerBuilder(
                 "1", "john", LocalDate.parse("1992-08-23"),
+                "123456789", "1234567",
                 BigDecimal.valueOf(500));
         var builderNoId = CustomerBuilder.customerNoIdBuilder(
                 "john", LocalDate.parse("1992-08-23"),
+                "123456789", "1234567",
                 BigDecimal.valueOf(500));
         when(customerRepository.save(builderNoId)).thenReturn(builder);
         Customer saved = customerService.save(builderNoId);
@@ -53,6 +55,7 @@ public class CustomerServiceTest {
     void testFindCustomerByNameSuccess() throws CustomerNotFoundException {
         var builder = CustomerBuilder.customerBuilder(
                 "1", "john", LocalDate.parse("1992-08-23"),
+                "123456789", "1234567",
                 BigDecimal.valueOf(500));
         when(customerRepository.findCustomerByName(builder.getName()))
                 .thenReturn(List.of(builder));
@@ -64,6 +67,7 @@ public class CustomerServiceTest {
     void testFindCustomerByNameCustomerNotFoundException() throws CustomerNotFoundException {
         var builder = CustomerBuilder.customerBuilder(
                 "1", "john", LocalDate.parse("1992-08-23"),
+                "123456789", "1234567",
                 BigDecimal.valueOf(500));
         when(customerRepository.findCustomerByName(builder.getName()))
                 .thenReturn(List.of());
@@ -80,6 +84,7 @@ public class CustomerServiceTest {
     void testFindAllSuccess() {
         var builder = CustomerBuilder.customerBuilder(
                 "1", "john", LocalDate.parse("1992-08-23"),
+                "123456789", "1234567",
                 BigDecimal.valueOf(500));
         when(customerRepository.findAll()).thenReturn(List.of(builder));
         List<Customer> result = customerService.findAll();
@@ -90,10 +95,12 @@ public class CustomerServiceTest {
     void testUpdateSuccess() throws CustomerNotFoundException {
         var builder = CustomerBuilder.customerBuilder(
                 "1", "john", LocalDate.parse("1992-08-23"),
+                "123456789", "1234567",
                 BigDecimal.valueOf(500)
         );
         var builderUpdated = CustomerBuilder.customerBuilder(
                 "1", "john", LocalDate.parse("1992-08-25"),
+                "123456789", "1234567",
                 BigDecimal.valueOf(600)
         );
         when(customerRepository.findById(builder.getCustomerId()))
@@ -107,6 +114,7 @@ public class CustomerServiceTest {
     void testUpdateCustomerNotFoundException() throws CustomerNotFoundException {
         var builder = CustomerBuilder.customerBuilder(
                 "1", "john", LocalDate.parse("1992-08-23"),
+                "123456789", "1234567",
                 BigDecimal.valueOf(500)
         );
         when(customerRepository.findById(builder.getCustomerId()))
@@ -123,7 +131,8 @@ public class CustomerServiceTest {
     @Test
     void testDeleteSuccess() throws CustomerNotFoundException {
         var builder = CustomerBuilder.customerBuilder(
-                "1", "john", LocalDate.parse("1992-08-23"), BigDecimal.valueOf(500));
+                "1", "john", LocalDate.parse("1992-08-23"),
+                "123456789", "1234567",BigDecimal.valueOf(500));
         when(customerRepository.findById(builder.getCustomerId()))
                 .thenReturn(Optional.of(builder));
         customerService.delete(builder);
@@ -135,6 +144,7 @@ public class CustomerServiceTest {
     void testDeleteCustomerNotFoundException() throws CustomerNotFoundException {
         var builder = CustomerBuilder.customerBuilder(
                 "1", "john", LocalDate.parse("1992-08-23"),
+                "123456789", "1234567",
                 BigDecimal.valueOf(500)
         );
         when(customerRepository.findById(builder.getCustomerId()))
@@ -164,6 +174,7 @@ public class CustomerServiceTest {
         final BigDecimal addition = BigDecimal.valueOf(300);
         var builder = CustomerBuilder.customerBuilder(
                 "01", "John", LocalDate.parse("1992-08-23"),
+                "123456789", "1234567",
                 BigDecimal.valueOf(500));
         when(customerRepository.findById(builder.getCustomerId()))
                 .thenReturn(Optional.of(builder));
@@ -176,6 +187,7 @@ public class CustomerServiceTest {
         final BigDecimal addition = BigDecimal.valueOf(300);
         var builder = CustomerBuilder.customerBuilder(
                 "01", "John", LocalDate.parse("1992-08-23"),
+                "123456789", "1234567",
                 BigDecimal.valueOf(500));
         when(customerRepository.findById(builder.getCustomerId()))
                 .thenReturn(Optional.empty());

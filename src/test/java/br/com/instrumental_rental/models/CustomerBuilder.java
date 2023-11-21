@@ -8,16 +8,22 @@ import java.time.LocalDate;
 public class CustomerBuilder {
 
     public static Customer customerBuilder(String id, String name, LocalDate date,
-                                  BigDecimal balance) {
+                                           String socialSecurityNumber, String driversLicenseNumber,
+                                           BigDecimal balance) {
         return Customer.builder()
                 .customerId(id).name(name).dateOfBirth(date)
+                .socialSecurityNumber(socialSecurityNumber)
+                .driversLicenseNumber(driversLicenseNumber)
                 .accountBalance(balance).build();
     }
 
     public static Customer customerNoIdBuilder(String name, LocalDate date,
+                                               String socialSecurityNumber, String driversLicenseNumber,
                                            BigDecimal balance) {
         return Customer.builder()
-                .customerId(null).name(name).dateOfBirth(date)
+                .name(name).dateOfBirth(date)
+                .socialSecurityNumber(socialSecurityNumber)
+                .driversLicenseNumber(driversLicenseNumber)
                 .accountBalance(balance).build();
     }
 }
