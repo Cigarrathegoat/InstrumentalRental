@@ -8,8 +8,9 @@ import java.util.List;
 
 public interface ICustomerRepository extends JpaRepository<Customer, String> {
 
-    @Query(value = "select * from TB_CUSTOMER where DS_SOCIAL_SECURITY = :socialSecurityNumber")
-    Customer findCustomerBySocialSecurityNumber(String socialSecurityNumber);
+    @Query(value = "SELECT c from Customer c" +
+            "WHERE c.socialSecurityNumber = :numberProvided OR c.driversLicenseNumber = :numberProvided")
+    Customer findCustomerByNumberProvided(String numberProvided);
 
     @Query(value = "select * from TB_CUSTOMER where DS_DRIVERS_LICENSE = :driversLicenseNumber")
     Customer findCustomerByDriversLicenseNumber(String driversLicenseNumber);
