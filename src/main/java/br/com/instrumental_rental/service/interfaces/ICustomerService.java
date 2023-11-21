@@ -13,4 +13,7 @@ public interface ICustomerService extends IService<Customer, Exception> {
     BigDecimal addToBalance(String customerId, BigDecimal addition)
             throws CustomerNotFoundException;
 
+    BigDecimal withdraw(String customerId, BigDecimal withdrawal)
+        throws CustomerNotFoundException;
+
 }

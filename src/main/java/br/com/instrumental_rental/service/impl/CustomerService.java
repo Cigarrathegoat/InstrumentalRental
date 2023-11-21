@@ -38,7 +38,6 @@ public class CustomerService implements ICustomerService {
         }
     }
 
-
     @Override
     public BigDecimal addToBalance(String customerId, BigDecimal addition)
             throws CustomerNotFoundException {
@@ -49,6 +48,20 @@ public class CustomerService implements ICustomerService {
                 );
         customerFound.setAccountBalance(customerFound.getAccountBalance().add(addition));
         return customerFound.getAccountBalance();
+    }
+
+    @Override
+    public BigDecimal withdraw(String customerId, BigDecimal withdrawal)
+            throws CustomerNotFoundException {
+        var customerFound = customerRepository.findById(customerId)
+                .orElseThrow(() -> new CustomerNotFoundException(
+                                "C01", "Customer not found"
+                        )
+                );
+        if (withdrawal.compareTo(customerFound.getAccountBalance()) > 0) {
+            throw new WithdrawalGreaterThanBalance exception()
+
+        }
     }
 
     @Override
