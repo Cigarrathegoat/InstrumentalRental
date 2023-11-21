@@ -29,21 +29,11 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
-    public Customer findCustomerByNumberProvided(String number) throws CustomerNotFoundException {
+    public void findCustomerByNumberProvided(String number) throws CustomerNotFoundException {
         if (number.length() == 7) {
-            var customerSought = customerRepository.findCustomerByDriversLicenseNumber(number);
-            if (customerSought == null) {
-                throw new CustomerNotFoundException("C01", "Customer not found");
-            } else {
-                return customerSought;
-            }
+            findCustomerByDriversLicenseNumber(number);
         } else if (number.length() == 9) {
-            var customerSought = customerRepository.findCustomerBySocialSecurityNumber(number);
-            if (customerSought == null) {
-                throw new CustomerNotFoundException("C01", "Customer not found");
-            } else {
-                return customerSought;
-            }
+            findCustomerBySocialSecurityNumber(number);
         }
     }
 
