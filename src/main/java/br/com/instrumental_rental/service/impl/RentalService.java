@@ -28,7 +28,6 @@ public class RentalService implements IRentalService {
 
     @Override
     public Rental save(Rental rental) {
-
         return rentalRepositoryAttribute.save(rental);
     }
 
@@ -40,11 +39,19 @@ public class RentalService implements IRentalService {
 
     @Override
     public List<Rental> findAll() {
-        return rentalRepositoryAttribute.findAll());
+        return rentalRepositoryAttribute.findAll();
     }
 
     @Override
-    public Rental update(Rental rental) throws Exception {
-        return null;
+    public Rental update(Rental rental) throws RentalNotFoundException {
+        var rentalToUpdate = finder(rental.getRentalId());
+        rentalToUpdate.setCustomer(rental.getCustomer());
+        rentalToUpdate.setAttendant(rental.getAttendant());
+        rentalToUpdate.setInstrument(rental.getInstrument());
+        rentalToUpdate.setPrice(rental.getPrice());
+        rentalToUpdate.setStartDate(rental.getStartDate());
+        rentalToUpdate.setEndDate(rental.getEndDate());
+
+        rentalRepositoryAttribute.save(rentalToUpdate);
     }
 }
