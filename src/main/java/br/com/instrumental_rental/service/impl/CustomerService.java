@@ -42,11 +42,7 @@ public class CustomerService implements ICustomerService {
     @Override
     public BigDecimal addToBalance(String customerId, BigDecimal addition)
             throws CustomerNotFoundException {
-        var customerFound = customerRepository.findById(customerId)
-                .orElseThrow(() -> new CustomerNotFoundException(
-                                "C01", "Customer not found"
-                        )
-                );
+        var customerFound = finder(customerId);
         customerFound.setAccountBalance(customerFound.getAccountBalance().add(addition));
         return customerFound.getAccountBalance();
     }
@@ -54,19 +50,22 @@ public class CustomerService implements ICustomerService {
     @Override
     public BigDecimal withdraw(String customerId, BigDecimal withdrawal)
             throws CustomerNotFoundException, WithdrawalGreaterThanBalanceException {
-        var customerFound = customerRepository.findById(customerId)
+        var withdrawer = finder(customerId);
+        sufficientBalanceChecker(withdrawer, withdrawal);
+            withdrawer.setAccountBalance(
+                    withdrawer.getAccountBalance().subtract(withdrawal));
+            customerRepository.save(withdrawer);
+
+        return withdrawer.getAccountBalance();
+    }
+
+    private Customer finder(String customerId) throws CustomerNotFoundException {
+        return customerRepository.findById(customerId)
                 .orElseThrow(() -> new CustomerNotFoundException(
                                 "C01", "Customer not found"
                         )
                 );
-        sufficientBalanceChecker(customerFound, withdrawal);
-            customerFound.setAccountBalance(
-                    customerFound.getAccountBalance().subtract(withdrawal));
-            customerRepository.save(customerFound);
-
-        return customerFound.getAccountBalance();
     }
-
     private void sufficientBalanceChecker(Customer customer, BigDecimal withdrawal)
     throws WithdrawalGreaterThanBalanceException{
         if (withdrawal.compareTo(customer.getAccountBalance()) > 0) {
