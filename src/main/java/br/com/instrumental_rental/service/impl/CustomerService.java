@@ -29,6 +29,19 @@ public class CustomerService implements ICustomerService {
         this.instrumentService = instrumentService;
     }
 
+    private Customer finder(String customerId) throws CustomerNotFoundException {
+        return customerRepository.findById(customerId)
+                .orElseThrow(() -> new CustomerNotFoundException(
+                                "C01", "Customer not found"
+                        )
+                );
+    }
+
+    @Override
+    public Customer save(Customer customer) {
+        return customerRepository.save(customer);
+    }
+
     @Override
     public Customer findCustomerByNumberProvided(String number) throws CustomerNotFoundException {
         var customerSought = customerRepository.findCustomerByNumberProvided(number);
@@ -59,13 +72,7 @@ public class CustomerService implements ICustomerService {
         return withdrawer.getAccountBalance();
     }
 
-    private Customer finder(String customerId) throws CustomerNotFoundException {
-        return customerRepository.findById(customerId)
-                .orElseThrow(() -> new CustomerNotFoundException(
-                                "C01", "Customer not found"
-                        )
-                );
-    }
+
     private void sufficientBalanceChecker(Customer customer, BigDecimal withdrawal)
     throws WithdrawalGreaterThanBalanceException{
         if (withdrawal.compareTo(customer.getAccountBalance()) > 0) {
@@ -80,17 +87,8 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
-    public Customer save(Customer customer) {
-        return customerRepository.save(customer);
-    }
-
-    @Override
-    public void delete(Customer customer) throws CustomerNotFoundException {
-        var customerToDelete = customerRepository.findById(customer.getCustomerId())
-                .orElseThrow(() -> new CustomerNotFoundException(
-                                "C01", "Customer not found"
-                        )
-                );
+    public void delete(String customerId) throws CustomerNotFoundException {
+        var customerToDelete = finder(customerId);
         customerRepository.delete(customerToDelete);
 
     }
