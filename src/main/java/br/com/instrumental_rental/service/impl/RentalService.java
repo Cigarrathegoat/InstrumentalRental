@@ -1,5 +1,6 @@
 package br.com.instrumental_rental.service.impl;
 
+import br.com.instrumental_rental.exceptions.RentalNotFoundException;
 import br.com.instrumental_rental.repository.entities.Rental;
 import br.com.instrumental_rental.repository.interfaces.IRentalRepository;
 import br.com.instrumental_rental.service.interfaces.IRentalService;
@@ -19,6 +20,12 @@ public class RentalService implements IRentalService {
     private RentalService (IRentalRepository rentalRepositoryParameter) {
         this.rentalRepositoryAttribute = rentalRepositoryParameter;
     }
+
+    private Rental finder(String rentalId) throws RentalNotFoundException {
+        return   rentalRepositoryAttribute.findById(rentalId)
+                .orElseThrow(() -> new RentalNotFoundException("R01", "Rental not found"));
+    }
+
     @Override
     public Rental save(Rental rental) {
         return null;
