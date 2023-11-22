@@ -53,5 +53,6 @@ public class RentalService implements IRentalService {
         rentalToUpdate.setEndDate(rental.getEndDate());
 
         rentalRepositoryAttribute.save(rentalToUpdate);
+        return rentalToUpdate;
     }
 }
