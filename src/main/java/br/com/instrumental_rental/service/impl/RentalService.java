@@ -28,17 +28,19 @@ public class RentalService implements IRentalService {
 
     @Override
     public Rental save(Rental rental) {
-        return null;
+
+        return rentalRepositoryAttribute.save(rental);
     }
 
     @Override
-    public void delete(Rental rental) throws Exception {
-
+    public void delete(Rental rental) throws RentalNotFoundException {
+        var rentalToDelete = finder(rental.getRentalId());
+        rentalRepositoryAttribute.delete(rentalToDelete);
     }
 
     @Override
     public List<Rental> findAll() {
-        return null;
+        return rentalRepositoryAttribute.findAll());
     }
 
     @Override
