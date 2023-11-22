@@ -13,9 +13,12 @@ import java.util.List;
 @Slf4j
 public class RentalService implements IRentalService {
 
-    @Autowired
-    IRentalRepository rentalRepository;
+    IRentalRepository rentalRepositoryAttribute;
 
+    @Autowired
+    private RentalService (IRentalRepository rentalRepositoryParameter) {
+        this.rentalRepositoryAttribute = rentalRepositoryParameter;
+    }
     @Override
     public Rental save(Rental rental) {
         return null;

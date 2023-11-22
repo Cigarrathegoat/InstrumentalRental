@@ -4,7 +4,6 @@ import br.com.instrumental_rental.exceptions.CustomerNotFoundException;
 import br.com.instrumental_rental.exceptions.WithdrawalGreaterThanBalanceException;
 import br.com.instrumental_rental.repository.entities.Customer;
 import br.com.instrumental_rental.repository.interfaces.ICustomerRepository;
-import br.com.instrumental_rental.service.AbstractValidateService;
 import br.com.instrumental_rental.service.interfaces.ICustomerService;
 import br.com.instrumental_rental.service.interfaces.IInstrumentService;
 import lombok.extern.slf4j.Slf4j;
@@ -18,19 +17,15 @@ import java.util.List;
 @Slf4j
 public class CustomerService implements ICustomerService {
 
-    private final ICustomerRepository customerRepository;
-
-    private final IInstrumentService instrumentService;
+    private final ICustomerRepository customerRepositoryAttribute;
 
     @Autowired
-    public CustomerService(ICustomerRepository customerRepository,
-                           IInstrumentService instrumentService) {
-        this.customerRepository = customerRepository;
-        this.instrumentService = instrumentService;
+    private CustomerService(ICustomerRepository customerRepositoryParameter) {
+        this.customerRepositoryAttribute = customerRepositoryParameter;
     }
 
     private Customer finder(String customerId) throws CustomerNotFoundException {
-        return customerRepository.findById(customerId)
+        return customerRepositoryAttribute.findById(customerId)
                 .orElseThrow(() -> new CustomerNotFoundException(
                                 "C01", "Customer not found"
                         )
@@ -39,12 +34,12 @@ public class CustomerService implements ICustomerService {
 
     @Override
     public Customer save(Customer customer) {
-        return customerRepository.save(customer);
+        return customerRepositoryAttribute.save(customer);
     }
 
     @Override
     public Customer findCustomerByNumberProvided(String number) throws CustomerNotFoundException {
-        var customerSought = customerRepository.findCustomerByNumberProvided(number);
+        var customerSought = customerRepositoryAttribute.findCustomerByNumberProvided(number);
         if (customerSought == null) {
             throw new CustomerNotFoundException("C01", "Customer not found");
         } else {
@@ -67,7 +62,7 @@ public class CustomerService implements ICustomerService {
         sufficientBalanceChecker(withdrawer, withdrawal);
             withdrawer.setAccountBalance(
                     withdrawer.getAccountBalance().subtract(withdrawal));
-            customerRepository.save(withdrawer);
+            customerRepositoryAttribute.save(withdrawer);
 
         return withdrawer.getAccountBalance();
     }
@@ -83,13 +78,13 @@ public class CustomerService implements ICustomerService {
 
     @Override
     public List<Customer> findAll() {
-        return customerRepository.findAll();
+        return customerRepositoryAttribute.findAll();
     }
 
     @Override
     public void delete(Customer customer) throws CustomerNotFoundException {
         var customerToDelete = finder(customer.getCustomerId());
-        customerRepository.delete(customerToDelete);
+        customerRepositoryAttribute.delete(customerToDelete);
     }
 
     @Override
@@ -99,7 +94,7 @@ public class CustomerService implements ICustomerService {
         customerToUpdate.setAddress(customer.getAddress());
         customerToUpdate.setDateOfBirth(customer.getDateOfBirth());
         customerToUpdate.setContacts(customer.getContacts());
-        customerRepository.save(customerToUpdate);
+        customerRepositoryAttribute.save(customerToUpdate);
         return customerToUpdate;
     }
 }
