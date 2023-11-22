@@ -18,9 +18,9 @@ import java.util.List;
 @Slf4j
 public class CustomerService implements ICustomerService {
 
-    private ICustomerRepository customerRepository;
+    private final ICustomerRepository customerRepository;
 
-    private IInstrumentService instrumentService;
+    private final IInstrumentService instrumentService;
 
     @Autowired
     public CustomerService(ICustomerRepository customerRepository,
@@ -59,14 +59,20 @@ public class CustomerService implements ICustomerService {
                                 "C01", "Customer not found"
                         )
                 );
-        if (withdrawal.compareTo(customerFound.getAccountBalance()) > 0) {
-            throw new WithdrawalGreaterThanBalanceException(
-                    "W01", "Withdrawal greater than balance");
-        } else {
+        sufficientBalanceChecker(customerFound, withdrawal);
             customerFound.setAccountBalance(
                     customerFound.getAccountBalance().subtract(withdrawal));
-        }
+            customerRepository.save(customerFound);
+
         return customerFound.getAccountBalance();
+    }
+
+    private void sufficientBalanceChecker(Customer customer, BigDecimal withdrawal)
+    throws WithdrawalGreaterThanBalanceException{
+        if (withdrawal.compareTo(customer.getAccountBalance()) > 0) {
+            throw new WithdrawalGreaterThanBalanceException(
+                    "W01", "Withdrawal greater than balance");
+        }
     }
 
     @Override
