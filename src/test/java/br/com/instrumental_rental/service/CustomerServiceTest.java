@@ -59,6 +59,7 @@ public class CustomerServiceTest {
     );
     final BigDecimal addition = BigDecimal.valueOf(300);
     final BigDecimal withdrawalAmount = BigDecimal.valueOf(500);
+    final BigDecimal excessiveWithdrawalAmount = BigDecimal.valueOf(501);
 
     @Test
     void testSaveSuccess() {
@@ -186,5 +187,16 @@ public class CustomerServiceTest {
     @Test
     void testWithdrawalWithdrawalGreaterthanBalanceException() throws CustomerNotFoundException,
             WithdrawalGreaterThanBalanceException {
+        when(customerRepository.findById(builder.getCustomerId())).thenReturn(Optional.of(builder));
+        when(customerService.withdraw(builder.getCustomerId(), excessiveWithdrawalAmount))
+                .thenThrow(new WithdrawalGreaterThanBalanceException(
+                        "W01", "Withdrawal greater than balance"));
+        WithdrawalGreaterThanBalanceException thrown = Assertions.assertThrows(
+                WithdrawalGreaterThanBalanceException.class, () -> {
+                    customerService.withdraw(builder.getCustomerId(), excessiveWithdrawalAmount);
+                }
+        );
+        Assertions.assertEquals("W01", thrown.getCode());
+        Assertions.assertEquals("Withdrawal greater than balance", thrown.getMessage());
     }
 }

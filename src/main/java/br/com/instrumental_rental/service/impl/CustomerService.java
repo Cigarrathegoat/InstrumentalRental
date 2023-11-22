@@ -61,7 +61,7 @@ public class CustomerService implements ICustomerService {
                 );
         if (withdrawal.compareTo(customerFound.getAccountBalance()) > 0) {
             throw new WithdrawalGreaterThanBalanceException(
-                    "W01", "Withdrawal cannot be greater than account balance");
+                    "W01", "Withdrawal greater than balance");
         } else {
             customerFound.setAccountBalance(
                     customerFound.getAccountBalance().subtract(withdrawal));
