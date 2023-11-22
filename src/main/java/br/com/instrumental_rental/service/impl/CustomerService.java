@@ -87,19 +87,14 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
-    public void delete(String customerId) throws CustomerNotFoundException {
-        var customerToDelete = finder(customerId);
+    public void delete(Customer customer) throws CustomerNotFoundException {
+        var customerToDelete = finder(customer.getCustomerId());
         customerRepository.delete(customerToDelete);
-
     }
 
     @Override
     public Customer update(Customer customer) throws CustomerNotFoundException {
-        var customerToUpdate = customerRepository.findById(customer.getCustomerId())
-                .orElseThrow(() -> new CustomerNotFoundException(
-                                "C01", "Customer not found"
-                        )
-                );
+        var customerToUpdate = finder(customer.getCustomerId());
         customerToUpdate.setName(customer.getName());
         customerToUpdate.setAddress(customer.getAddress());
         customerToUpdate.setDateOfBirth(customer.getDateOfBirth());
