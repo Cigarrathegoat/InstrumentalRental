@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @Service
@@ -31,10 +32,10 @@ public class RentalService implements IRentalService {
     IAttendantService attendantServiceAttribute;
 
     @Autowired
-    private RentalService (IRentalRepository rentalRepositoryParameter,
-                           ICustomerService customerServiceParameter,
-                           IInstrumentService instrumentServiceParameter,
-                           IAttendantService attendantServiceParameter) {
+    private RentalService(IRentalRepository rentalRepositoryParameter,
+                          ICustomerService customerServiceParameter,
+                          IInstrumentService instrumentServiceParameter,
+                          IAttendantService attendantServiceParameter) {
         this.rentalRepositoryAttribute = rentalRepositoryParameter;
         this.customerServiceAttribute = customerServiceParameter;
         this.instrumentServiceAttribute = instrumentServiceParameter;
@@ -42,18 +43,27 @@ public class RentalService implements IRentalService {
     }
 
     private Rental idFinder(String rentalId) throws RentalNotFoundException {
-        return   rentalRepositoryAttribute.findById(rentalId)
+        return rentalRepositoryAttribute.findById(rentalId)
                 .orElseThrow(() -> new RentalNotFoundException("R01", "Rental not found"));
     }
+
     private void emptyListChecker(List<Rental> rentalListSought) throws RentalNotFoundException {
         if (rentalListSought.isEmpty()) {
             throw new RentalNotFoundException("R01", "no rentals found");
         }
     }
 
-    private void rentalPriceSetter(Instrument instrument, Rental rental) {
-        rental.setPrice(instrument.getPrice().divide(BigDecimal.valueOf(100), RoundingMode.HALF_UP));
+    private BigDecimal rentalPriceSetter(Instrument instrument, Rental rental) {
+        rental.setPrice((instrument.getPrice().divide(BigDecimal.valueOf(100), RoundingMode.HALF_UP))
+                .multiply(BigDecimal.valueOf(
+                                ChronoUnit.DAYS.between(rental.getStartDate(), rental.getEndDate())
+                        )
+                )
+        );
+        return rental.getPrice();
     }
+
+    private BigDecimal comis
 
     private void nonRentalAttributesUpdater(Instrument instrument, Customer customer,
                                             Attendant attendant, Rental rental) {
