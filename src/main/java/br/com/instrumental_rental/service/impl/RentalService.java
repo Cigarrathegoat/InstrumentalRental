@@ -76,8 +76,7 @@ public class RentalService implements IRentalService {
     }
 
     private void nonRentalAttributesUpdater(Instrument instrument, Customer customer,
-                                            Attendant attendant, Rental rental)
-            throws WithdrawalGreaterThanBalanceException{
+                                            Attendant attendant, Rental rental) {
         instrument.setAvailable(!instrument.isAvailable());
         customer.setAccountBalance(customer.getAccountBalance().subtract(
                         rentalPriceSetter(instrument, rental)));

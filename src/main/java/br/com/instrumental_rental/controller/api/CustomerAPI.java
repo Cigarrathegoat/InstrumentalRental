@@ -34,7 +34,7 @@ public class CustomerAPI implements ICustomerAPI {
 
     @PostMapping("/new")
     public CustomerResponseDTO add(CustomerDTO customerDTO)
-            throws CustomerNotFoundException, WithdrawalGreaterThanBalanceException, Exception {
+            throws CustomerNotFoundException, WithdrawalGreaterThanBalanceException {
 
         return CustomerResponseDTO.builder()
                 .data(

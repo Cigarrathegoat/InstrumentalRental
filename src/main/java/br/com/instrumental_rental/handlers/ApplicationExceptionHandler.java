@@ -79,4 +79,19 @@ public class ApplicationExceptionHandler {
                         ).build()
                 );
     }
+
+    @ExceptionHandler(EndDateNotAfterStartDateException.class)
+    public ResponseEntity<ErrorResponseDTO> EndDateNotAfterStartDateExceptionHandler(
+            EndDateNotAfterStartDateException exception) {
+        log.info("the end date is not after the start date");
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(ErrorResponseDTO.builder()
+                        .data(ErrorSpecificationDTO.builder()
+                                .errorCode("400")
+                                .errorMessage("The end date is not after the start date")
+                                .build())
+                        .build()
+                );
+    }
 }

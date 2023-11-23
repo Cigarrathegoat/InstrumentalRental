@@ -1,6 +1,6 @@
 package br.com.instrumental_rental.exceptions;
 
-public class AttendantNotFoundException extends Throwable {
+public class AttendantNotFoundException extends Exception {
 
     private String code;
 

@@ -1,6 +1,6 @@
 package br.com.instrumental_rental.exceptions;
 
-public class CustomerNotFoundException extends Throwable {
+public class CustomerNotFoundException extends Exception {
 
     private String code;
 

@@ -1,6 +1,6 @@
 package br.com.instrumental_rental.exceptions;
 
-public class InstrumentNotFoundException extends Throwable {
+public class InstrumentNotFoundException extends Exception {
 
     private String code;
 

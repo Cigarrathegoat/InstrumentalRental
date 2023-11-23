@@ -1,6 +1,6 @@
 package br.com.instrumental_rental.exceptions;
 
-public class WithdrawalGreaterThanBalanceException extends Throwable{
+public class WithdrawalGreaterThanBalanceException extends Exception {
 
     private String code;
 
