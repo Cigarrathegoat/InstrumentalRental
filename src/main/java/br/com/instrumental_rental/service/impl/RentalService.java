@@ -87,8 +87,8 @@ public class RentalService implements IRentalService {
 
 
     @Override
-    public Rental save(Rental rental) throws WithdrawalGreaterThanBalanceException
-            {
+    public Rental save(Rental rental) throws WithdrawalGreaterThanBalanceException {
+
         nonRentalAttributesUpdater(rental.getInstrument(), rental.getCustomer(),
                 rental.getAttendant(), rental);
         return rentalRepositoryAttribute.save(rental);

@@ -23,8 +23,9 @@ public class InstrumentService implements IInstrumentService {
     }
 
     @Override
-    public List<Instrument> findInstrumentByModel(String model) throws InstrumentNotFoundException {
-        var instrumentSought = instrumentRepository.findInstrumentByModel(model);
+    public List<Instrument> findInstrumentByMakeOrModel(String makeOrModel)
+            throws InstrumentNotFoundException {
+        var instrumentSought = instrumentRepository.findInstrumentByMakeOrModel(makeOrModel);
         if (instrumentSought == null) {
             throw new InstrumentNotFoundException("I01", "Instrument not found");
         } else {

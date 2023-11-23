@@ -16,5 +16,5 @@ public interface IInstrumentService {
     public void delete(Instrument instrument) throws InstrumentNotFoundException;
 
 
-    List<Instrument> findInstrumentByModel(String model) throws InstrumentNotFoundException;
+    List<Instrument> findInstrumentByMakeOrModel(String makeOrModel) throws InstrumentNotFoundException;
 }

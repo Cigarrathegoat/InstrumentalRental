@@ -60,9 +60,9 @@ public class InstrumentServiceTest {
         var builder = InstrumentBuilder.instrumentBuilder(
                 "1", "microphone", "Yamaha", "Supermic 4000",
                 BigDecimal.valueOf(4000), LocalDate.parse("2000-01-01"));
-        when(instrumentRepository.findInstrumentByModel(builder.getModel()))
+        when(instrumentRepository.findInstrumentByMakeOrModel(builder.getModel()))
                 .thenReturn(List.of(builder));
-        List<Instrument> found = instrumentService.findInstrumentByModel(builder.getModel());
+        List<Instrument> found = instrumentService.findInstrumentByMakeOrModel(builder.getModel());
         Assertions.assertIterableEquals(List.of(builder), found);
     }
 
@@ -73,11 +73,11 @@ public class InstrumentServiceTest {
                 "1", "microphone", "Yamaha", "Supermic 4000",
                 BigDecimal.valueOf(4000), LocalDate.parse("2000-01-01")
         );
-        when(instrumentRepository.findInstrumentByModel(builder.getModel()))
+        when(instrumentRepository.findInstrumentByMakeOrModel(builder.getModel()))
                 .thenReturn(List.of());
         InstrumentNotFoundException thrown = Assertions.assertThrows(
                 InstrumentNotFoundException.class, () -> {
-                    instrumentService.findInstrumentByModel(builder.getModel());
+                    instrumentService.findInstrumentByMakeOrModel(builder.getModel());
                 }
         );
         Assertions.assertEquals("I01", thrown.getCode());
