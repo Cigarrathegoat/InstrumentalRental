@@ -185,7 +185,7 @@ public class CustomerServiceTest {
     }
 
     @Test
-    void testWithdrawalWithdrawalGreaterthanBalanceException() throws CustomerNotFoundException,
+    void testWithdrawalWithdrawalGreaterThanBalanceException() throws CustomerNotFoundException,
             WithdrawalGreaterThanBalanceException {
         when(customerRepository.findById(builder.getCustomerId())).thenReturn(Optional.of(builder));
         WithdrawalGreaterThanBalanceException thrown = Assertions.assertThrows(

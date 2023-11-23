@@ -21,9 +21,14 @@ public class RentalService implements IRentalService {
         this.rentalRepositoryAttribute = rentalRepositoryParameter;
     }
 
-    private Rental finder(String rentalId) throws RentalNotFoundException {
+    private Rental idFinder(String rentalId) throws RentalNotFoundException {
         return   rentalRepositoryAttribute.findById(rentalId)
                 .orElseThrow(() -> new RentalNotFoundException("R01", "Rental not found"));
+    }
+    private void emptyListChecker(List<Rental> rentalListSought) throws RentalNotFoundException {
+        if (rentalListSought.isEmpty()) {
+            throw new RentalNotFoundException("R01", "no rentals found");
+        }
     }
 
     @Override
@@ -33,8 +38,15 @@ public class RentalService implements IRentalService {
 
     @Override
     public void delete(Rental rental) throws RentalNotFoundException {
-        var rentalToDelete = finder(rental.getRentalId());
+        var rentalToDelete = idFinder(rental.getRentalId());
         rentalRepositoryAttribute.delete(rentalToDelete);
+    }
+
+    @Override
+    public List<Rental> findRentalListByWord(String word) throws RentalNotFoundException {
+        var rentalToFind = rentalRepositoryAttribute.findRentalByWord(word);
+        emptyListChecker(rentalToFind);
+        return rentalToFind;
     }
 
     @Override
@@ -44,7 +56,7 @@ public class RentalService implements IRentalService {
 
     @Override
     public Rental update(Rental rental) throws RentalNotFoundException {
-        var rentalToUpdate = finder(rental.getRentalId());
+        var rentalToUpdate = idFinder(rental.getRentalId());
         rentalToUpdate.setCustomer(rental.getCustomer());
         rentalToUpdate.setAttendant(rental.getAttendant());
         rentalToUpdate.setInstrument(rental.getInstrument());

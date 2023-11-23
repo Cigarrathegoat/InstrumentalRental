@@ -5,14 +5,13 @@ import br.com.instrumental_rental.repository.entities.Customer;
 import br.com.instrumental_rental.repository.entities.Instrument;
 import br.com.instrumental_rental.repository.entities.Rental;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
 public interface IRentalRepository extends JpaRepository<Rental, String> {
 
-    List<Rental> findRentalByCustomer (Customer customer);
-
-    List<Rental> findRentalByInstrument(Instrument instrument);
-
-    List<Rental> findRentalByAttendant(Attendant attendant);
+   @Query(value = "SELECT r FROM Rental r" +
+   "WHERE r.customer = :word OR r.attendant = :word OR r.instrument = :word")
+    List<Rental> findRentalByWord(String word);
 }

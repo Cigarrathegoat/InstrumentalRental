@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 
 @Data
 @Builder
@@ -13,7 +14,8 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 public class ContactsDTO {
 
-    @NotBlank(message = "field must not be empty")
+    @NotBlank(message = "field must not be empty")"
+    @Pattern(regexp = "^[a-zA-Z]+$" "field must be filled with letters only")
     private String contactType;
 
     @NotBlank(message = "field must not be empty")
