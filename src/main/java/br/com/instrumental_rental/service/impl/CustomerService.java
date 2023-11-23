@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.util.List;
 
+import static br.com.instrumental_rental.service.util.ServiceUtil.sufficientBalanceChecker;
+
 @Service
 @Slf4j
 public class CustomerService implements ICustomerService {
@@ -65,15 +67,6 @@ public class CustomerService implements ICustomerService {
             customerRepositoryAttribute.save(withdrawer);
 
         return withdrawer.getAccountBalance();
-    }
-
-
-    private void sufficientBalanceChecker(Customer customer, BigDecimal withdrawal)
-    throws WithdrawalGreaterThanBalanceException{
-        if (withdrawal.compareTo(customer.getAccountBalance()) > 0) {
-            throw new WithdrawalGreaterThanBalanceException(
-                    "W01", "Withdrawal greater than balance");
-        }
     }
 
     @Override

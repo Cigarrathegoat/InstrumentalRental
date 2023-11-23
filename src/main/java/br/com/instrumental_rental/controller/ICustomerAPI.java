@@ -7,6 +7,7 @@ import br.com.instrumental_rental.controller.dto.responses.responses.CustomerLis
 import br.com.instrumental_rental.controller.dto.responses.responses.CustomerResponseDTO;
 import br.com.instrumental_rental.controller.dto.responses.responses.DeleteResponseDTO;
 import br.com.instrumental_rental.exceptions.CustomerNotFoundException;
+import br.com.instrumental_rental.exceptions.WithdrawalGreaterThanBalanceException;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -19,7 +20,7 @@ public interface ICustomerAPI {
     @ApiResponses(value = {@ApiResponse(code = 200, message = "success"),
     @ApiResponse(code =404, response = ErrorSpecificationDTO.class, message = "not found")})
     CustomerResponseDTO add(CustomerDTO customerDTO)
-        throws CustomerNotFoundException;
+        throws CustomerNotFoundException, WithdrawalGreaterThanBalanceException;
 
     @ApiOperation(value = "find Customer object",
     response = CustomerDTO.class)

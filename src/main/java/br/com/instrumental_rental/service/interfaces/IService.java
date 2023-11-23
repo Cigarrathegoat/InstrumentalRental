@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface IService<T, E extends Exception> {
 
-    T save (T t);
+    T save (T t) throws E;
 
     void delete(T t) throws E;
 

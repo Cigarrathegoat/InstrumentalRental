@@ -8,6 +8,7 @@ import br.com.instrumental_rental.controller.dto.responses.responses.CustomerLis
 import br.com.instrumental_rental.controller.dto.responses.responses.CustomerResponseDTO;
 import br.com.instrumental_rental.controller.dto.responses.responses.DeleteResponseDTO;
 import br.com.instrumental_rental.exceptions.CustomerNotFoundException;
+import br.com.instrumental_rental.exceptions.WithdrawalGreaterThanBalanceException;
 import br.com.instrumental_rental.repository.entities.Customer;
 import br.com.instrumental_rental.service.interfaces.ICustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,8 @@ public class CustomerAPI implements ICustomerAPI {
     }
 
     @PostMapping("/new")
-    public CustomerResponseDTO add(CustomerDTO customerDTO) throws CustomerNotFoundException {
+    public CustomerResponseDTO add(CustomerDTO customerDTO)
+            throws CustomerNotFoundException, WithdrawalGreaterThanBalanceException {
 
         return CustomerResponseDTO.builder()
                 .data(

@@ -55,12 +55,12 @@ public class RentalServiceTest {
                     DateTimeFormatter.ofPattern("yyyy-MM-dd")));
     Attendant attendantBuilder = AttendantBuilder.attendantBuilder(
             "1", "Mark", BigDecimal.valueOf(0));
-    private final LocalDate rentalStartDate = LocalDate.parse("2020-12-01",
+    private LocalDate rentalStartDate = LocalDate.parse("2020-12-01",
             DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-    private final LocalDate rentalEndDate = LocalDate.parse("2020-12-03",
+    private LocalDate rentalEndDate = LocalDate.parse("2020-12-03",
             DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-    private final BigDecimal rentalPrice = BigDecimal.valueOf(120);
-    private final BigDecimal attendantCommission = BigDecimal.valueOf(12);
+    private BigDecimal rentalPrice = BigDecimal.valueOf(120);
+    private BigDecimal attendantCommission = BigDecimal.valueOf(12);
     Rental rentalBuilder = RentalBuilder.rentalBuilderBeforeSave(
             customerBuilder, attendantBuilder, instrumentBuilder, rentalStartDate, rentalEndDate);
     Rental rentalBuilderAfterSave = RentalBuilder.rentalBuilderAfterSave(
