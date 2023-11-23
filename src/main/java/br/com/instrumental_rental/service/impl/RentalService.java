@@ -63,14 +63,17 @@ public class RentalService implements IRentalService {
         return rental.getPrice();
     }
 
-    private BigDecimal comis
+    private BigDecimal attendantCommissionSetter(Rental rental) {
+        return rental.getPrice().divide(BigDecimal.valueOf(10), RoundingMode.HALF_UP);
+    }
 
     private void nonRentalAttributesUpdater(Instrument instrument, Customer customer,
                                             Attendant attendant, Rental rental) {
         instrument.setAvailable(!instrument.isAvailable());
-        customer.setAccountBalance(customer.getAccountBalance().subtract(rental.getPrice()));
+        customer.setAccountBalance(customer.getAccountBalance().subtract(
+                        rentalPriceSetter(instrument, rental)));
         attendant.setTotalCommission(attendant.getTotalCommission().add(
-                rental.getAttendantCommission()));
+                attendantCommissionSetter(rental)));
         instrumentServiceAttribute.save(instrument);
         customerServiceAttribute.save(customer);
         attendantServiceAttribute.save(attendant);
