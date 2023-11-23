@@ -14,6 +14,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
 @Service
@@ -50,7 +52,7 @@ public class RentalService implements IRentalService {
     }
 
     private void rentalPriceSetter(Instrument instrument, Rental rental) {
-
+        rental.setPrice(instrument.getPrice().divide(BigDecimal.valueOf(100), RoundingMode.HALF_UP));
     }
 
     private void nonRentalAttributesUpdater(Instrument instrument, Customer customer,
