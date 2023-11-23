@@ -20,9 +20,11 @@ public class RentalBuilder {
 
     public static Rental rentalBuilderAfterSave(String id, Customer customer, Attendant attendant,
                                            Instrument instrument, LocalDate startDate,
-                                           LocalDate endDate, BigDecimal price) {
-        return Rental.builder().customer(customer).attendant(attendant)
+                                           LocalDate endDate, BigDecimal price,
+                                                BigDecimal attendantCommission) {
+        return Rental.builder().rentalId(id).customer(customer)
                 .instrument(instrument).startDate(startDate).endDate(endDate).price(price)
+                .attendant(attendant).attendantCommission(attendantCommission)
                 .build();
     }
 

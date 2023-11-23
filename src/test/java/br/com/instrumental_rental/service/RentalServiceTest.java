@@ -46,26 +46,26 @@ public class RentalServiceTest {
     }
 
     Customer customerBuilder = CustomerBuilder.customerBuilder(
-            "01", "John", LocalDate.parse("1992-08-23"),
+            "01", "John", LocalDate.parse("1985-08-23"),
             "123456789", "1234567",
-            BigDecimal.valueOf(500)
-    );
+            BigDecimal.valueOf(500));
     Instrument instrumentBuilder = InstrumentBuilder.instrumentBuilder(
             "1", "microphone", "Yamaha", "Supermic 4000",
-            BigDecimal.valueOf(4000), LocalDate.parse("2000-12-31",
-                    DateTimeFormatter.ofPattern("yyyy-MM-dd"))
-    );
+            BigDecimal.valueOf(4000), LocalDate.parse("2005-12-31",
+                    DateTimeFormatter.ofPattern("yyyy-MM-dd")));
     Attendant attendantBuilder = AttendantBuilder.attendantBuilder(
-            "1", "Mark", BigDecimal.valueOf(0)
-    );
-    private final LocalDate rentalStartDate = LocalDate.parse("2000-12-01",
+            "1", "Mark", BigDecimal.valueOf(0));
+    private final LocalDate rentalStartDate = LocalDate.parse("2020-12-01",
             DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-    private final LocalDate rentalEndDate = LocalDate.parse("2000-12-03",
+    private final LocalDate rentalEndDate = LocalDate.parse("2020-12-03",
             DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-
+    private final BigDecimal rentalPrice = BigDecimal.valueOf(120);
+    private final BigDecimal attendantCommission = BigDecimal.valueOf(12);
     Rental rentalBuilder = RentalBuilder.rentalBuilderBeforeSave(
             customerBuilder, attendantBuilder, instrumentBuilder, rentalStartDate, rentalEndDate);
-
+    Rental rentalBuilderAfterSave = RentalBuilder.rentalBuilderAfterSave(
+            "01", customerBuilder, attendantBuilder, instrumentBuilder, rentalStartDate,
+            rentalEndDate, rentalPrice, attendantCommission);
 
     @Test
     void testSaveSuccess() {
