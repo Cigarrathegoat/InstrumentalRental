@@ -10,15 +10,15 @@ import java.time.LocalDate;
 
 public class RentalBuilder {
 
-    public static Rental rentalBuilder(String id, Customer customer, Attendant attendant,
-                                       Instrument instrument, LocalDate startDate,
-                                       LocalDate endDate, BigDecimal price) {
-        return Rental.builder().rentalId(id).customer(customer).attendant(attendant)
-                .instrument(instrument).startDate(startDate).endDate(endDate).price(price)
+    public static Rental rentalBuilderBeforeSave(Customer customer, Attendant attendant,
+                                                 Instrument instrument, LocalDate startDate,
+                                                 LocalDate endDate) {
+        return Rental.builder().customer(customer).instrument(instrument)
+                .startDate(startDate).endDate(endDate).attendant(attendant)
                 .build();
     }
 
-    public static Rental rentalBuilderNoId(Customer customer, Attendant attendant,
+    public static Rental rentalBuilderAfterSave(String id, Customer customer, Attendant attendant,
                                            Instrument instrument, LocalDate startDate,
                                            LocalDate endDate, BigDecimal price) {
         return Rental.builder().customer(customer).attendant(attendant)

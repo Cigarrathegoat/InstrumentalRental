@@ -7,6 +7,7 @@ import br.com.instrumental_rental.models.RentalBuilder;
 import br.com.instrumental_rental.repository.entities.Attendant;
 import br.com.instrumental_rental.repository.entities.Customer;
 import br.com.instrumental_rental.repository.entities.Instrument;
+import br.com.instrumental_rental.repository.entities.Rental;
 import br.com.instrumental_rental.repository.interfaces.IRentalRepository;
 import br.com.instrumental_rental.service.interfaces.IAttendantService;
 import br.com.instrumental_rental.service.interfaces.ICustomerService;
@@ -41,7 +42,8 @@ public class RentalServiceTest {
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.openMocks(this);}
+        MockitoAnnotations.openMocks(this);
+    }
 
     Customer customerBuilder = CustomerBuilder.customerBuilder(
             "01", "John", LocalDate.parse("1992-08-23"),
@@ -54,8 +56,15 @@ public class RentalServiceTest {
                     DateTimeFormatter.ofPattern("yyyy-MM-dd"))
     );
     Attendant attendantBuilder = AttendantBuilder.attendantBuilder(
+            "1", "Mark", BigDecimal.valueOf(0)
+    );
+    private final LocalDate rentalStartDate = LocalDate.parse("2000-12-01",
+            DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+    private final LocalDate rentalEndDate = LocalDate.parse("2000-12-03",
+            DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 
-    )
+    Rental rentalBuilder = RentalBuilder.rentalBuilderBeforeSave(
+            customerBuilder, attendantBuilder, instrumentBuilder, rentalStartDate, rentalEndDate);
 
 
     @Test
