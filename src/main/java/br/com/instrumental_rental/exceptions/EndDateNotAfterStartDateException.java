@@ -1,4 +1,4 @@
 package br.com.instrumental_rental.exceptions;
 
-public class EndDateNotAfterStartDateException extends Exception {
+public class EndDateNotAfterStartDateException extends Throwable {
 }

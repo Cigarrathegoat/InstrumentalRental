@@ -1,8 +1,6 @@
 package br.com.instrumental_rental.service.impl;
 
-import br.com.instrumental_rental.exceptions.EndDateNotAfterStartDateException;
-import br.com.instrumental_rental.exceptions.RentalNotFoundException;
-import br.com.instrumental_rental.exceptions.WithdrawalGreaterThanBalanceException;
+import br.com.instrumental_rental.exceptions.*;
 import br.com.instrumental_rental.repository.entities.Attendant;
 import br.com.instrumental_rental.repository.entities.Customer;
 import br.com.instrumental_rental.repository.entities.Instrument;
@@ -75,7 +73,9 @@ public class RentalService implements IRentalService {
     }
 
     private void nonRentalAttributesUpdater(Instrument instrument, Customer customer,
-                                            Attendant attendant, Rental rental) throws Exception {
+                                            Attendant attendant, Rental rental)
+            throws WithdrawalGreaterThanBalanceException, InstrumentNotFoundException,
+            CustomerNotFoundException, AttendantNotFoundException {
         instrument.setAvailable(!instrument.isAvailable());
         customer.setAccountBalance(customer.getAccountBalance().subtract(
                         rentalPriceSetter(instrument, rental)));
@@ -86,8 +86,11 @@ public class RentalService implements IRentalService {
         attendantServiceAttribute.save(attendant);
     }
 
+
     @Override
-    public Rental save(Rental rental) throws WithdrawalGreaterThanBalanceException, {
+    public Rental save(Rental rental) throws WithdrawalGreaterThanBalanceException,
+            InstrumentNotFoundException, CustomerNotFoundException, AttendantNotFoundException
+            {
         nonRentalAttributesUpdater(rental.getInstrument(), rental.getCustomer(),
                 rental.getAttendant(), rental);
         return rentalRepositoryAttribute.save(rental);

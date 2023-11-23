@@ -5,7 +5,7 @@ import br.com.instrumental_rental.repository.entities.Attendant;
 
 import java.util.List;
 
-public interface IAttendantService extends IService<Attendant, Exception> {
+public interface IAttendantService extends IService<Attendant, Throwable> {
 
     List<Attendant> findAttendantByName(String name) throws AttendantNotFoundException;
 }

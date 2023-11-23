@@ -5,7 +5,7 @@ import br.com.instrumental_rental.repository.entities.Instrument;
 
 import java.util.List;
 
-public interface IInstrumentService extends IService<Instrument, Exception> {
+public interface IInstrumentService extends IService<Instrument, Throwable> {
 
     List<Instrument> findInstrumentByModel(String model) throws InstrumentNotFoundException;
 }

@@ -5,7 +5,7 @@ import br.com.instrumental_rental.repository.entities.Rental;
 
 import java.util.List;
 
-public interface IRentalService extends IService<Rental, Exception> {
+public interface IRentalService extends IService<Rental, Throwable> {
 
     public List<Rental> findRentalListByWord(String word) throws RentalNotFoundException;
 

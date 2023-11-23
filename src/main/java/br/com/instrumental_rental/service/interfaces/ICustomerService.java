@@ -7,7 +7,7 @@ import br.com.instrumental_rental.repository.entities.Customer;
 import java.math.BigDecimal;
 import java.util.List;
 
-public interface ICustomerService extends IService<Customer, Exception> {
+public interface ICustomerService extends IService<Customer, Throwable> {
 
     Customer findCustomerByNumberProvided(String number) throws CustomerNotFoundException;
 
