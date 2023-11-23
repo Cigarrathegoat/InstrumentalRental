@@ -48,7 +48,6 @@ public class RentalService implements IRentalService {
 
     @Override
     public Rental save(Rental rental) {
-
         return rentalRepositoryAttribute.save(rental);
     }
 

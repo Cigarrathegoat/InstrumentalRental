@@ -3,6 +3,7 @@ package br.com.instrumental_rental.repository.entities;
 import lombok.*;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
@@ -33,4 +34,7 @@ public class Attendant {
     @JoinColumn(name = "CONTACTS_DS")
     @OneToMany(mappedBy = "customer")
     private List<Contact> contacts;
+
+    @Column(name = "DS_TOTAL_COMMISSION")
+    private BigDecimal totalCommission;
 }
