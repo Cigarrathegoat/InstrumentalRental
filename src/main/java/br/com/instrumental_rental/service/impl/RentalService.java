@@ -3,6 +3,9 @@ package br.com.instrumental_rental.service.impl;
 import br.com.instrumental_rental.exceptions.RentalNotFoundException;
 import br.com.instrumental_rental.repository.entities.Rental;
 import br.com.instrumental_rental.repository.interfaces.IRentalRepository;
+import br.com.instrumental_rental.service.interfaces.IAttendantService;
+import br.com.instrumental_rental.service.interfaces.ICustomerService;
+import br.com.instrumental_rental.service.interfaces.IInstrumentService;
 import br.com.instrumental_rental.service.interfaces.IRentalService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +19,21 @@ public class RentalService implements IRentalService {
 
     IRentalRepository rentalRepositoryAttribute;
 
+    ICustomerService customerServiceAttribute;
+
+    IInstrumentService instrumentServiceAttribute;
+
+    IAttendantService attendantServiceAttribute;
+
     @Autowired
-    private RentalService (IRentalRepository rentalRepositoryParameter) {
+    private RentalService (IRentalRepository rentalRepositoryParameter,
+                           ICustomerService customerServiceParameter,
+                           IInstrumentService instrumentServiceParameter,
+                           IAttendantService attendantServiceParameter) {
         this.rentalRepositoryAttribute = rentalRepositoryParameter;
+        this.customerServiceAttribute = customerServiceParameter;
+        this.instrumentServiceAttribute = instrumentServiceParameter;
+        this.attendantServiceAttribute = attendantServiceParameter;
     }
 
     private Rental idFinder(String rentalId) throws RentalNotFoundException {
@@ -33,6 +48,7 @@ public class RentalService implements IRentalService {
 
     @Override
     public Rental save(Rental rental) {
+
         return rentalRepositoryAttribute.save(rental);
     }
 
