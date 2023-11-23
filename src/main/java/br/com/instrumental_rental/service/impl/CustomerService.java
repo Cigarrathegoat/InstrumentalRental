@@ -5,7 +5,6 @@ import br.com.instrumental_rental.exceptions.WithdrawalGreaterThanBalanceExcepti
 import br.com.instrumental_rental.repository.entities.Customer;
 import br.com.instrumental_rental.repository.interfaces.ICustomerRepository;
 import br.com.instrumental_rental.service.interfaces.ICustomerService;
-import br.com.instrumental_rental.service.interfaces.IInstrumentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

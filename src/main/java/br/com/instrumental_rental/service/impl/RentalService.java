@@ -19,6 +19,8 @@ import java.math.RoundingMode;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
+import static br.com.instrumental_rental.service.util.ServiceUtil.sufficientBalanceChecker;
+
 @Service
 @Slf4j
 public class RentalService implements IRentalService {
@@ -47,9 +49,10 @@ public class RentalService implements IRentalService {
                 .orElseThrow(() -> new RentalNotFoundException("R01", "Rental not found"));
     }
 
-    private Rental rentalDatesChecker(Rental rental) throws EndDateNotAfterStartDateException {
-
-        return rental;
+    private void rentalDatesChecker(Rental rental) throws EndDateNotAfterStartDateException {
+        if (!rental.getStartDate().isBefore(rental.getEndDate())) {
+           throw new EndDateNotAfterStartDateException("E01", "the end date is not after the start date");
+        }
     }
 
     private void emptyListChecker(List<Rental> rentalListSought) throws RentalNotFoundException {
@@ -87,8 +90,10 @@ public class RentalService implements IRentalService {
 
 
     @Override
-    public Rental save(Rental rental) throws WithdrawalGreaterThanBalanceException {
-
+    public Rental save(Rental rental) throws WithdrawalGreaterThanBalanceException,
+            EndDateNotAfterStartDateException {
+        rentalDatesChecker(rental);
+        sufficientBalanceChecker(rental.getCustomer(), rental.getPrice());
         nonRentalAttributesUpdater(rental.getInstrument(), rental.getCustomer(),
                 rental.getAttendant(), rental);
         return rentalRepositoryAttribute.save(rental);
