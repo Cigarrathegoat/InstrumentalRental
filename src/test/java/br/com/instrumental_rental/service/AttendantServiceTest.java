@@ -12,6 +12,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -30,10 +31,12 @@ public class AttendantServiceTest {
     void setUp() {
         MockitoAnnotations.openMocks(this);}
 
+    Attendant builder = AttendantBuilder.attendantBuilder("1", "Mark", BigDecimal.valueOf(0));
+
+
     @Test
     void testSaveSuccess() {
         var builderNoId = AttendantBuilder.attendantBuilderNoId("Mark");
-        var builder = AttendantBuilder.attendantBuilder("1", "Mark");
         when(attendantRepository.save(builderNoId)).thenReturn(builder);
         Attendant saved = attendantService.save(builderNoId);
         Assertions.assertNotNull(saved);
@@ -41,7 +44,6 @@ public class AttendantServiceTest {
 
     @Test
     void findAttendantByNameSuccess() throws AttendantNotFoundException {
-        var builder = AttendantBuilder.attendantBuilder("1", "Mark");
         when(attendantRepository.findAttendantByName(builder.getName()))
                 .thenReturn(List.of(builder));
         List<Attendant> found = attendantService.findAttendantByName(builder.getName());
@@ -50,7 +52,6 @@ public class AttendantServiceTest {
 
     @Test
     void findAttendantByNameAttendantNotFoundException() throws AttendantNotFoundException {
-        var builder = AttendantBuilder.attendantBuilder("1", "Mark");
         when(attendantRepository.findAttendantByName(builder.getName()))
                 .thenReturn(Collections.emptyList());
         AttendantNotFoundException thrown = Assertions.assertThrows(
@@ -64,8 +65,8 @@ public class AttendantServiceTest {
 
     @Test
     void updateAttendantSuccess() throws AttendantNotFoundException {
-        var builder = AttendantBuilder.attendantBuilder("1", "Mark");
-        var builderUpdated = AttendantBuilder.attendantBuilder("1", "Marky");
+        var builderUpdated = AttendantBuilder.attendantBuilder("1", "Marky",
+        BigDecimal.valueOf(0));
         when(attendantRepository.findById(builder.getAttendantId()))
                 .thenReturn(Optional.of(builder));
         when(attendantRepository.save(builderUpdated)).thenReturn(builderUpdated);
@@ -75,7 +76,6 @@ public class AttendantServiceTest {
 
     @Test
     void updateAttendantNotFoundException() throws AttendantNotFoundException {
-        var builder = AttendantBuilder.attendantBuilder("1", "Mark");
         when(attendantRepository.findById(builder.getAttendantId()))
                 .thenReturn(Optional.empty());
         AttendantNotFoundException thrown = Assertions.assertThrows(
@@ -89,7 +89,6 @@ public class AttendantServiceTest {
 
     @Test
     void testDeleteSuccess() throws AttendantNotFoundException {
-        var builder = AttendantBuilder.attendantBuilder("1", "Mark");
       when(attendantRepository.findById(builder.getAttendantId()))
               .thenReturn(Optional.of(builder));
       attendantService.delete(builder);
@@ -99,7 +98,6 @@ public class AttendantServiceTest {
 
     @Test
     void testDeleteAttendantNotFoundException() throws AttendantNotFoundException {
-        var builder = AttendantBuilder.attendantBuilder("1", "Mark");
         when(attendantRepository.findById(builder.getAttendantId()))
                 .thenReturn(Optional.empty());
         AttendantNotFoundException thrown = Assertions.assertThrows(
