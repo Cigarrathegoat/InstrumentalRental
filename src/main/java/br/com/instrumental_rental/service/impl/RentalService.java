@@ -1,6 +1,9 @@
 package br.com.instrumental_rental.service.impl;
 
 import br.com.instrumental_rental.exceptions.RentalNotFoundException;
+import br.com.instrumental_rental.repository.entities.Attendant;
+import br.com.instrumental_rental.repository.entities.Customer;
+import br.com.instrumental_rental.repository.entities.Instrument;
 import br.com.instrumental_rental.repository.entities.Rental;
 import br.com.instrumental_rental.repository.interfaces.IRentalRepository;
 import br.com.instrumental_rental.service.interfaces.IAttendantService;
@@ -46,8 +49,25 @@ public class RentalService implements IRentalService {
         }
     }
 
+    private void rentalPriceSetter(Instrument instrument, Rental rental) {
+
+    }
+
+    private void nonRentalAttributesUpdater(Instrument instrument, Customer customer,
+                                            Attendant attendant, Rental rental) {
+        instrument.setAvailable(!instrument.isAvailable());
+        customer.setAccountBalance(customer.getAccountBalance().subtract(rental.getPrice()));
+        attendant.setTotalCommission(attendant.getTotalCommission().add(
+                rental.getAttendantCommission()));
+        instrumentServiceAttribute.save(instrument);
+        customerServiceAttribute.save(customer);
+        attendantServiceAttribute.save(attendant);
+    }
+
     @Override
     public Rental save(Rental rental) {
+        nonRentalAttributesUpdater(rental.getInstrument(), rental.getCustomer(),
+                rental.getAttendant(), rental);
         return rentalRepositoryAttribute.save(rental);
     }
 
