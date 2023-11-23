@@ -7,7 +7,14 @@ import br.com.instrumental_rental.repository.entities.Customer;
 import java.math.BigDecimal;
 import java.util.List;
 
-public interface ICustomerService extends IService<Customer, Throwable> {
+public interface ICustomerService {
+
+    public Customer save(Customer customer);
+
+    public List<Customer> findAll();
+    public void delete(Customer customer) throws CustomerNotFoundException;
+
+    public Customer update(Customer customer) throws CustomerNotFoundException;
 
     Customer findCustomerByNumberProvided(String number) throws CustomerNotFoundException;
 

@@ -5,7 +5,16 @@ import br.com.instrumental_rental.repository.entities.Instrument;
 
 import java.util.List;
 
-public interface IInstrumentService extends IService<Instrument, Throwable> {
+public interface IInstrumentService {
+
+    public Instrument save(Instrument instrument);
+
+    public List<Instrument> findAll();
+
+    public Instrument update(Instrument instrument) throws InstrumentNotFoundException;
+
+    public void delete(Instrument instrument) throws InstrumentNotFoundException;
+
 
     List<Instrument> findInstrumentByModel(String model) throws InstrumentNotFoundException;
 }

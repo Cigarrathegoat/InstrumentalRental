@@ -74,8 +74,7 @@ public class RentalService implements IRentalService {
 
     private void nonRentalAttributesUpdater(Instrument instrument, Customer customer,
                                             Attendant attendant, Rental rental)
-            throws WithdrawalGreaterThanBalanceException, InstrumentNotFoundException,
-            CustomerNotFoundException, AttendantNotFoundException {
+            throws WithdrawalGreaterThanBalanceException{
         instrument.setAvailable(!instrument.isAvailable());
         customer.setAccountBalance(customer.getAccountBalance().subtract(
                         rentalPriceSetter(instrument, rental)));
@@ -88,8 +87,7 @@ public class RentalService implements IRentalService {
 
 
     @Override
-    public Rental save(Rental rental) throws WithdrawalGreaterThanBalanceException,
-            InstrumentNotFoundException, CustomerNotFoundException, AttendantNotFoundException
+    public Rental save(Rental rental) throws WithdrawalGreaterThanBalanceException
             {
         nonRentalAttributesUpdater(rental.getInstrument(), rental.getCustomer(),
                 rental.getAttendant(), rental);
