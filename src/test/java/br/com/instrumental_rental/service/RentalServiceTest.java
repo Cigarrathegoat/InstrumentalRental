@@ -26,6 +26,7 @@ import org.mockito.MockitoAnnotations;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.anyString;
@@ -87,10 +88,10 @@ public class RentalServiceTest {
         Assertions.assertEquals(rentalBuilderAfterSave, result);
     }
 
+    /*TODO ask him about whether it's okay to instantiate another service method on my test method
+    *  instead of a repository method*/
     @Test
-    void testSaveCustomerNotFoundException() throws CustomerNotFoundException, InstrumentNotFoundException,
-            AttendantNotFoundException, WithdrawalGreaterThanBalanceException,
-            EndDateNotAfterStartDateException {
+    void testSaveCustomerNotFoundException() throws CustomerNotFoundException {
         when(customerService.findCustomerByNumberProvided(
                 rentalBuilderBeforeSave.getCustomer().getSocialSecurityNumber())).thenThrow(
                 new CustomerNotFoundException("C01", "Customer not found"));
@@ -103,9 +104,7 @@ public class RentalServiceTest {
     }
 
     @Test
-    void testSaveInstrumentNotFoundException() throws CustomerNotFoundException, InstrumentNotFoundException,
-            AttendantNotFoundException, WithdrawalGreaterThanBalanceException,
-            EndDateNotAfterStartDateException {
+    void testSaveInstrumentNotFoundException() throws InstrumentNotFoundException {
         when(instrumentService.findInstrumentByMakeOrModel(
                 rentalBuilderBeforeSave.getInstrument().getModel())).thenThrow(
                 new InstrumentNotFoundException("I01", "Instrument not found"));
@@ -118,9 +117,7 @@ public class RentalServiceTest {
     }
 
     @Test
-    void testSaveAttendantNotFoundException() throws CustomerNotFoundException, InstrumentNotFoundException,
-            AttendantNotFoundException, WithdrawalGreaterThanBalanceException,
-            EndDateNotAfterStartDateException {
+    void testSaveAttendantNotFoundException() throws AttendantNotFoundException {
         when(attendantService.findAttendantByNumberProvided(
                 rentalBuilderBeforeSave.getAttendant().getSocialSecurityNumber())).thenThrow(
                 new AttendantNotFoundException("A01", "Attendant not found"));
@@ -132,10 +129,9 @@ public class RentalServiceTest {
         Assertions.assertEquals("Attendant not found", thrown.getMessage());
     }
 
+    /*TODO ask him why this exception didn't light up*/
     @Test
-    void testSaveWithdrawalGreaterThanBalanceException() throws CustomerNotFoundException,
-            InstrumentNotFoundException,  AttendantNotFoundException,
-            WithdrawalGreaterThanBalanceException, EndDateNotAfterStartDateException {
+    void testSaveWithdrawalGreaterThanBalanceException() throws WithdrawalGreaterThanBalanceException {
         instrumentBuilder.setPrice(BigDecimal.valueOf(100000));
         WithdrawalGreaterThanBalanceException thrown = Assertions.assertThrows(
                 WithdrawalGreaterThanBalanceException.class, () -> {
@@ -146,10 +142,9 @@ public class RentalServiceTest {
         Assertions.assertEquals("Withdrawal greater than balance", thrown.getMessage());
     }
 
+    /*TODO ask him why this exception didn't work either*/
     @Test
-    void testSaveEndDateNotAfterStartDateException() throws CustomerNotFoundException,
-            InstrumentNotFoundException,  AttendantNotFoundException,
-            WithdrawalGreaterThanBalanceException, EndDateNotAfterStartDateException {
+    void testSaveEndDateNotAfterStartDateException() throws EndDateNotAfterStartDateException {
         rentalBuilderBeforeSave.setEndDate(
                 LocalDate.parse("2020-10-01", DateTimeFormatter.ofPattern("yyyy-MM-dd")));
         EndDateNotAfterStartDateException thrown = Assertions.assertThrows(
@@ -159,6 +154,7 @@ public class RentalServiceTest {
                 thrown.getMessage());
     }
 
+    /*TODO ask him why the assertions commented didn't work*/
     @Test
     void testDeleteSuccess() throws RentalNotFoundException {
         when(rentalRepository.findById(rentalBuilderAfterSave.getRentalId()))
@@ -167,5 +163,42 @@ public class RentalServiceTest {
         /*Assertions.assertNull(rentalBuilderAfterSave);*/
         verify(rentalRepository).findById(rentalBuilderAfterSave.getRentalId());
         verify(rentalRepository).delete(rentalBuilderAfterSave);
+    }
+
+    @Test
+    void testDeleteRentalNotFoundException() throws RentalNotFoundException {
+        when(rentalRepository.findById(rentalBuilderAfterSave.getRentalId()))
+                .thenReturn(Optional.empty());
+        RentalNotFoundException thrown = Assertions.assertThrows(RentalNotFoundException.class,
+                () -> {rentalService.delete(rentalBuilderAfterSave);});
+        Assertions.assertEquals("R01", thrown.getCode());
+        Assertions.assertEquals("Rental not found", thrown.getMessage());
+    }
+
+    @Test
+    void testFindAll() {
+        when(rentalRepository.findAll()).thenReturn(List.of(rentalBuilderAfterSave));
+        List<Rental> result = rentalService.findAll();
+        Assertions.assertEquals(List.of(rentalBuilderAfterSave), result);
+    }
+
+    /*TODO ask him how this worked if the find method is looking for a word
+       and the column at the table is an ID*/
+    @Test
+    void testFindByWordSuccess() throws RentalNotFoundException {
+        when(rentalRepository.findRentalByWord(rentalBuilderAfterSave.getCustomer().getName()))
+                .thenReturn(List.of(rentalBuilderAfterSave));
+        List<Rental> result = rentalService.findRentalListByWord(
+                rentalBuilderAfterSave.getCustomer().getName());
+        Assertions.assertEquals(List.of(rentalBuilderAfterSave), result);
+    }
+
+    @Test
+    void testFindByWordRentalNotFoundException() throws RentalNotFoundException {
+        when(rentalRepository.findRentalByWord(anyString())).thenReturn(List.of());
+        RentalNotFoundException thrown = Assertions.assertThrows(RentalNotFoundException.class,
+                () -> {rentalService.findRentalListByWord(anyString());});
+        Assertions.assertEquals("R01", thrown.getCode());
+        Assertions.assertEquals("no rentals found", thrown.getMessage());
     }
 }
