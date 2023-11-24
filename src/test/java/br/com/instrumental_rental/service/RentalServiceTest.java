@@ -26,9 +26,10 @@ import org.mockito.MockitoAnnotations;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class RentalServiceTest {
 
@@ -156,7 +157,15 @@ public class RentalServiceTest {
         Assertions.assertEquals("E01", thrown.getCode());
         Assertions.assertEquals("the end date must be at least one day after the start date",
                 thrown.getMessage());
+    }
 
-
+    @Test
+    void testDeleteSuccess() throws RentalNotFoundException {
+        when(rentalRepository.findById(rentalBuilderAfterSave.getRentalId()))
+                .thenReturn(Optional.of(rentalBuilderAfterSave));
+        rentalService.delete(rentalBuilderAfterSave);
+        /*Assertions.assertNull(rentalBuilderAfterSave);*/
+        verify(rentalRepository).findById(rentalBuilderAfterSave.getRentalId());
+        verify(rentalRepository).delete(rentalBuilderAfterSave);
     }
 }
