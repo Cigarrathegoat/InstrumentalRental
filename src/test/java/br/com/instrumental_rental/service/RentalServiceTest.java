@@ -77,8 +77,8 @@ public class RentalServiceTest {
     void testSaveSuccess() throws CustomerNotFoundException, InstrumentNotFoundException,
             AttendantNotFoundException, WithdrawalGreaterThanBalanceException,
             EndDateNotAfterStartDateException {
-    when(rentalRepository.save(rentalBuilderBeforeSave)).thenReturn(rentalBuilderAfterSave);
-    Rental result = rentalService.save(rentalBuilderBeforeSave);
+        when(rentalRepository.save(rentalBuilderBeforeSave)).thenReturn(rentalBuilderAfterSave);
+        Rental result = rentalService.save(rentalBuilderBeforeSave);
         Assertions.assertEquals(rentalBuilderAfterSave, result);
     }
 
@@ -90,7 +90,9 @@ public class RentalServiceTest {
                 rentalBuilderBeforeSave.getCustomer().getSocialSecurityNumber())).thenThrow(
                 new CustomerNotFoundException("C01", "Customer not found"));
         CustomerNotFoundException thrown = Assertions.assertThrows(CustomerNotFoundException.class,
-                () -> {rentalService.save(rentalBuilderBeforeSave);});
+                () -> {
+                    rentalService.save(rentalBuilderBeforeSave);
+                });
         Assertions.assertEquals("C01", thrown.getCode());
         Assertions.assertEquals("Customer not found", thrown.getMessage());
     }
@@ -103,7 +105,27 @@ public class RentalServiceTest {
                 rentalBuilderBeforeSave.getInstrument().getModel())).thenThrow(
                 new InstrumentNotFoundException("I01", "Instrument not found"));
         InstrumentNotFoundException thrown = Assertions.assertThrows(InstrumentNotFoundException.class,
-                () -> {rentalService.save(rentalBuilderBeforeSave);});
+                () -> {
+                    rentalService.save(rentalBuilderBeforeSave);
+                });
         Assertions.assertEquals("I01", thrown.getCode());
         Assertions.assertEquals("Instrument not found", thrown.getMessage());
+    }
+
+    @Test
+    void testSaveAttendantNotFoundException() throws CustomerNotFoundException, InstrumentNotFoundException,
+            AttendantNotFoundException, WithdrawalGreaterThanBalanceException,
+            EndDateNotAfterStartDateException {
+        when(attendantService.findAttendantByNumberProvided(
+                rentalBuilderBeforeSave.getAttendant().getSocialSecurityNumber())).thenThrow(
+                new AttendantNotFoundException("A01", "Attendant not found"));
+        AttendantNotFoundException thrown = Assertions.assertThrows(AttendantNotFoundException.class,
+                () -> {
+                    rentalService.save(rentalBuilderBeforeSave);
+                });
+        Assertions.assertEquals("A01", thrown.getCode());
+        Assertions.assertEquals("Attendant not found", thrown.getMessage());
+    }
+
+
 }
