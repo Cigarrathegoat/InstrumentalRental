@@ -15,6 +15,7 @@ import br.com.instrumental_rental.service.interfaces.IAttendantService;
 import br.com.instrumental_rental.service.interfaces.ICustomerService;
 import br.com.instrumental_rental.service.interfaces.IInstrumentService;
 import br.com.instrumental_rental.service.interfaces.IRentalService;
+import br.com.instrumental_rental.service.util.ServiceUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -42,6 +43,9 @@ public class RentalServiceTest {
 
     @Mock
     IAttendantService attendantService;
+
+    @Mock
+    ServiceUtil serviceUtil;
 
     @InjectMocks
     RentalService rentalService;
@@ -127,5 +131,25 @@ public class RentalServiceTest {
         Assertions.assertEquals("Attendant not found", thrown.getMessage());
     }
 
+    @Test
+    void testSaveWithdrawalGreaterThanBalanceException() throws CustomerNotFoundException,
+            InstrumentNotFoundException,  AttendantNotFoundException,
+            WithdrawalGreaterThanBalanceException, EndDateNotAfterStartDateException {
+        instrumentBuilder.setPrice(BigDecimal.valueOf(100000));
+        WithdrawalGreaterThanBalanceException thrown = Assertions.assertThrows(
+                WithdrawalGreaterThanBalanceException.class, () -> {
+                    rentalService.save(rentalBuilderBeforeSave);
+                }
+        );
+        Assertions.assertEquals("W01", thrown.getCode());
+        Assertions.assertEquals("Withdrawal greater than balance", thrown.getMessage());
+    }
 
+    @Test
+    void testSaveEndDateNotAfterStartDateException() throws CustomerNotFoundException,
+            InstrumentNotFoundException,  AttendantNotFoundException,
+            WithdrawalGreaterThanBalanceException, EndDateNotAfterStartDateException {
+        rentalEndDate = LocalDate.parse("2020-12-01", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
+    }
 }
