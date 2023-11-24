@@ -2,10 +2,15 @@ package br.com.instrumental_rental.repository.interfaces;
 
 import br.com.instrumental_rental.repository.entities.Attendant;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
 public interface IAttendantRepository extends JpaRepository<Attendant, String> {
+/*@Query(value = "SELECT c from Customer c" +
+            "WHERE c.socialSecurityNumber = :numberProvided OR c.driversLicenseNumber = :numberProvided")*/
 
-    List<Attendant> findAttendantByName(String name);
+    @Query(value = "SELECT a FROM Attendant a" +
+    "WHERE a.socialSecurityNumber = :numberProvided OR a.driversLicenseNumber = :numberProvided")
+    List<Attendant> findAttendantByNumberProvided(String numberProvided);
 }

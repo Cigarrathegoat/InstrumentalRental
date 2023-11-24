@@ -105,7 +105,8 @@ public class RentalService implements IRentalService {
         customerServiceAttribute.findCustomerByNumberProvided(rental.getCustomer()
                 .getSocialSecurityNumber());
         instrumentServiceAttribute.findInstrumentByMakeOrModel(rental.getInstrument().getModel());
-        attendantServiceAttribute.findAttendantByName(rental.getAttendant().getName());
+        attendantServiceAttribute.findAttendantByNumberProvided(rental.getAttendant()
+                .getDriversLicenseNumber());
         nonRentalAttributesUpdater(rental.getInstrument(), rental.getCustomer(),
                 rental.getAttendant(), rental);
         rentalDatesChecker(rental);

@@ -43,20 +43,21 @@ public class AttendantServiceTest {
     }
 
     @Test
-    void findAttendantByNameSuccess() throws AttendantNotFoundException {
-        when(attendantRepository.findAttendantByName(builder.getName()))
+    void findAttendantByNumberProvidedSuccess() throws AttendantNotFoundException {
+        when(attendantRepository.findAttendantByNumberProvided(builder.getDriversLicenseNumber()))
                 .thenReturn(List.of(builder));
-        List<Attendant> found = attendantService.findAttendantByName(builder.getName());
-        Assertions.assertNotNull(found);
+        List<Attendant> found = attendantService.findAttendantByNumberProvided(
+                builder.getDriversLicenseNumber());
+        Assertions.assertEquals(List.of(builder), found);
     }
 
     @Test
-    void findAttendantByNameAttendantNotFoundException() throws AttendantNotFoundException {
-        when(attendantRepository.findAttendantByName(builder.getName()))
+    void findAttendantByNumberProvidedAttendantNotFoundException() throws AttendantNotFoundException {
+        when(attendantRepository.findAttendantByNumberProvided(anyString()))
                 .thenReturn(Collections.emptyList());
         AttendantNotFoundException thrown = Assertions.assertThrows(
                 AttendantNotFoundException.class, () -> {
-                    attendantService.findAttendantByName(builder.getName());
+                    attendantService.findAttendantByNumberProvided(anyString());
                 }
         );
         Assertions.assertEquals("A01", thrown.getCode());

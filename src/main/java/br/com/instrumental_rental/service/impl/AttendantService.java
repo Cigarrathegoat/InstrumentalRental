@@ -18,8 +18,8 @@ public class AttendantService implements IAttendantService {
     private IAttendantRepository attendantRepository;
 
     @Override
-    public List<Attendant> findAttendantByName(String name) throws AttendantNotFoundException {
-        var attendantSought = attendantRepository.findAttendantByName(name);
+    public List<Attendant> findAttendantByNumberProvided(String numberProvided) throws AttendantNotFoundException {
+        var attendantSought = attendantRepository.findAttendantByNumberProvided(numberProvided);
         if (attendantSought.isEmpty()) {
             throw new AttendantNotFoundException("A01", "Attendant not found");
         }

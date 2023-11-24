@@ -26,6 +26,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 public class RentalServiceTest {
@@ -81,6 +82,28 @@ public class RentalServiceTest {
         Assertions.assertEquals(rentalBuilderAfterSave, result);
     }
 
+    @Test
+    void testSaveCustomerNotFoundException() throws CustomerNotFoundException, InstrumentNotFoundException,
+            AttendantNotFoundException, WithdrawalGreaterThanBalanceException,
+            EndDateNotAfterStartDateException {
+        when(customerService.findCustomerByNumberProvided(
+                rentalBuilderBeforeSave.getCustomer().getSocialSecurityNumber())).thenThrow(
+                new CustomerNotFoundException("C01", "Customer not found"));
+        CustomerNotFoundException thrown = Assertions.assertThrows(CustomerNotFoundException.class,
+                () -> {rentalService.save(rentalBuilderBeforeSave);});
+        Assertions.assertEquals("C01", thrown.getCode());
+        Assertions.assertEquals("Customer not found", thrown.getMessage());
+    }
 
-
+    @Test
+    void testSaveInstrumentNotFoundException() throws CustomerNotFoundException, InstrumentNotFoundException,
+            AttendantNotFoundException, WithdrawalGreaterThanBalanceException,
+            EndDateNotAfterStartDateException {
+        when(instrumentService.findInstrumentByMakeOrModel(
+                rentalBuilderBeforeSave.getInstrument().getModel())).thenThrow(
+                new InstrumentNotFoundException("I01", "Instrument not found"));
+        InstrumentNotFoundException thrown = Assertions.assertThrows(InstrumentNotFoundException.class,
+                () -> {rentalService.save(rentalBuilderBeforeSave);});
+        Assertions.assertEquals("I01", thrown.getCode());
+        Assertions.assertEquals("Instrument not found", thrown.getMessage());
 }
