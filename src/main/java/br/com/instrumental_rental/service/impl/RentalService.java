@@ -111,6 +111,7 @@ public class RentalService implements IRentalService {
                 rental.getAttendant(), rental);
         rentalDatesChecker(rental);
         sufficientBalanceChecker(rental.getCustomer(), rental.getPrice());
+
         return rentalRepositoryAttribute.save(rental);
     }
 

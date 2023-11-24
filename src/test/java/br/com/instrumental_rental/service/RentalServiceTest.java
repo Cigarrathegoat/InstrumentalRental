@@ -149,7 +149,14 @@ public class RentalServiceTest {
     void testSaveEndDateNotAfterStartDateException() throws CustomerNotFoundException,
             InstrumentNotFoundException,  AttendantNotFoundException,
             WithdrawalGreaterThanBalanceException, EndDateNotAfterStartDateException {
-        rentalEndDate = LocalDate.parse("2020-12-01", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        rentalBuilderBeforeSave.setEndDate(
+                LocalDate.parse("2020-10-01", DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        EndDateNotAfterStartDateException thrown = Assertions.assertThrows(
+                EndDateNotAfterStartDateException.class, () -> {rentalService.save(rentalBuilderBeforeSave);});
+        Assertions.assertEquals("E01", thrown.getCode());
+        Assertions.assertEquals("the end date must be at least one day after the start date",
+                thrown.getMessage());
+
 
     }
 }
