@@ -8,10 +8,6 @@ import java.time.format.DateTimeFormatter;
 
 public class InstrumentBuilder {
 
-    /*private Instrument instrumentBuilder = InstrumentBuilder.instrumentBuilder(
-            "1", "microphone", "Yamaha", "Supermic 4000",
-            BigDecimal.valueOf(4000), LocalDate.parse("2005-12-31",
-                    DateTimeFormatter.ofPattern("yyyy-MM-dd")));*/
     public static Instrument instrumentBuilder(String id, String type, String make,
                                                String model, BigDecimal price, LocalDate date) {
         return Instrument.builder().instrumentId("1").type("Microphone").make("Yamaha").model("Supermic 4000")
@@ -23,6 +19,6 @@ public class InstrumentBuilder {
                                                BigDecimal price, LocalDate date) {
         return Instrument.builder().instrumentId(null).type("Microphone").make("Yamaha").model("Supermic 4000")
                 .price(BigDecimal.valueOf(4000)).manufactureDate(LocalDate.parse("2005-12-31",
-                        DateTimeFormatter.ofPattern("yyyy-MM-dd"))git co).available(true).build();
+                        DateTimeFormatter.ofPattern("yyyy-MM-dd"))).available(true).build();
     }
 }
