@@ -5,7 +5,7 @@ import br.com.instrumental_rental.repository.entities.Rental;
 
 import java.util.List;
 
-public interface IRentalService extends IService<Rental, Throwable> {
+public interface IRentalService extends IService<Rental, Exception> {
 
     public Rental save(Rental rental) throws WithdrawalGreaterThanBalanceException,
             EndDateNotAfterStartDateException, CustomerNotFoundException, InstrumentNotFoundException,

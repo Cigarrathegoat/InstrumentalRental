@@ -22,7 +22,7 @@ public class Rental {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_RENTAL")
     @Column(name = "ID_RENTAL")
-    private String rentalId;
+    private Long rentalId;
 
     @Column(name = "ID_CUSTOMER")//the name of the column of course
     @JoinColumn(name = "CUSTOMER_ID")

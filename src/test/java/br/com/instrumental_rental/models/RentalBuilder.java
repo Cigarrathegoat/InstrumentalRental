@@ -7,28 +7,40 @@ import br.com.instrumental_rental.repository.entities.Rental;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 public class RentalBuilder {
 
-    public static Rental rentalBuilderBeforeSave(Customer customer, Attendant attendant,
-                                                 Instrument instrument, LocalDate startDate,
-                                                 LocalDate endDate) {
-        return Rental.builder().customer(customer).instrument(instrument)
-                .startDate(startDate).endDate(endDate).attendant(attendant)
+    /*private LocalDate rentalStartDate = LocalDate.parse("2020-12-01",
+            DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+    private LocalDate rentalEndDate = LocalDate.parse("2020-12-03",
+            DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+    private BigDecimal rentalPrice = BigDecimal.valueOf(120);
+    private BigDecimal attendantCommission = BigDecimal.valueOf(12);
+    private Rental rentalBuilderBeforeSave = RentalBuilder.rentalBuilderBeforeSave(
+            customerBuilder, attendantBuilder, instrumentBuilder, rentalStartDate, rentalEndDate);*/
+    public static Rental rentalBuilderBeforeSave(Customer customer, Instrument instrument,
+                                                 Attendant attendant) {
+        return Rental.builder().rentalId(null).customer(customer).instrument(instrument)
+                .attendant(attendant).startDate(LocalDate.parse("2020-12-03",
+                        DateTimeFormatter.ofPattern("yyyy-MM-dd"))).endDate(LocalDate.parse("2020-12-03",
+                        DateTimeFormatter.ofPattern("yyyy-MM-dd"))).price(null).attendantCommission(null)
                 .build();
     }
 
     /*TODO turn all id parameters into longs now*/
-    public static Rental rentalBuilderAfterSave(String id, Customer customer, Attendant attendant,
+    public static Rental rentalBuilderAfterSave(Customer customer, Attendant attendant,
                                            Instrument instrument, LocalDate startDate,
                                            LocalDate endDate, BigDecimal price,
                                                 BigDecimal attendantCommission) {
 
 
-        return Rental.builder().rentalId(id).customer(customer)
-                .instrument(instrument).startDate(startDate).endDate(endDate).price(price)
-                .attendant(attendant).attendantCommission(attendantCommission)
+        return Rental.builder().rentalId(1L).customer(customer).attendant(attendant)
+                .instrument(instrument).startDate(LocalDate.parse("2020-12-01",
+                        DateTimeFormatter.ofPattern("yyyy-MM-dd"))).endDate(LocalDate.parse("2020-12-03",
+                        DateTimeFormatter.ofPattern("yyyy-MM-dd"))).price(BigDecimal.valueOf(120))
+                .attendantCommission(BigDecimal.valueOf(12))
                 .build();
     }
 

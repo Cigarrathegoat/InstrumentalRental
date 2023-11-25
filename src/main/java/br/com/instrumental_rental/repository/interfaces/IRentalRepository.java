@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface IRentalRepository extends JpaRepository<Rental, String> {
+public interface IRentalRepository extends JpaRepository<Rental, Long> {
 
    @Query(value = "SELECT r FROM Rental r" +
    "WHERE r.customer = :word OR r.attendant = :word OR r.instrument = :word")
