@@ -21,7 +21,8 @@ public class InstrumentBuilder {
 
     public static Instrument instrumentNoIdBuilder(String type, String make, String model,
                                                BigDecimal price, LocalDate date) {
-        return Instrument.builder().instrumentId(null).type(type).make(make).model(model)
-                .price(price).manufactureDate(date).available(true).build();
+        return Instrument.builder().instrumentId(null).type("Microphone").make("Yamaha").model("Supermic 4000")
+                .price(BigDecimal.valueOf(4000)).manufactureDate(LocalDate.parse("2005-12-31",
+                        DateTimeFormatter.ofPattern("yyyy-MM-dd"))git co).available(true).build();
     }
 }
