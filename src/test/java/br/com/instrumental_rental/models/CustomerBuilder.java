@@ -29,9 +29,11 @@ public class CustomerBuilder {
                                                String socialSecurityNumber, String driversLicenseNumber,
                                            BigDecimal balance) {
         return Customer.builder()
-                .name(name).dateOfBirth(date)
-                .socialSecurityNumber(socialSecurityNumber)
-                .driversLicenseNumber(driversLicenseNumber)
-                .accountBalance(balance).build();
+                .name("John").dateOfBirth(LocalDate.parse("1985-08-23",
+                        DateTimeFormatter.ofPattern("yyyy-MM-dd")))
+                .socialSecurityNumber("123456789")
+                .driversLicenseNumber("1234567")
+                .accountBalance(BigDecimal.valueOf(500))
+                .build();
     }
 }
