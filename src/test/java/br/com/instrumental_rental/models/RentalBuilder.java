@@ -30,10 +30,8 @@ public class RentalBuilder {
     }
 
     /*TODO turn all id parameters into longs now*/
-    public static Rental rentalBuilderAfterSave(Customer customer, Attendant attendant,
-                                           Instrument instrument, LocalDate startDate,
-                                           LocalDate endDate, BigDecimal price,
-                                                BigDecimal attendantCommission) {
+    public static Rental rentalBuilderAfterSave(Customer customer, Instrument instrument,
+                                                Attendant attendant) {
 
 
         return Rental.builder().rentalId(1L).customer(customer).attendant(attendant)

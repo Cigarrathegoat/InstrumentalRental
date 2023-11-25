@@ -56,52 +56,15 @@ public class RentalServiceTest {
         MockitoAnnotations.openMocks(this);
     }
 
-    private Customer customerBuilder = CustomerBuilder.customerBuilder(
-            "01", "John", LocalDate.parse("1985-08-23",
-                    DateTimeFormatter.ofPattern("yyyy-MM-dd")),
-            "123456789", "1234567",
-            BigDecimal.valueOf(500));
-    private Instrument instrumentBuilder = InstrumentBuilder.instrumentBuilder(
-            "1", "microphone", "Yamaha", "Supermic 4000",
-            BigDecimal.valueOf(4000), LocalDate.parse("2005-12-31",
-                    DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-    private Attendant attendantBuilder = AttendantBuilder.attendantBuilder(
-            "1", "Mark", BigDecimal.valueOf(0));
-    private LocalDate rentalStartDate = LocalDate.parse("2020-12-01",
-            DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-    private LocalDate rentalEndDate = LocalDate.parse("2020-12-03",
-            DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-    private BigDecimal rentalPrice = BigDecimal.valueOf(120);
-    private BigDecimal attendantCommission = BigDecimal.valueOf(12);
-    private Rental rentalBuilderBeforeSave = RentalBuilder.rentalBuilderBeforeSave(
-            customerBuilder, attendantBuilder, instrumentBuilder, rentalStartDate, rentalEndDate);
-
-    /*public static Rental rentalBuilderAfterSave(String id, Customer customer, Attendant attendant,
-                                           Instrument instrument, LocalDate startDate,
-                                           LocalDate endDate, BigDecimal price,
-                                                BigDecimal attendantCommission)*/
-    private Rental rentalBuilderAfterSave = RentalBuilder.rentalBuilderAfterSave("2", customerBuilder,
-            attendantBuilder, instrumentBuilder, rentalStartDate, rentalEndDate, rentalPrice,
-            attendantCommission);
-
-
-    private Rental rentalBuilderAfterSave(Customer customerBuilder, Attendant attendantBuilder,
-                                          Instrument instrumentBuilder, LocalDate rentalStartDate,
-                                          LocalDate rentalEndDate, BigDecimal rentalPrice,
-                                          BigDecimal attendantComission) {
-        return RentalBuilder.rentalBuilderAfterSave(
-                "01", customerBuilder, attendantBuilder, instrumentBuilder, rentalStartDate,
-                rentalEndDate, rentalPrice, attendantCommission);
-
-    }
-    /*TODO put all this stuff in its proper place*/
-    @Test
+   @Test
     void testSaveSuccess() throws CustomerNotFoundException, InstrumentNotFoundException,
             AttendantNotFoundException, WithdrawalGreaterThanBalanceException,
             EndDateNotAfterStartDateException {
         var customer = CustomerBuilder.customerBuilder();
         var instrument = InstrumentBuilder.instrumentBuilder();
-        var Attendant = AttendantBuilder.attendantBuilder();
+        var attendant = AttendantBuilder.attendantBuilder();
+        var rentalBuilderBeforeSave = RentalBuilder.rentalBuilderBeforeSave(customer, instrument, attendant);
+        var rentalBuilderAfterSave = RentalBuilder.rentalBuilderAfterSave(customer, instrument, attendant);
 
         when(rentalRepository.save(rentalBuilderBeforeSave)).thenReturn(rentalBuilderAfterSave);
         Rental result = rentalService.save(rentalBuilderBeforeSave);
@@ -112,8 +75,12 @@ public class RentalServiceTest {
     *  instead of a repository method*/
     @Test
     void testSaveCustomerNotFoundException() throws CustomerNotFoundException {
-        when(rentalService.findById(
-                rentalBuilderBeforeSave.getCustomer().getSocialSecurityNumber())).thenThrow(
+        var customer = CustomerBuilder.customerBuilder();
+        var instrument = InstrumentBuilder.instrumentBuilder();
+        var attendant = AttendantBuilder.attendantBuilder();
+        var rentalBuilderBeforeSave = RentalBuilder.rentalBuilderBeforeSave(customer, instrument, attendant);
+        when(customerService.findById(
+                rentalBuilderBeforeSave.getCustomer().getCustomerId())).thenThrow(
                 new CustomerNotFoundException("C01", "Customer not found"));
         CustomerNotFoundException thrown = Assertions.assertThrows(CustomerNotFoundException.class,
                 () -> {
@@ -125,6 +92,10 @@ public class RentalServiceTest {
 
     @Test
     void testSaveInstrumentNotFoundException() throws InstrumentNotFoundException {
+        var customer = CustomerBuilder.customerBuilder();
+        var instrument = InstrumentBuilder.instrumentBuilder();
+        var attendant = AttendantBuilder.attendantBuilder();
+        var rentalBuilderBeforeSave = RentalBuilder.rentalBuilderBeforeSave(customer, instrument, attendant);
         when(instrumentService.findInstrumentByMakeOrModel(
                 rentalBuilderBeforeSave.getInstrument().getModel())).thenThrow(
                 new InstrumentNotFoundException("I01", "Instrument not found"));
@@ -138,6 +109,10 @@ public class RentalServiceTest {
 
     @Test
     void testSaveAttendantNotFoundException() throws AttendantNotFoundException {
+        var customer = CustomerBuilder.customerBuilder();
+        var instrument = InstrumentBuilder.instrumentBuilder();
+        var attendant = AttendantBuilder.attendantBuilder();
+        var rentalBuilderBeforeSave = RentalBuilder.rentalBuilderBeforeSave(customer, instrument, attendant);
         when(attendantService.findAttendantByNumberProvided(
                 rentalBuilderBeforeSave.getAttendant().getSocialSecurityNumber())).thenThrow(
                 new AttendantNotFoundException("A01", "Attendant not found"));
@@ -152,7 +127,11 @@ public class RentalServiceTest {
     /*TODO ask him why this exception didn't light up*/
     @Test
     void testSaveWithdrawalGreaterThanBalanceException() throws WithdrawalGreaterThanBalanceException {
-        instrumentBuilder.setPrice(BigDecimal.valueOf(100000));
+        var customer = CustomerBuilder.customerBuilder();
+        var instrument = InstrumentBuilder.instrumentBuilder();
+        var attendant = AttendantBuilder.attendantBuilder();
+        var rentalBuilderBeforeSave = RentalBuilder.rentalBuilderBeforeSave(customer, instrument, attendant);
+        instrument.setPrice(BigDecimal.valueOf(100000));
         WithdrawalGreaterThanBalanceException thrown = Assertions.assertThrows(
                 WithdrawalGreaterThanBalanceException.class, () -> {
                     rentalService.save(rentalBuilderBeforeSave);
@@ -165,6 +144,10 @@ public class RentalServiceTest {
     /*TODO ask him why this exception didn't work either*/
     @Test
     void testSaveEndDateNotAfterStartDateException() throws EndDateNotAfterStartDateException {
+        var customer = CustomerBuilder.customerBuilder();
+        var instrument = InstrumentBuilder.instrumentBuilder();
+        var attendant = AttendantBuilder.attendantBuilder();
+        var rentalBuilderBeforeSave = RentalBuilder.rentalBuilderBeforeSave(customer, instrument, attendant);
         rentalBuilderBeforeSave.setEndDate(
                 LocalDate.parse("2020-10-01", DateTimeFormatter.ofPattern("yyyy-MM-dd")));
         EndDateNotAfterStartDateException thrown = Assertions.assertThrows(
@@ -177,6 +160,10 @@ public class RentalServiceTest {
     /*TODO ask him why the assertions commented didn't work*/
     @Test
     void testDeleteSuccess() throws RentalNotFoundException {
+        var customer = CustomerBuilder.customerBuilder();
+        var instrument = InstrumentBuilder.instrumentBuilder();
+        var attendant = AttendantBuilder.attendantBuilder();
+        var rentalBuilderAfterSave = RentalBuilder.rentalBuilderAfterSave(customer, instrument, attendant);
         when(rentalRepository.findById(rentalBuilderAfterSave.getRentalId()))
                 .thenReturn(Optional.of(rentalBuilderAfterSave));
         rentalService.delete(rentalBuilderAfterSave);
@@ -188,6 +175,10 @@ public class RentalServiceTest {
 
     @Test
     void testDeleteRentalNotFoundException() throws RentalNotFoundException {
+        var customer = CustomerBuilder.customerBuilder();
+        var instrument = InstrumentBuilder.instrumentBuilder();
+        var attendant = AttendantBuilder.attendantBuilder();
+        var rentalBuilderAfterSave = RentalBuilder.rentalBuilderAfterSave(customer, instrument, attendant);
         when(rentalRepository.findById(rentalBuilderAfterSave.getRentalId()))
                 .thenReturn(Optional.empty());
         RentalNotFoundException thrown = Assertions.assertThrows(RentalNotFoundException.class,
@@ -198,6 +189,10 @@ public class RentalServiceTest {
 
     @Test
     void testFindAll() {
+        var customer = CustomerBuilder.customerBuilder();
+        var instrument = InstrumentBuilder.instrumentBuilder();
+        var attendant = AttendantBuilder.attendantBuilder();
+        var rentalBuilderAfterSave = RentalBuilder.rentalBuilderAfterSave(customer, instrument, attendant);
         when(rentalRepository.findAll()).thenReturn(List.of(rentalBuilderAfterSave));
         List<Rental> result = rentalService.findAll();
         Assertions.assertEquals(List.of(rentalBuilderAfterSave), result);
@@ -207,6 +202,10 @@ public class RentalServiceTest {
        and the column at the table is an ID (WOULD WORK WITH A JOIN)*/
     @Test
     void testFindByWordSuccess() throws RentalNotFoundException {
+        var customer = CustomerBuilder.customerBuilder();
+        var instrument = InstrumentBuilder.instrumentBuilder();
+        var attendant = AttendantBuilder.attendantBuilder();
+        var rentalBuilderAfterSave = RentalBuilder.rentalBuilderAfterSave(customer, instrument, attendant);
         when(rentalRepository.findRentalByWord(rentalBuilderAfterSave.getCustomer().getName()))
                 .thenReturn(List.of(rentalBuilderAfterSave));
         List<Rental> result = rentalService.findRentalListByWord(
@@ -217,6 +216,10 @@ public class RentalServiceTest {
 
     @Test
     void testFindByWordRentalNotFoundException() throws RentalNotFoundException {
+        var customer = CustomerBuilder.customerBuilder();
+        var instrument = InstrumentBuilder.instrumentBuilder();
+        var attendant = AttendantBuilder.attendantBuilder();
+        var rentalBuilderAfterSave = RentalBuilder.rentalBuilderAfterSave(customer, instrument, attendant);
         when(rentalRepository.findRentalByWord(anyString())).thenReturn(List.of());
         RentalNotFoundException thrown = Assertions.assertThrows(RentalNotFoundException.class,
                 () -> {rentalService.findRentalListByWord(anyString());});

@@ -44,7 +44,7 @@ public class RentalService implements IRentalService {
         this.attendantServiceAttribute = attendantServiceParameter;
     }
     /*TODO search other classes for finders and turn them into findById*/
-    public Rental findById(String rentalId) throws RentalNotFoundException {
+    public Rental findById(Long rentalId) throws RentalNotFoundException {
         return rentalRepositoryAttribute.findById(rentalId)
                 .orElseThrow(() -> new RentalNotFoundException("R01", "Rental not found"));
     }

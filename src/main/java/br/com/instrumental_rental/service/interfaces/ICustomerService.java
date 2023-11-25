@@ -24,4 +24,6 @@ public interface ICustomerService {
     BigDecimal withdraw(String customerId, BigDecimal withdrawal)
         throws CustomerNotFoundException, WithdrawalGreaterThanBalanceException;
 
+    Customer findById(String customerId) throws CustomerNotFoundException;
+
 }
