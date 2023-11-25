@@ -17,11 +17,11 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class RentalDTO {
 
-    private Customer customer;
+    private String customerId;
 
-     private Attendant attendant;
+     private String attendantId;
 
-    private Instrument instrument;
+    private InstrumentDTO instrument;
 
     private LocalDate startDate;
 

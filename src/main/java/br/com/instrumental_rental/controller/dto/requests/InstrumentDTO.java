@@ -16,6 +16,9 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class InstrumentDTO {
 
+    private String id;
+    /*TODO put ids in all dtos*/
+
     @NotBlank(message = "field cannot be left blank")
     @Pattern(regexp = "^[a-zA-Z]+&", message = "please use only letters")
     private String type;

@@ -14,7 +14,6 @@ import br.com.instrumental_rental.service.impl.RentalService;
 import br.com.instrumental_rental.service.interfaces.IAttendantService;
 import br.com.instrumental_rental.service.interfaces.ICustomerService;
 import br.com.instrumental_rental.service.interfaces.IInstrumentService;
-import br.com.instrumental_rental.service.interfaces.IRentalService;
 import br.com.instrumental_rental.service.util.ServiceUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -58,7 +57,8 @@ public class RentalServiceTest {
     }
 
     private Customer customerBuilder = CustomerBuilder.customerBuilder(
-            "01", "John", LocalDate.parse("1985-08-23"),
+            "01", "John", LocalDate.parse("1985-08-23",
+                    DateTimeFormatter.ofPattern("yyyy-MM-dd")),
             "123456789", "1234567",
             BigDecimal.valueOf(500));
     private Instrument instrumentBuilder = InstrumentBuilder.instrumentBuilder(
@@ -75,10 +75,26 @@ public class RentalServiceTest {
     private BigDecimal attendantCommission = BigDecimal.valueOf(12);
     private Rental rentalBuilderBeforeSave = RentalBuilder.rentalBuilderBeforeSave(
             customerBuilder, attendantBuilder, instrumentBuilder, rentalStartDate, rentalEndDate);
-    private Rental rentalBuilderAfterSave = RentalBuilder.rentalBuilderAfterSave(
-            "01", customerBuilder, attendantBuilder, instrumentBuilder, rentalStartDate,
-            rentalEndDate, rentalPrice, attendantCommission);
 
+    /*public static Rental rentalBuilderAfterSave(String id, Customer customer, Attendant attendant,
+                                           Instrument instrument, LocalDate startDate,
+                                           LocalDate endDate, BigDecimal price,
+                                                BigDecimal attendantCommission)*/
+    private Rental rentalBuilderAfterSave = RentalBuilder.rentalBuilderAfterSave("2", customerBuilder,
+            attendantBuilder, instrumentBuilder, rentalStartDate, rentalEndDate, rentalPrice,
+            attendantCommission);
+
+
+    private Rental rentalBuilderAfterSave(Customer customerBuilder, Attendant attendantBuilder,
+                                          Instrument instrumentBuilder, LocalDate rentalStartDate,
+                                          LocalDate rentalEndDate, BigDecimal rentalPrice,
+                                          BigDecimal attendantComission) {
+        return RentalBuilder.rentalBuilderAfterSave(
+                "01", customerBuilder, attendantBuilder, instrumentBuilder, rentalStartDate,
+                rentalEndDate, rentalPrice, attendantCommission);
+
+    }
+    /*TODO put all this stuff in its proper place*/
     @Test
     void testSaveSuccess() throws CustomerNotFoundException, InstrumentNotFoundException,
             AttendantNotFoundException, WithdrawalGreaterThanBalanceException,
@@ -88,11 +104,11 @@ public class RentalServiceTest {
         Assertions.assertEquals(rentalBuilderAfterSave, result);
     }
 
-    /*TODO ask him about whether it's okay to instantiate another service method on my test method
+    /*TODO ask him about whether it's okay to call another service method on my test method
     *  instead of a repository method*/
     @Test
     void testSaveCustomerNotFoundException() throws CustomerNotFoundException {
-        when(customerService.findCustomerByNumberProvided(
+        when(rentalService.findById(
                 rentalBuilderBeforeSave.getCustomer().getSocialSecurityNumber())).thenThrow(
                 new CustomerNotFoundException("C01", "Customer not found"));
         CustomerNotFoundException thrown = Assertions.assertThrows(CustomerNotFoundException.class,
@@ -161,6 +177,7 @@ public class RentalServiceTest {
                 .thenReturn(Optional.of(rentalBuilderAfterSave));
         rentalService.delete(rentalBuilderAfterSave);
         /*Assertions.assertNull(rentalBuilderAfterSave);*/
+        /*TODO never return a null*/
         verify(rentalRepository).findById(rentalBuilderAfterSave.getRentalId());
         verify(rentalRepository).delete(rentalBuilderAfterSave);
     }
@@ -183,7 +200,7 @@ public class RentalServiceTest {
     }
 
     /*TODO ask him how this worked if the find method is looking for a word
-       and the column at the table is an ID*/
+       and the column at the table is an ID (WOULD WORK WITH A JOIN)*/
     @Test
     void testFindByWordSuccess() throws RentalNotFoundException {
         when(rentalRepository.findRentalByWord(rentalBuilderAfterSave.getCustomer().getName()))
@@ -192,6 +209,7 @@ public class RentalServiceTest {
                 rentalBuilderAfterSave.getCustomer().getName());
         Assertions.assertEquals(List.of(rentalBuilderAfterSave), result);
     }
+    /*TODO how does a test method check the real method if I tell it what to do*/
 
     @Test
     void testFindByWordRentalNotFoundException() throws RentalNotFoundException {

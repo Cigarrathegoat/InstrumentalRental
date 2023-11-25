@@ -7,6 +7,7 @@ import br.com.instrumental_rental.repository.entities.Rental;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.UUID;
 
 public class RentalBuilder {
 
@@ -18,10 +19,13 @@ public class RentalBuilder {
                 .build();
     }
 
+    /*TODO turn all id parameters into longs now*/
     public static Rental rentalBuilderAfterSave(String id, Customer customer, Attendant attendant,
                                            Instrument instrument, LocalDate startDate,
                                            LocalDate endDate, BigDecimal price,
                                                 BigDecimal attendantCommission) {
+
+
         return Rental.builder().rentalId(id).customer(customer)
                 .instrument(instrument).startDate(startDate).endDate(endDate).price(price)
                 .attendant(attendant).attendantCommission(attendantCommission)

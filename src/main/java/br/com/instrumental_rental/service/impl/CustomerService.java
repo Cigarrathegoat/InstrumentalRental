@@ -49,6 +49,12 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
+    public String findById(Customer customer) {
+        return finder()
+
+    }
+
+    @Override
     public BigDecimal addToBalance(String customerId, BigDecimal addition)
             throws CustomerNotFoundException {
         var customerFound = finder(customerId);

@@ -43,8 +43,8 @@ public class RentalService implements IRentalService {
         this.instrumentServiceAttribute = instrumentServiceParameter;
         this.attendantServiceAttribute = attendantServiceParameter;
     }
-
-    private Rental rentalIdFinder(String rentalId) throws RentalNotFoundException {
+    /*TODO search other classes for finders and turn them into findById*/
+    public Rental findById(String rentalId) throws RentalNotFoundException {
         return rentalRepositoryAttribute.findById(rentalId)
                 .orElseThrow(() -> new RentalNotFoundException("R01", "Rental not found"));
     }
@@ -97,7 +97,7 @@ public class RentalService implements IRentalService {
         } else {
             // Handle the case where no instruments are found
         }*/
-
+/*TODO create a new Rental object, make it ony have ID*/
     @Override
     public Rental save(Rental rental) throws CustomerNotFoundException, InstrumentNotFoundException,
     AttendantNotFoundException, WithdrawalGreaterThanBalanceException,
@@ -117,7 +117,7 @@ public class RentalService implements IRentalService {
 
     @Override
     public void delete(Rental rental) throws RentalNotFoundException {
-        var rentalToDelete = rentalIdFinder(rental.getRentalId());
+        var rentalToDelete = findById(rental.getRentalId());
         rentalRepositoryAttribute.delete(rentalToDelete);
     }
 
@@ -135,7 +135,7 @@ public class RentalService implements IRentalService {
 
     @Override
     public Rental update(Rental rental) throws RentalNotFoundException {
-        var rentalToUpdate = rentalIdFinder(rental.getRentalId());
+        var rentalToUpdate = findById(rental.getRentalId());
         rentalToUpdate.setCustomer(rental.getCustomer());
         rentalToUpdate.setAttendant(rental.getAttendant());
         rentalToUpdate.setInstrument(rental.getInstrument());
