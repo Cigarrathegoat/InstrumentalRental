@@ -99,6 +99,10 @@ public class RentalServiceTest {
     void testSaveSuccess() throws CustomerNotFoundException, InstrumentNotFoundException,
             AttendantNotFoundException, WithdrawalGreaterThanBalanceException,
             EndDateNotAfterStartDateException {
+        var customer = CustomerBuilder.customerBuilder();
+        var instrument = InstrumentBuilder.instrumentBuilder();
+        var Attendant = AttendantBuilder.attendantBuilder();
+
         when(rentalRepository.save(rentalBuilderBeforeSave)).thenReturn(rentalBuilderAfterSave);
         Rental result = rentalService.save(rentalBuilderBeforeSave);
         Assertions.assertEquals(rentalBuilderAfterSave, result);

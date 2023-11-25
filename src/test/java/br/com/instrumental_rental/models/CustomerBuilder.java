@@ -13,9 +13,7 @@ public class CustomerBuilder {
             "123456789", "1234567",
             BigDecimal.valueOf(500));*/
 
-    public static Customer customerBuilder(String id, String name, LocalDate date,
-                                           String socialSecurityNumber, String driversLicenseNumber,
-                                           BigDecimal balance) {
+    public static Customer customerBuilder() {
         return Customer.builder()
                 .customerId("01").name("John").dateOfBirth(LocalDate.parse("1985-08-23",
                         DateTimeFormatter.ofPattern("yyyy-MM-dd")))
