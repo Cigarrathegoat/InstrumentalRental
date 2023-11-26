@@ -21,7 +21,7 @@ public class Instrument {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_INSTRUMENT")
     @Column(name = "ID_INSTRUMENT")
-    private String instrumentId;
+    private Long instrumentId;
 
     @Column(name = "DS_TYPE")
     private String type;

@@ -71,8 +71,6 @@ public class RentalServiceTest {
         Assertions.assertEquals(rentalBuilderAfterSave, result);
     }
 
-    /*TODO ask him about whether it's okay to call another service method on my test method
-    *  instead of a repository method*/
     @Test
     void testSaveCustomerNotFoundException() throws CustomerNotFoundException {
         var customer = CustomerBuilder.customerBuilder();

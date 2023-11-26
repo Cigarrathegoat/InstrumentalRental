@@ -16,7 +16,7 @@ import javax.persistence.*;
 public class TheAddress {
 
     @Column(name = "ID_ADDRESS")
-    private String addressId;
+    private Long addressId;
 
     @Column(name = "DS_STREETNAME")
     private String streetName;

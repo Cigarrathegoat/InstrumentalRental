@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface IAttendantRepository extends JpaRepository<Attendant, String> {
+public interface IAttendantRepository extends JpaRepository<Attendant, Long> {
 /*@Query(value = "SELECT c from Customer c" +
             "WHERE c.socialSecurityNumber = :numberProvided OR c.driversLicenseNumber = :numberProvided")*/
 

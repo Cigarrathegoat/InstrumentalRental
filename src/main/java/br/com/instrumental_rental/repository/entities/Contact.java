@@ -17,7 +17,7 @@ public class Contact {
 
     @Column(name = "ID_CONTACTS")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_CONTACTS")
-    private String contactId;
+    private Long contactId;
 
     @Column(name = "ID_CUSTOMER")
     @JoinColumn(name = "CUSTOMER_ID")

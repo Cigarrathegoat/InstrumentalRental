@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface ICustomerRepository extends JpaRepository<Customer, String> {
+public interface ICustomerRepository extends JpaRepository<Customer, Long> {
 
     @Query(value = "SELECT c from Customer c" +
             "WHERE c.socialSecurityNumber = :numberProvided OR c.driversLicenseNumber = :numberProvided")
