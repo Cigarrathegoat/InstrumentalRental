@@ -29,7 +29,7 @@ public class AttendantService implements IAttendantService {
     }
 
     @Override
-    public Attendant findById(Long id) throws AttendantNotFoundException {
+    public Attendant findAttendantById(Long id) throws AttendantNotFoundException {
         return attendantRepository.findById(id).orElseThrow(
                 () -> new AttendantNotFoundException("A01", "Attendant not found"));
     }
@@ -42,7 +42,7 @@ public class AttendantService implements IAttendantService {
     @Override
     public void delete(Attendant attendant) throws AttendantNotFoundException {
 
-        attendantRepository.delete(findById(attendant.getAttendantId()));
+        attendantRepository.delete(findAttendantById(attendant.getAttendantId()));
 
     }
 
@@ -53,7 +53,7 @@ public class AttendantService implements IAttendantService {
 
     @Override
     public Attendant update(Attendant attendant) throws AttendantNotFoundException {
-        var attendantToUpdate = findById(attendant.getAttendantId());
+        var attendantToUpdate = findAttendantById(attendant.getAttendantId());
         attendantToUpdate.setName(attendant.getName());
         attendantToUpdate.setContacts(attendant.getContacts());
         attendantToUpdate.setDateOfBirth(attendant.getDateOfBirth());

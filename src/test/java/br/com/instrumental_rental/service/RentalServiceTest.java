@@ -5,9 +5,6 @@ import br.com.instrumental_rental.models.AttendantBuilder;
 import br.com.instrumental_rental.models.CustomerBuilder;
 import br.com.instrumental_rental.models.InstrumentBuilder;
 import br.com.instrumental_rental.models.RentalBuilder;
-import br.com.instrumental_rental.repository.entities.Attendant;
-import br.com.instrumental_rental.repository.entities.Customer;
-import br.com.instrumental_rental.repository.entities.Instrument;
 import br.com.instrumental_rental.repository.entities.Rental;
 import br.com.instrumental_rental.repository.interfaces.IRentalRepository;
 import br.com.instrumental_rental.service.impl.RentalService;
@@ -77,7 +74,7 @@ public class RentalServiceTest {
         var instrument = InstrumentBuilder.instrumentBuilder();
         var attendant = AttendantBuilder.attendantBuilder();
         var rentalBuilderBeforeSave = RentalBuilder.rentalBuilderBeforeSave(customer, instrument, attendant);
-        when(customerService.findById(
+        when(customerService.findCustomerById(
                 rentalBuilderBeforeSave.getCustomer().getCustomerId())).thenThrow(
                 new CustomerNotFoundException("C01", "Customer not found"));
         CustomerNotFoundException thrown = Assertions.assertThrows(CustomerNotFoundException.class,

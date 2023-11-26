@@ -25,7 +25,7 @@ public class CustomerService implements ICustomerService {
         this.customerRepositoryAttribute = customerRepositoryParameter;
     }
 
-    public Customer findById(String customerId) throws CustomerNotFoundException {
+    public Customer findCustomerById(Long customerId) throws CustomerNotFoundException {
         return customerRepositoryAttribute.findById(customerId)
                 .orElseThrow(() -> new CustomerNotFoundException(
                                 "C01", "Customer not found"
@@ -49,17 +49,17 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
-    public BigDecimal addToBalance(String customerId, BigDecimal addition)
+    public BigDecimal addToBalance(Long customerId, BigDecimal addition)
             throws CustomerNotFoundException {
-        var customerFound = findById(customerId);
+        var customerFound = findCustomerById(customerId);
         customerFound.setAccountBalance(customerFound.getAccountBalance().add(addition));
         return customerFound.getAccountBalance();
     }
 
     @Override
-    public BigDecimal withdraw(String customerId, BigDecimal withdrawal)
+    public BigDecimal withdraw(Long customerId, BigDecimal withdrawal)
             throws CustomerNotFoundException, WithdrawalGreaterThanBalanceException {
-        var withdrawer = findById(customerId);
+        var withdrawer = findCustomerById(customerId);
         sufficientBalanceChecker(withdrawer, withdrawal);
             withdrawer.setAccountBalance(
                     withdrawer.getAccountBalance().subtract(withdrawal));
@@ -75,13 +75,13 @@ public class CustomerService implements ICustomerService {
 
     @Override
     public void delete(Customer customer) throws CustomerNotFoundException {
-        var customerToDelete = findById(customer.getCustomerId());
+        var customerToDelete = findCustomerById(customer.getCustomerId());
         customerRepositoryAttribute.delete(customerToDelete);
     }
 
     @Override
     public Customer update(Customer customer) throws CustomerNotFoundException {
-        var customerToUpdate = findById(customer.getCustomerId());
+        var customerToUpdate = findCustomerById(customer.getCustomerId());
         customerToUpdate.setName(customer.getName());
         customerToUpdate.setAddress(customer.getAddress());
         customerToUpdate.setDateOfBirth(customer.getDateOfBirth());

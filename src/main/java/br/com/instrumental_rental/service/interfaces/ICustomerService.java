@@ -19,12 +19,12 @@ public interface ICustomerService {
 
     Customer findCustomerByNumberProvided(String number) throws CustomerNotFoundException;
 
-    BigDecimal addToBalance(String customerId, BigDecimal addition)
+    BigDecimal addToBalance(Long customerId, BigDecimal addition)
             throws CustomerNotFoundException;
 
-    BigDecimal withdraw(String customerId, BigDecimal withdrawal)
+    BigDecimal withdraw(Long customerId, BigDecimal withdrawal)
         throws CustomerNotFoundException, WithdrawalGreaterThanBalanceException;
 
-    Customer findById(String customerId) throws CustomerNotFoundException;
+    Customer findCustomerById(Long customerId) throws CustomerNotFoundException;
 
 }
