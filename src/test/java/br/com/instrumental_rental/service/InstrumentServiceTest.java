@@ -40,14 +40,8 @@ public class InstrumentServiceTest {
 
     @Test
     void testSaveSuccess() {
-        var builder = InstrumentBuilder.instrumentBuilder(
-                "1", "microphone", "Yamaha", "Supermic 4000",
-                BigDecimal.valueOf(4000), LocalDate.parse("2000-12-31",
-                        DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-        var builderNoId = InstrumentBuilder.instrumentNoIdBuilder("microphone",
-                "Yamaha", "Supermic 4000",
-                BigDecimal.valueOf(4000), LocalDate.parse("2000-01-01")
-        );
+        var builder = InstrumentBuilder.instrumentBuilder();
+        var builderNoId = InstrumentBuilder.instrumentNoIdBuilder();
         when(instrumentRepository.save(builderNoId)).thenReturn(builder);
         Instrument saved = instrumentService.save(builderNoId);
         Assertions.assertEquals(builder, saved);
@@ -57,9 +51,7 @@ public class InstrumentServiceTest {
 
     @Test
     void testFindInstrumentByModelSuccess() throws InstrumentNotFoundException {
-        var builder = InstrumentBuilder.instrumentBuilder(
-                "1", "microphone", "Yamaha", "Supermic 4000",
-                BigDecimal.valueOf(4000), LocalDate.parse("2000-01-01"));
+        var builder = InstrumentBuilder.instrumentBuilder();
         when(instrumentRepository.findInstrumentByMakeOrModel(builder.getModel()))
                 .thenReturn(List.of(builder));
         List<Instrument> found = instrumentService.findInstrumentByMakeOrModel(builder.getModel());
@@ -69,10 +61,7 @@ public class InstrumentServiceTest {
     @Test
     void testFindInstrumentByModelInstrumentNotFoundException()
         throws InstrumentNotFoundException {
-        var builder = InstrumentBuilder.instrumentBuilder(
-                "1", "microphone", "Yamaha", "Supermic 4000",
-                BigDecimal.valueOf(4000), LocalDate.parse("2000-01-01")
-        );
+        var builder = InstrumentBuilder.instrumentBuilder();
         when(instrumentRepository.findInstrumentByMakeOrModel(builder.getModel()))
                 .thenReturn(List.of());
         InstrumentNotFoundException thrown = Assertions.assertThrows(
@@ -86,9 +75,7 @@ public class InstrumentServiceTest {
 
     @Test
     void testListAll() {
-        var builder = InstrumentBuilder.instrumentBuilder(
-                "1", "microphone", "Yamaha", "Supermic 4000",
-                BigDecimal.valueOf(4000), LocalDate.parse("2000-01-01"));
+        var builder = InstrumentBuilder.instrumentBuilder();
         when(instrumentRepository.findAll()).thenReturn(List.of(builder));
         List<Instrument> listed = instrumentService.findAll();
         Assertions.assertIterableEquals(List.of(builder), listed);
@@ -96,14 +83,8 @@ public class InstrumentServiceTest {
 
     @Test
     void testUpdateSuccess() throws InstrumentNotFoundException {
-        var builder = InstrumentBuilder.instrumentBuilder(
-                "1", "microphone", "Yamaha", "Supermic 4000",
-                BigDecimal.valueOf(4000), LocalDate.parse("2000-01-01")
-        );
-        var builderUpdated = InstrumentBuilder.instrumentBuilder(
-                "1", "microphone", "Yamaha", "Supermic 4000",
-                BigDecimal.valueOf(4500), LocalDate.parse("2000-01-01")
-                );
+        var builder = InstrumentBuilder.instrumentBuilder();
+        var builderUpdated = InstrumentBuilder.instrumentBuilder();
         when(instrumentRepository.findById(builder.getInstrumentId()))
                 .thenReturn(Optional.of(builder));
         when(instrumentRepository.save(builderUpdated))
@@ -114,10 +95,7 @@ public class InstrumentServiceTest {
 
     @Test
     void testUpdateInstrumentNotFoundException() throws InstrumentNotFoundException {
-        var builder = InstrumentBuilder.instrumentBuilder(
-                "1", "microphone", "Yamaha", "Supermic 4000",
-                BigDecimal.valueOf(4500), LocalDate.parse("2000-01-01")
-        );
+        var builder = InstrumentBuilder.instrumentBuilder();
         when(instrumentRepository.findById(builder.getInstrumentId()))
                 .thenReturn(Optional.empty());
         InstrumentNotFoundException thrown = Assertions.assertThrows(
@@ -131,10 +109,7 @@ public class InstrumentServiceTest {
 
     @Test
     void testDeleteSuccess() throws InstrumentNotFoundException {
-        var builder = InstrumentBuilder.instrumentBuilder(
-                "1", "microphone", "Yamaha", "Supermic 4000",
-                BigDecimal.valueOf(4500), LocalDate.parse("2000-01-01")
-        );
+        var builder = InstrumentBuilder.instrumentBuilder();
         when(instrumentRepository.findById(builder.getInstrumentId()))
                 .thenReturn(Optional.of(builder));
         instrumentService.delete(builder);
@@ -144,10 +119,7 @@ public class InstrumentServiceTest {
 
     @Test
     void testDeleteInstrumentNotFoundException() throws InstrumentNotFoundException {
-        var builder = InstrumentBuilder.instrumentBuilder(
-                "1", "microphone", "Yamaha", "Supermic 4000",
-                BigDecimal.valueOf(4500), LocalDate.parse("2000-01-01")
-        );
+        var builder = InstrumentBuilder.instrumentBuilder();
         when(instrumentRepository.findById(builder.getInstrumentId()))
                 .thenReturn(Optional.empty());
         InstrumentNotFoundException thrown = Assertions.assertThrows(

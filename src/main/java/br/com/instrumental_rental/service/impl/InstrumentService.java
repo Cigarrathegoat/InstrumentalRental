@@ -26,7 +26,7 @@ public class InstrumentService implements IInstrumentService {
     public List<Instrument> findInstrumentByMakeOrModel(String makeOrModel)
             throws InstrumentNotFoundException {
         var instrumentSought = instrumentRepository.findInstrumentByMakeOrModel(makeOrModel);
-        if (instrumentSought == null) {
+        if (instrumentSought.isEmpty()) {
             throw new InstrumentNotFoundException("I01", "Instrument not found");
         } else {
             return instrumentSought;

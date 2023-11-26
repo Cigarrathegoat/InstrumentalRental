@@ -72,6 +72,7 @@ public class CustomerServiceTest {
 
     @Test
     void testFindAllSuccess() {
+        var builder = CustomerBuilder.customerBuilder();
         when(customerRepository.findAll()).thenReturn(List.of(builder));
         List<Customer> result = customerService.findAll();
         Assertions.assertNotNull(result);
