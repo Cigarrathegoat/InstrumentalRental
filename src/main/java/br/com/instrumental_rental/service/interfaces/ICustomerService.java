@@ -11,10 +11,11 @@ public interface ICustomerService {
 
     public Customer save(Customer customer);
 
-    public List<Customer> findAll();
-    public void delete(Customer customer) throws CustomerNotFoundException;
+    List<Customer> findAll();
 
-    public Customer update(Customer customer) throws CustomerNotFoundException;
+    void delete(Customer customer) throws CustomerNotFoundException;
+
+    Customer update(Customer customer) throws CustomerNotFoundException;
 
     Customer findCustomerByNumberProvided(String number) throws CustomerNotFoundException;
 

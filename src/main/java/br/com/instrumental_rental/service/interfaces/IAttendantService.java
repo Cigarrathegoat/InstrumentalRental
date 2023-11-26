@@ -7,13 +7,17 @@ import java.util.List;
 
 public interface IAttendantService {
 
-    public Attendant save(Attendant attendant);
+    Attendant save(Attendant attendant);
 
-    public void delete(Attendant attendant) throws AttendantNotFoundException;
+    void delete(Attendant attendant) throws AttendantNotFoundException;
 
-    public List<Attendant> findAll();
+    List<Attendant> findAll();
 
-    public Attendant update(Attendant attendant) throws AttendantNotFoundException;
+    Attendant update(Attendant attendant) throws AttendantNotFoundException;
 
     List<Attendant> findAttendantByNumberProvided(String numberProvided) throws AttendantNotFoundException;
+
+    Attendant findById(Long id) throws AttendantNotFoundException;
+
+
 }

@@ -17,6 +17,8 @@ public class AttendantService implements IAttendantService {
     @Autowired
     private IAttendantRepository attendantRepository;
 
+
+
     @Override
     public List<Attendant> findAttendantByNumberProvided(String numberProvided) throws AttendantNotFoundException {
         var attendantSought = attendantRepository.findAttendantByNumberProvided(numberProvided);
@@ -27,18 +29,20 @@ public class AttendantService implements IAttendantService {
     }
 
     @Override
+    public Attendant findById(Long id) throws AttendantNotFoundException {
+        return attendantRepository.findById(id).orElseThrow(
+                () -> new AttendantNotFoundException("A01", "Attendant not found"));
+    }
+
+    @Override
     public Attendant save(Attendant attendant) {
         return attendantRepository.save(attendant);
     }
 
     @Override
     public void delete(Attendant attendant) throws AttendantNotFoundException {
-        var attendantToDelete = attendantRepository.findById(attendant.getAttendantId())
-                .orElseThrow(() -> new AttendantNotFoundException(
-                        "A01", "Attendant not found"
-                        )
-                );
-        attendantRepository.delete(attendantToDelete);
+
+        attendantRepository.delete(findById(attendant.getAttendantId()));
 
     }
 
@@ -49,11 +53,12 @@ public class AttendantService implements IAttendantService {
 
     @Override
     public Attendant update(Attendant attendant) throws AttendantNotFoundException {
-        var attendantToUpdate = attendantRepository.findById(attendant.getAttendantId())
-                .orElseThrow(() -> new AttendantNotFoundException(
-                        "A01", "Attendant not found"
-                ));
+        var attendantToUpdate = findById(attendant.getAttendantId());
         attendantToUpdate.setName(attendant.getName());
+        attendantToUpdate.setContacts(attendant.getContacts());
+        attendantToUpdate.setDateOfBirth(attendant.getDateOfBirth());
+        attendantToUpdate.setSocialSecurityNumber(attendant.getSocialSecurityNumber());
+        attendantToUpdate.setDriversLicenseNumber(attendant.getDriversLicenseNumber());
         attendantRepository.save(attendantToUpdate);
         return attendantToUpdate;
     }
