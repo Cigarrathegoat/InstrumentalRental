@@ -29,13 +29,13 @@ public class AttendantServiceTest {
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.openMocks(this);}
-
-    Attendant builder = AttendantBuilder.attendantBuilder("1", "Mark", BigDecimal.valueOf(0));
+        MockitoAnnotations.openMocks(this);
+    }
 
 
     @Test
     void testSaveSuccess() {
+        var builder = AttendantBuilder.attendantBuilder();
         var builderNoId = AttendantBuilder.attendantBuilderNoId("Mark");
         when(attendantRepository.save(builderNoId)).thenReturn(builder);
         Attendant saved = attendantService.save(builderNoId);
@@ -44,6 +44,7 @@ public class AttendantServiceTest {
 
     @Test
     void findAttendantByNumberProvidedSuccess() throws AttendantNotFoundException {
+        var builder = AttendantBuilder.attendantBuilder();
         when(attendantRepository.findAttendantByNumberProvided(builder.getDriversLicenseNumber()))
                 .thenReturn(List.of(builder));
         List<Attendant> found = attendantService.findAttendantByNumberProvided(
@@ -66,8 +67,8 @@ public class AttendantServiceTest {
 
     @Test
     void updateAttendantSuccess() throws AttendantNotFoundException {
-        var builderUpdated = AttendantBuilder.attendantBuilder("1", "Marky",
-        BigDecimal.valueOf(0));
+        var builder = AttendantBuilder.attendantBuilder();
+        var builderUpdated = AttendantBuilder.attendantBuilder();
         when(attendantRepository.findById(builder.getAttendantId()))
                 .thenReturn(Optional.of(builder));
         when(attendantRepository.save(builderUpdated)).thenReturn(builderUpdated);
@@ -77,6 +78,7 @@ public class AttendantServiceTest {
 
     @Test
     void updateAttendantNotFoundException() throws AttendantNotFoundException {
+        var builder = AttendantBuilder.attendantBuilder();
         when(attendantRepository.findById(builder.getAttendantId()))
                 .thenReturn(Optional.empty());
         AttendantNotFoundException thrown = Assertions.assertThrows(
@@ -90,15 +92,17 @@ public class AttendantServiceTest {
 
     @Test
     void testDeleteSuccess() throws AttendantNotFoundException {
-      when(attendantRepository.findById(builder.getAttendantId()))
-              .thenReturn(Optional.of(builder));
-      attendantService.delete(builder);
-      verify(attendantRepository).findById(builder.getAttendantId());
-      verify(attendantRepository).delete(builder);
+        var builder = AttendantBuilder.attendantBuilder();
+        when(attendantRepository.findById(builder.getAttendantId()))
+                .thenReturn(Optional.of(builder));
+        attendantService.delete(builder);
+        verify(attendantRepository).findById(builder.getAttendantId());
+        verify(attendantRepository).delete(builder);
     }
 
     @Test
     void testDeleteAttendantNotFoundException() throws AttendantNotFoundException {
+        var builder = AttendantBuilder.attendantBuilder();
         when(attendantRepository.findById(builder.getAttendantId()))
                 .thenReturn(Optional.empty());
         AttendantNotFoundException thrown = Assertions.assertThrows(
