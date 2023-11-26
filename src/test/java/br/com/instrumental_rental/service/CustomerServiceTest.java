@@ -63,6 +63,8 @@ public class CustomerServiceTest {
 
     @Test
     void testSaveSuccess() {
+        var builder = CustomerBuilder.customerBuilder();
+        var builderNoId = CustomerBuilder.customerNoIdBuilder();
         when(customerRepository.save(builderNoId)).thenReturn(builder);
         Customer saved = customerService.save(builderNoId);
         Assertions.assertNotNull(saved);
@@ -70,6 +72,7 @@ public class CustomerServiceTest {
 
     @Test
     void testFindCustomerByNumberProvidedSuccess() throws CustomerNotFoundException {
+        var builder = CustomerBuilder.customerBuilder();
         when(customerRepository.findCustomerByNumberProvided(builder.getDriversLicenseNumber()))
                 .thenReturn(builder);
         Customer result = customerService.findCustomerByNumberProvided(
@@ -79,6 +82,7 @@ public class CustomerServiceTest {
 
     @Test
     void testFindCustomerByNameCustomerNotFoundException() throws CustomerNotFoundException {
+        var builder = CustomerBuilder.customerBuilder();
         when(customerRepository.findCustomerByNumberProvided(builder.getSocialSecurityNumber()))
                 .thenReturn(null);
         CustomerNotFoundException thrown = Assertions.assertThrows(
@@ -99,6 +103,8 @@ public class CustomerServiceTest {
 
     @Test
     void testUpdateSuccess() throws CustomerNotFoundException {
+        var builder = CustomerBuilder.customerBuilder();
+        var builderUpdated = CustomerBuilder.customerUpdatedBuilder();
         when(customerRepository.findById(builder.getCustomerId()))
                 .thenReturn(Optional.of(builder));
         when(customerRepository.save(builderUpdated)).thenReturn(builderUpdated);
