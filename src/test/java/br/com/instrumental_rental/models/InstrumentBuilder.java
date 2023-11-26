@@ -9,7 +9,7 @@ import java.time.format.DateTimeFormatter;
 public class InstrumentBuilder {
 
     public static Instrument instrumentBuilder() {
-        return Instrument.builder().instrumentId("1").type("Microphone").make("Yamaha").model("Supermic 4000")
+        return Instrument.builder().instrumentId(1L).type("Microphone").make("Yamaha").model("Supermic 4000")
                 .price(BigDecimal.valueOf(4000)).manufactureDate(LocalDate.parse("2005-12-31",
                         DateTimeFormatter.ofPattern("yyyy-MM-dd"))).available(true).build();
     }

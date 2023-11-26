@@ -10,7 +10,7 @@ public class AttendantBuilder {
     /*private Attendant attendantBuilder = AttendantBuilder.attendantBuilder(
             "1", "Mark", BigDecimal.valueOf(0));*/
     public static Attendant attendantBuilder() {
-        return Attendant.builder().attendantId("01").name("Mark")
+        return Attendant.builder().attendantId(1L).name("Mark")
                 .totalCommission(BigDecimal.valueOf(0))
                 .build();
     }
