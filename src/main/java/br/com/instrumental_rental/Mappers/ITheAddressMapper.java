@@ -5,6 +5,8 @@ import br.com.instrumental_rental.repository.entities.TheAddress;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring")
 public interface ITheAddressMapper {
 
@@ -13,4 +15,6 @@ public interface ITheAddressMapper {
     TheAddressDTO convertToDto(TheAddress theAddress);
 
     TheAddress convertToEntity(TheAddressDTO theAddressDTO);
+
+    List<TheAddressDTO> convertToListDTO(List<TheAddress> theAddressList);
 }
