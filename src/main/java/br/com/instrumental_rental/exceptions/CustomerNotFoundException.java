@@ -11,5 +11,11 @@ public class CustomerNotFoundException extends Exception {
         this.code = code;
     }
 
+    //public String path;
+
+    //public String filename;
+
+    //public LocalDateTime time;
+
     public String getCode() {return code;}
 }
