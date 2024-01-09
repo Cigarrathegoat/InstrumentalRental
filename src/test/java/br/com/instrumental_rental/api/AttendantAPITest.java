@@ -14,6 +14,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 public class AttendantAPITest {
@@ -55,5 +56,18 @@ public class AttendantAPITest {
         Assertions.assertEquals(AttendantResponseDTO.builder().data(attendantSoughtDTO).build(), result);
     }
 
-
+    @Test
+    void testFindAttendantNotFoundExceptionError() throws AttendantNotFoundException {
+        var attendantSought = AttendantBuilder.attendantBuilder();
+        var attendantSoughtDTO = AttendantDTOBuilder.attendantDTOSuccessBuilder();
+        when(attendantService.findAttendantByNumberProvided(attendantSought.getSocialSecurityNumber()))
+                .thenThrow(new AttendantNotFoundException("A01", "Attendant not found"));
+        AttendantNotFoundException thrown = Assertions.assertThrows(
+                AttendantNotFoundException.class, () -> {
+                    attendantAPI.update(attendantSought.getAttendantId(), attendantSoughtDTO);
+                }
+        );
+        Assertions.assertEquals("A01", thrown.getCode());
+        Assertions.assertEquals("not found", thrown.getMessage());
+    }
 }
