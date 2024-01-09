@@ -8,7 +8,9 @@ import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Positive;
 import javax.validation.metadata.ConstraintDescriptor;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
@@ -18,10 +20,33 @@ import java.util.Set;
 @NoArgsConstructor
 public class AttendantDTO {
 
+
+    /* private Long attendantId;
+
+    @Column(name = "DS_NAME")
+    private String name;
+
+    @Column(name = "DS_DATE_OF_BIRTH")
+    private LocalDate dateOfBirth;
+
+    @Column(name = "DS_SOCIAL_SECURITY")
+    private String socialSecurityNumber;//9 digits
+
+    @Column(name = "DS_DRIVERS-LICENSE")
+    private String driversLicenseNumber;//7 digits
+
+     */
     @NotBlank(message = "Name field must not be blank")
     @Pattern(regexp = "^[a-zA-Z]+$", message = "Field must only have letters")
     private String name;
 
+    @NotBlank(message = "dateOfBirth field must not be blank")
+    @Pattern(regexp = "^[0-9]+$", message = "field must only have numbers")
+    @Positive(message = "numbers in field must be positive")
+    @Pattern(regexp = "^\\d{2}-\\d{2}-\\d{4}$", message = "date entered must be in dd/mm/yyyy format")
+    private LocalDate birthDate;
+
+    @NotBlank(message = "socialSecurityNumber field must not be blank")
     @NotBlank(message = "Contacts field must not be blank")
     private List<ContactsDTO> contacts;
 }

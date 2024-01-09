@@ -56,13 +56,18 @@ public class AttendantAPI implements IAttendantAPI {
                 ).build();
     }
 
-    @Override
-    public AttendantListResponseDTO findAll() {
-        return null;
+    @GetMapping("/listAll")
+    public AttendantListResponseDTO listAll() {
+
+        return AttendantListResponseDTO.builder()
+                .data(
+                        attendantMapper.convertToListDto(attendantService.findAll())
+                ).build();
     }
 
-    @Override
-    public AttendantResponseDTO update(Long attendantId, CustomerDTO customerDTO) throws AttendantNotFoundException {
+    @PutMapping("/update/attendant/{attendantId}")
+    public AttendantResponseDTO update(@PathVariable("attendantId")Long attendantId,
+                                       @RequestBody AttendantDTO attendantDTO) throws AttendantNotFoundException {
         return null;
     }
 
