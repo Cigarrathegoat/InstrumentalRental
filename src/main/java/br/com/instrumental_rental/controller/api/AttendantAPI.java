@@ -68,11 +68,23 @@ public class AttendantAPI implements IAttendantAPI {
     @PutMapping("/update/attendant/{attendantId}")
     public AttendantResponseDTO update(@PathVariable("attendantId")Long attendantId,
                                        @RequestBody AttendantDTO attendantDTO) throws AttendantNotFoundException {
-        return null;
+        return AttendantResponseDTO.builder()
+                .data(
+                        attendantMapper.convertToDTO(
+                                attendantService.update(attendantMapper.convertToEntity(attendantDTO
+                                )
+                                )
+                        )
+                ).build();
     }
 
-    @Override
-    public ResponseEntity<DeleteResponseDTO> delete(Long attendantId) throws AttendantNotFoundException {
-        return null;
+    @DeleteMapping("/{attendantId}")
+    public ResponseEntity<DeleteResponseDTO> delete(@PathVariable("attendantId")Long attendantId)
+            throws AttendantNotFoundException {
+        attendantService.delete(attendantService.findAttendantById(attendantId));
+        return ResponseEntity.ok(DeleteResponseDTO
+                .builder()
+                .deleteSuccessMessage("Attendant successfully deleted")
+                .build());
     }
 }

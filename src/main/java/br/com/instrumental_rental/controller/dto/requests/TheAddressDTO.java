@@ -11,6 +11,8 @@ import javax.validation.constraints.Positive;
 @Builder
 public class TheAddressDTO {
 
+    private String addressId;
+
     @NotBlank(message = "field must not be blank")
     @Pattern(regexp  = "^[a-zA-Z]+$", message = "field must be letters only")
     private String streetName;

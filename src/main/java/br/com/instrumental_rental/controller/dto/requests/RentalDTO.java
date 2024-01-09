@@ -20,27 +20,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class RentalDTO {
 
-
-    /* @NotBlank(message = "field cannot be left blank")
-    @Pattern(regexp = "^[a-zA-Z]+&", message = "please use only letters")
-    private String type;
-
-    @NotBlank(message = "field cannot be left blank")
-    @Pattern(regexp = "^[a-zA-Z]+$", message = "must only use letters")
-    private String make;
-
-    @NotBlank(message = "field cannot be left blank")
-    private String model;
-
-    @NotBlank(message = "field cannot be left blank")
-    @Pattern(regexp = "^[0-9]+$", message = "only numeral digits please")
-    private BigDecimal price;
-
-    @NotBlank(message = "field cannot be left blank")
-    @Pattern(regexp = "^\\d{2}-\\d{2}-\\d{4}$", message = "date must be in mm-dd-YYYY format")
-    private LocalDate manufactureDate;
-
-     */
+    private Long rentalId;
 
     @NotBlank(message = "field cannot be left blank")
     @Pattern(regexp = "^[0-9]+$", message = "Field must be a number")

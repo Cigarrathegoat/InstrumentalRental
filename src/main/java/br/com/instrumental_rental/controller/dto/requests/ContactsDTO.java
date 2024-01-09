@@ -14,6 +14,8 @@ import javax.validation.constraints.Pattern;
 @NoArgsConstructor
 public class ContactsDTO {
 
+    private Long contactsId;
+
     @NotBlank(message = "field must not be empty")
     @Pattern(regexp = "^[a-zA-Z]+$", message = "field must be filled with letters only")
     private String contactType;
