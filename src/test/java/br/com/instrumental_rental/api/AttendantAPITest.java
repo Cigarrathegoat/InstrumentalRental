@@ -3,6 +3,7 @@ package br.com.instrumental_rental.api;
 import br.com.instrumental_rental.Mappers.IAttendantMapper;
 import br.com.instrumental_rental.controller.api.AttendantAPI;
 import br.com.instrumental_rental.controller.dto.responses.responses.AttendantResponseDTO;
+import br.com.instrumental_rental.exceptions.AttendantNotFoundException;
 import br.com.instrumental_rental.models.AttendantBuilder;
 import br.com.instrumental_rental.models.AttendantDTOBuilder;
 import br.com.instrumental_rental.service.interfaces.IAttendantService;
@@ -42,4 +43,17 @@ public class AttendantAPITest {
         AttendantResponseDTO result = attendantAPI.add(attendantDTONoIdBuilder);
         Assertions.assertEquals(AttendantResponseDTO.builder().data(attendantDTOBuilder).build(), result);
     }
+
+    @Test
+    void testFindSuccess() throws AttendantNotFoundException {
+        var attendantSought = AttendantBuilder.attendantBuilder();
+        var attendantSoughtDTO = AttendantDTOBuilder.attendantDTOSuccessBuilder();
+        when(attendantService.findAttendantByNumberProvided(attendantSought.getSocialSecurityNumber()))
+                .thenReturn(attendantSought);
+        when(attendantMapper.convertToDTO(attendantSought)).thenReturn(attendantSoughtDTO);
+        AttendantResponseDTO result = attendantAPI.find(attendantSought.getSocialSecurityNumber());
+        Assertions.assertEquals(AttendantResponseDTO.builder().data(attendantSoughtDTO).build(), result);
+    }
+
+
 }
