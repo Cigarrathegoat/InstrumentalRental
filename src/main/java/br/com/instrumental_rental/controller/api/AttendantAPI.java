@@ -9,13 +9,13 @@ import br.com.instrumental_rental.controller.dto.responses.responses.AttendantRe
 import br.com.instrumental_rental.controller.dto.responses.responses.DeleteResponseDTO;
 import br.com.instrumental_rental.exceptions.AttendantNotFoundException;
 import br.com.instrumental_rental.exceptions.CustomerNotFoundException;
+import br.com.instrumental_rental.repository.entities.Attendant;
 import br.com.instrumental_rental.service.interfaces.IAttendantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("v1/attendant")
@@ -44,9 +44,14 @@ public class AttendantAPI implements IAttendantAPI {
                 ).build();
     }
 
-    @Override
-    public AttendantListResponseDTO find(String attendantName) throws AttendantNotFoundException {
-        return AttendantListResponseDTO.builder().build();
+    @GetMapping("/find/{attendant}")
+    public AttendantListResponseDTO find(@PathVariable("attendant")String attendantNumber)
+            throws AttendantNotFoundException {
+        List<Attendant> attendantList = attendantService.findAttendantByNumberProvided()
+        return AttendantListResponseDTO.builder()
+                .data(
+
+                ).build();
     }
 
     @Override
