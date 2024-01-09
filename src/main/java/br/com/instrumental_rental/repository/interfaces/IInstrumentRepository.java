@@ -14,6 +14,6 @@ public interface IInstrumentRepository extends JpaRepository<Instrument, Long> {
     List<Instrument> findInstrumentByMakeOrModel(String makeOrModel);
     //TODO: write query to find IDs of all instruments of a certain type
     //TODO: write query to find IDs of all instruments that have been rented
-    @Query("")
+
 
 }

@@ -15,7 +15,7 @@ public interface IAttendantService {
 
     Attendant update(Attendant attendant) throws AttendantNotFoundException;
 
-    List<Attendant> findAttendantByNumberProvided(String numberProvided) throws AttendantNotFoundException;
+    Attendant findAttendantByNumberProvided(String numberProvided) throws AttendantNotFoundException;
 
     Attendant findAttendantById(Long id) throws AttendantNotFoundException;
 

@@ -46,16 +46,16 @@ public class AttendantServiceTest {
     void findAttendantByNumberProvidedSuccess() throws AttendantNotFoundException {
         var builder = AttendantBuilder.attendantBuilder();
         when(attendantRepository.findAttendantByNumberProvided(builder.getDriversLicenseNumber()))
-                .thenReturn(List.of(builder));
-        List<Attendant> found = attendantService.findAttendantByNumberProvided(
+                .thenReturn(builder);
+       Attendant found = attendantService.findAttendantByNumberProvided(
                 builder.getDriversLicenseNumber());
-        Assertions.assertEquals(List.of(builder), found);
+        Assertions.assertEquals(builder, found);
     }
 
     @Test
     void findAttendantByNumberProvidedAttendantNotFoundException() throws AttendantNotFoundException {
         when(attendantRepository.findAttendantByNumberProvided(anyString()))
-                .thenReturn(Collections.emptyList());
+                .thenReturn(null);
         AttendantNotFoundException thrown = Assertions.assertThrows(
                 AttendantNotFoundException.class, () -> {
                     attendantService.findAttendantByNumberProvided(anyString());

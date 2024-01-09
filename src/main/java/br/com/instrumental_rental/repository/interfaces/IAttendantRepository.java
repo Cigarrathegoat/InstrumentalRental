@@ -12,7 +12,7 @@ public interface IAttendantRepository extends JpaRepository<Attendant, Long> {
 
     @Query(value = "SELECT a FROM Attendant a" +
     "WHERE a.socialSecurityNumber = :numberProvided OR a.driversLicenseNumber = :numberProvided")
-    List<Attendant> findAttendantByNumberProvided(String numberProvided);
+    Attendant findAttendantByNumberProvided(String numberProvided);
 
     //TODO run query to find which attendant has made most sales, per month
 }

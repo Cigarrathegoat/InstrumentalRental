@@ -20,9 +20,9 @@ public class AttendantService implements IAttendantService {
 
 
     @Override
-    public List<Attendant> findAttendantByNumberProvided(String numberProvided) throws AttendantNotFoundException {
+    public Attendant findAttendantByNumberProvided(String numberProvided) throws AttendantNotFoundException {
         var attendantSought = attendantRepository.findAttendantByNumberProvided(numberProvided);
-        if (attendantSought.isEmpty()) {
+        if (attendantSought == null) {
             throw new AttendantNotFoundException("A01", "Attendant not found");
         }
         return attendantSought;

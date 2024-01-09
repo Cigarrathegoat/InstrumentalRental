@@ -45,12 +45,14 @@ public class AttendantAPI implements IAttendantAPI {
     }
 
     @GetMapping("/find/{attendant}")
-    public AttendantListResponseDTO find(@PathVariable("attendant")String attendantNumber)
+    public AttendantResponseDTO find(@PathVariable("attendant")String attendantNumber)
             throws AttendantNotFoundException {
-        List<Attendant> attendantList = attendantService.findAttendantByNumberProvided()
-        return AttendantListResponseDTO.builder()
-                .data(
 
+        return AttendantResponseDTO.builder()
+                .data(
+                        attendantMapper.convertToDTO(attendantService.findAttendantByNumberProvided(
+                                attendantNumber)
+                        )
                 ).build();
     }
 

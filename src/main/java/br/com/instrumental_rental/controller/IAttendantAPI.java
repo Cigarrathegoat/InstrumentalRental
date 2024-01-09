@@ -24,10 +24,10 @@ public interface IAttendantAPI {
         throws AttendantNotFoundException;
 
     @ApiOperation(value = "find Attendant object",
-    response = AttendantListResponseDTO.class)
+    response = AttendantResponseDTO.class)
     @ApiResponses(value = {@ApiResponse(code = 200, message = "success"),
     @ApiResponse(code = 404, response = ErrorSpecificationDTO.class, message = "not found")})
-    public AttendantListResponseDTO find(String attendantName)
+    public AttendantResponseDTO find(String attendantNumber)
         throws AttendantNotFoundException;
 
     @ApiOperation(value = "find all Attendant objects",
