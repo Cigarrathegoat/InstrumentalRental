@@ -2,6 +2,8 @@ package br.com.instrumental_rental.api;
 
 import br.com.instrumental_rental.Mappers.IAttendantMapper;
 import br.com.instrumental_rental.controller.api.AttendantAPI;
+import br.com.instrumental_rental.controller.dto.requests.AttendantDTO;
+import br.com.instrumental_rental.controller.dto.responses.responses.AttendantListResponseDTO;
 import br.com.instrumental_rental.controller.dto.responses.responses.AttendantResponseDTO;
 import br.com.instrumental_rental.exceptions.AttendantNotFoundException;
 import br.com.instrumental_rental.models.AttendantBuilder;
@@ -13,6 +15,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+
+import java.util.List;
 
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
@@ -68,5 +72,15 @@ public class AttendantAPITest {
         );
         Assertions.assertEquals("A01", thrown.getCode());
         Assertions.assertEquals("Attendant not found", thrown.getMessage());
+    }
+    @Test
+    void testListAllSuccess() {
+        var attendantSought = AttendantBuilder.attendantBuilder();
+        var attendantSoughtDTO = AttendantDTOBuilder.attendantDTOSuccessBuilder();
+        when(attendantService.findAll()).thenReturn(List.of(attendantSought));
+        when(attendantMapper.convertToListDto(List.of(attendantSought))).thenReturn(List.of(attendantSoughtDTO));
+        AttendantListResponseDTO result = attendantAPI.listAll();
+        Assertions.assertEquals(AttendantListResponseDTO.builder()
+                .data(List.of(attendantSoughtDTO)).build(), result);
     }
 }
