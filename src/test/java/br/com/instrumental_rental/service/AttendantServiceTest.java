@@ -36,7 +36,7 @@ public class AttendantServiceTest {
     @Test
     void testSaveSuccess() {
         var builder = AttendantBuilder.attendantBuilder();
-        var builderNoId = AttendantBuilder.attendantBuilderNoId("Mark");
+        var builderNoId = AttendantBuilder.attendantBuilderNoId();
         when(attendantRepository.save(builderNoId)).thenReturn(builder);
         Attendant saved = attendantService.save(builderNoId);
         Assertions.assertNotNull(saved);

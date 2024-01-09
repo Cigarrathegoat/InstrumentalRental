@@ -15,7 +15,7 @@ public class AttendantBuilder {
                 .build();
     }
 
-    public static Attendant attendantBuilderNoId(String name) {
+    public static Attendant attendantBuilderNoId() {
         return Attendant.builder().attendantId(null).name("Mark")
                 .totalCommission(BigDecimal.valueOf(0)).build();
     }

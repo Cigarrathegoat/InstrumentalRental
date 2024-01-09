@@ -31,8 +31,7 @@ public class AttendantAPI implements IAttendantAPI {
         this.attendantService = attendantService;
     }
     @PostMapping("/new")
-    public AttendantResponseDTO add(@RequestBody AttendantDTO attendantDTO)
-            throws AttendantNotFoundException {
+    public AttendantResponseDTO add(@RequestBody AttendantDTO attendantDTO) {
         return AttendantResponseDTO.builder()
                 .data(
                         attendantMapper.convertToDTO(
