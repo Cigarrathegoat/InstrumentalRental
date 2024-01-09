@@ -21,7 +21,7 @@ public interface IAttendantAPI {
     @ApiResponses(value = {@ApiResponse(code = 200, message = "success"),
     @ApiResponse(code = 404, response = ErrorSpecificationDTO.class, message = "not found")})
     AttendantResponseDTO add(AttendantDTO attendantDTO)
-        throws CustomerNotFoundException;
+        throws AttendantNotFoundException;
 
     @ApiOperation(value = "find Attendant object",
     response = AttendantListResponseDTO.class)

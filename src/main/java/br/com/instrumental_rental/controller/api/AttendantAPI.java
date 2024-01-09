@@ -12,7 +12,13 @@ import br.com.instrumental_rental.exceptions.CustomerNotFoundException;
 import br.com.instrumental_rental.service.interfaces.IAttendantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+@RestController
+@RequestMapping("v1/attendant")
 public class AttendantAPI implements IAttendantAPI {
 
     private IAttendantService attendantService;
@@ -24,14 +30,23 @@ public class AttendantAPI implements IAttendantAPI {
         this.attendantMapper = attendantMapper;
         this.attendantService = attendantService;
     }
-    @Override
-    public AttendantResponseDTO add(AttendantDTO attendantDTO) throws CustomerNotFoundException {
-        return null;
+    @PostMapping("/new")
+    public AttendantResponseDTO add(@RequestBody AttendantDTO attendantDTO)
+            throws AttendantNotFoundException {
+        return AttendantResponseDTO.builder()
+                .data(
+                        attendantMapper.convertToDTO(
+                                attendantService.save(
+                                        attendantMapper.convertToEntity(
+                                                attendantDTO)
+                                )
+                        )
+                ).build();
     }
 
     @Override
     public AttendantListResponseDTO find(String attendantName) throws AttendantNotFoundException {
-        return null;
+        return AttendantListResponseDTO.builder().build();
     }
 
     @Override
