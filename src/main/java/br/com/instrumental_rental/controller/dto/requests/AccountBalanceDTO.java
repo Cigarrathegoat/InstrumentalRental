@@ -8,6 +8,7 @@ import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Positive;
 
 @Data
@@ -18,6 +19,7 @@ public class AccountBalanceDTO {
 
     @NotNull(message = "Please deposit a minimum balance of $100.00.")
     @Positive(message = "Please deposit a minimum balance of $100.00.")
+    @Pattern(regexp = "^[0-9]+$", message = "Field must only have numbers")
     @Min(value = 100, message = "Please deposit a minimum balance of $100.00.")
     private long accountBalance;
 }
