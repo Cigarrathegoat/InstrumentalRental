@@ -30,15 +30,15 @@ public interface IAttendantAPI {
     public AttendantResponseDTO find(String attendantNumber)
         throws AttendantNotFoundException;
 
-    @ApiOperation(value = "find all Attendant objects",
+    @ApiOperation(value = "list all Attendant objects",
     response = AttendantListResponseDTO.class)
     @ApiResponses(value = {@ApiResponse(code = 200, message = "success")})
-    public AttendantListResponseDTO findAll();
+    public AttendantListResponseDTO listAll();
 
     @ApiOperation(value = "update Attendant object",
     response = AttendantListResponseDTO.class)
     @ApiResponses(value = {@ApiResponse(code = 200, message = "success")})
-    public AttendantResponseDTO update(Long attendantId, CustomerDTO customerDTO)
+    public AttendantResponseDTO update(Long attendantId, AttendantDTO attendantDTO)
         throws AttendantNotFoundException;
 
     @ApiOperation(value = "delete Attendant object",
