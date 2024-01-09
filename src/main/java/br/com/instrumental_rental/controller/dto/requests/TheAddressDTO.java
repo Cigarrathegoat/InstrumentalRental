@@ -20,14 +20,23 @@ public class TheAddressDTO {
     @Positive(message = "field must be a positive number")
     private String streetNumber;
 
-
+    @NotBlank(message = "field must not be blank")
+    @Pattern(regexp = "^[a-zA-Z]+$", message = "field must be a letter")
     private String borough;
 
+    @NotBlank(message = "field must not be blank")
+    @Pattern(regexp = "^[a-zA-Z]+$", message = "field must be a letter")
     private String city;
 
+    @NotBlank(message = "field must not be blank")
+    @Pattern(regexp = "^[a-zA-Z]+$", message = "field must be a letter")
     private String state;
 
+    @NotBlank(message = "field must not be blank")
+    @Pattern(regexp = "^[a-zA-Z]+$", message = "field must be a letter")
     private String country;
 
+    @NotBlank(message = "field must not be blank")
+    @Pattern(regexp = "^[0-9]+$", message = "field must be a number")
     private String zipCode;
 }
