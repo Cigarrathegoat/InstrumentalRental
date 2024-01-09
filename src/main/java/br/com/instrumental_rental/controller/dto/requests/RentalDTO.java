@@ -9,6 +9,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Positive;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -41,22 +43,30 @@ public class RentalDTO {
      */
 
     @NotBlank(message = "field cannot be left blank")
-
-
+    @Pattern(regexp = "^[0-9]+$", message = "Field must be a number")
+    @Positive(message = "field must not be a negative number")
     private String customerId;
 
     @NotBlank(message = "field cannot be left blank")
-     private String attendantId;
+    @Pattern(regexp = "^[0-9]+$", message = "Field must be a number")
+    @Positive(message = "field must not be a negative number")
+    private String attendantId;
 
     @NotBlank(message = "field cannot be left blank")
     private InstrumentDTO instrument;
 
     @NotBlank(message = "field cannot be left blank")
+    @Pattern(regexp = "^[0-9]+$", message = "Field must be a number")
+    @Pattern(regexp = "^\\d{2}-\\d{2}-\\d{4}$", message = "date must be in dd-mm-yyyy format")
     private LocalDate startDate;
 
+    @Pattern(regexp = "^[0-9]+$", message = "Field must be a number")
+    @Pattern(regexp = "^\\d{2}-\\d{2}-\\d{4}$", message = "date must be in dd-mm-yyyy format")
     @NotBlank(message = "field cannot be left blank")
     private LocalDate endDate;
 
     @NotBlank(message = "field cannot be left blank")
+    @Pattern(regexp = "^[0-9]+$", message = "Field must be a number")
+    @Positive(message = "number must be positive")
     private BigDecimal price;
 }
