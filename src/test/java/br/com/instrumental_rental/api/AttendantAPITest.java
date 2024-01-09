@@ -59,15 +59,14 @@ public class AttendantAPITest {
     @Test
     void testFindAttendantNotFoundExceptionError() throws AttendantNotFoundException {
         var attendantSought = AttendantBuilder.attendantBuilder();
-        var attendantSoughtDTO = AttendantDTOBuilder.attendantDTOSuccessBuilder();
         when(attendantService.findAttendantByNumberProvided(attendantSought.getSocialSecurityNumber()))
                 .thenThrow(new AttendantNotFoundException("A01", "Attendant not found"));
         AttendantNotFoundException thrown = Assertions.assertThrows(
                 AttendantNotFoundException.class, () -> {
-                    attendantAPI.update(attendantSought.getAttendantId(), attendantSoughtDTO);
+                    attendantAPI.find(attendantSought.getSocialSecurityNumber());
                 }
         );
         Assertions.assertEquals("A01", thrown.getCode());
-        Assertions.assertEquals("not found", thrown.getMessage());
+        Assertions.assertEquals("Attendant not found", thrown.getMessage());
     }
 }
