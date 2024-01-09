@@ -9,6 +9,7 @@ import javax.validation.ValidatorFactory;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 import javax.validation.metadata.ConstraintDescriptor;
 import java.time.LocalDate;
 import java.util.List;
@@ -20,22 +21,8 @@ import java.util.Set;
 @NoArgsConstructor
 public class AttendantDTO {
 
+    private Long attendantId;
 
-    /* private Long attendantId;
-
-    @Column(name = "DS_NAME")
-    private String name;
-
-    @Column(name = "DS_DATE_OF_BIRTH")
-    private LocalDate dateOfBirth;
-
-    @Column(name = "DS_SOCIAL_SECURITY")
-    private String socialSecurityNumber;//9 digits
-
-    @Column(name = "DS_DRIVERS-LICENSE")
-    private String driversLicenseNumber;//7 digits
-
-     */
     @NotBlank(message = "Name field must not be blank")
     @Pattern(regexp = "^[a-zA-Z]+$", message = "Field must only have letters")
     private String name;
@@ -47,6 +34,16 @@ public class AttendantDTO {
     private LocalDate birthDate;
 
     @NotBlank(message = "socialSecurityNumber field must not be blank")
+    @Pattern(regexp = "^[0-9]+$", message = "please only input numeral digits")
+    @Size(min = 9, max = 9, message = "social security number must have exactly nine digits")
+    private String socialSecurityNumber;
+
+    @NotBlank(message = "driver's license number field must not be left blank")
+    @Pattern(regexp = "^[0-9]+$", message = "please only input numerical digits")
+    @Size(min = 7, max = 7, message = "driver's license number must have exactly seven digits")
+    private String driversLicense;
+
+
     @NotBlank(message = "Contacts field must not be blank")
     private List<ContactsDTO> contacts;
 }

@@ -20,6 +20,8 @@ import java.util.List;
 @NoArgsConstructor
 public class CustomerDTO {
 
+    private Long customerId;
+
     @NotBlank(message = "Name field must not be empty")
     @Pattern(regexp = "^[a-zA-Z]+$", message = "only letter-type characters allowed in name field")
     private String name;
