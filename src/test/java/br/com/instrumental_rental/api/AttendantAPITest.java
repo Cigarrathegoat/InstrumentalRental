@@ -8,6 +8,7 @@ import br.com.instrumental_rental.controller.dto.responses.responses.AttendantRe
 import br.com.instrumental_rental.exceptions.AttendantNotFoundException;
 import br.com.instrumental_rental.models.AttendantBuilder;
 import br.com.instrumental_rental.models.AttendantDTOBuilder;
+import br.com.instrumental_rental.repository.entities.Attendant;
 import br.com.instrumental_rental.service.interfaces.IAttendantService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -82,5 +83,16 @@ public class AttendantAPITest {
         AttendantListResponseDTO result = attendantAPI.listAll();
         Assertions.assertEquals(AttendantListResponseDTO.builder()
                 .data(List.of(attendantSoughtDTO)).build(), result);
+    }
+
+    @Test
+    void testUpdateSuccess() throws AttendantNotFoundException {
+        var attendantSought = AttendantBuilder.attendantBuilder();
+        var attendantSoughtDTO = AttendantDTOBuilder.attendantDTOSuccessBuilder();
+        when(attendantMapper.convertToEntity(attendantSoughtDTO)).thenReturn(attendantSought);
+        when(attendantService.update(attendantSought)).thenReturn(attendantSought);
+        when(attendantMapper.convertToDTO(attendantSought)).thenReturn(attendantSoughtDTO);
+        AttendantResponseDTO result = attendantAPI.update(attendantSought.getAttendantId(), attendantSoughtDTO);
+        Assertions.assertEquals(AttendantResponseDTO.builder().data(attendantSoughtDTO).build(), result);
     }
 }
