@@ -22,8 +22,7 @@ public interface ICustomerAPI {
     response = CustomerDTO.class)
     @ApiResponses(value = {@ApiResponse(code = 200, message = "success"),
     @ApiResponse(code =404, response = ErrorSpecificationDTO.class, message = "not found")})
-    CustomerResponseDTO add(CustomerDTO customerDTO)
-        throws CustomerNotFoundException, WithdrawalGreaterThanBalanceException;
+    CustomerResponseDTO add(CustomerDTO customerDTO);
 
     @ApiOperation(value = "find Customer object",
     response = CustomerDTO.class)
