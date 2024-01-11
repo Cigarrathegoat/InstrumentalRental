@@ -13,7 +13,7 @@ public interface ICustomerService {
 
     List<Customer> findAll();
 
-    void delete(Customer customer) throws CustomerNotFoundException;
+    void delete(Long customerId) throws CustomerNotFoundException;
 
     Customer update(Customer customer) throws CustomerNotFoundException;
 

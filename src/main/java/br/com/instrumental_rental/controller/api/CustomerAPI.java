@@ -6,6 +6,7 @@ import br.com.instrumental_rental.controller.dto.requests.AccountBalanceDTO;
 import br.com.instrumental_rental.controller.dto.requests.CustomerDTO;
 import br.com.instrumental_rental.controller.dto.responses.errors.ErrorResponseDTO;
 import br.com.instrumental_rental.controller.dto.responses.errors.ErrorSpecificationDTO;
+import br.com.instrumental_rental.controller.dto.responses.responses.AccountBalanceResponseDTO;
 import br.com.instrumental_rental.controller.dto.responses.responses.CustomerListResponseDTO;
 import br.com.instrumental_rental.controller.dto.responses.responses.CustomerResponseDTO;
 import br.com.instrumental_rental.controller.dto.responses.responses.DeleteResponseDTO;
@@ -18,6 +19,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -74,19 +76,48 @@ public class CustomerAPI implements ICustomerAPI {
 
     }
 
-    @Override
-    public CustomerResponseDTO update() throws CustomerNotFoundException {
+    @PutMapping("/update/{customerId}")
+    public CustomerResponseDTO update(@PathVariable("customerId") Long customerId,
+                                      @RequestBody CustomerDTO customerDTO) throws CustomerNotFoundException {
 
-        return null;
+        return CustomerResponseDTO.builder()
+                .data(customerMapperAttribute.convertToDto(customerServiceAttribute.update(
+                                        customerMapperAttribute.convertToEntity(customerDTO)
+                                )
+                        )
+                )
+                .build();
     }
 
-    @Override
-    public AccountBalanceDTO addToBalance() throws CustomerNotFoundException {
-        return null;
+    @PutMapping("/add-to-balance/{customerId}")
+    public AccountBalanceResponseDTO addToBalance(@PathVariable("customerId") Long customerId,
+                                                  @RequestBody AccountBalanceDTO accountBalanceDTO)
+            throws CustomerNotFoundException {
+        return AccountBalanceResponseDTO.builder()
+                .data(
+                        customerMapperAttribute.convertAccountBalanceToDTO(
+                                customerServiceAttribute.addToBalance(customerId,
+                                BigDecimal.valueOf(accountBalanceDTO.getValueToAddOrWithdraw())))
+                ).build();
+    }
+    @PutMapping("/withdraw/{customerId}")
+    public AccountBalanceResponseDTO withdraw(@PathVariable("customerId") Long customerId,
+                                              @RequestBody AccountBalanceDTO accountBalanceDTO)
+        throws CustomerNotFoundException, WithdrawalGreaterThanBalanceException {
+        return AccountBalanceResponseDTO.builder()
+                .data(
+                        customerMapperAttribute.convertAccountBalanceToDTO(
+                                customerServiceAttribute.withdraw(customerId,
+                                        BigDecimal.valueOf(accountBalanceDTO.getValueToAddOrWithdraw()))
+                        )
+                ).build();
     }
 
-    @Override
-    public ResponseEntity<DeleteResponseDTO> delete(Long customerId) throws CustomerNotFoundException {
-        return null;
+    @DeleteMapping("/delete/{customerId}")
+    public ResponseEntity<DeleteResponseDTO> delete(@PathVariable("customerId")Long customerId)
+            throws CustomerNotFoundException {
+        customerServiceAttribute.delete(customerId);
+        return ResponseEntity.ok(DeleteResponseDTO.builder().deleteSuccessMessage("customer deleted")
+                .build());
     }
 }

@@ -2,13 +2,11 @@ package br.com.instrumental_rental.api;
 
 import br.com.instrumental_rental.Mappers.IAttendantMapper;
 import br.com.instrumental_rental.controller.api.AttendantAPI;
-import br.com.instrumental_rental.controller.dto.requests.AttendantDTO;
 import br.com.instrumental_rental.controller.dto.responses.responses.AttendantListResponseDTO;
 import br.com.instrumental_rental.controller.dto.responses.responses.AttendantResponseDTO;
 import br.com.instrumental_rental.exceptions.AttendantNotFoundException;
 import br.com.instrumental_rental.models.AttendantBuilder;
 import br.com.instrumental_rental.models.AttendantDTOBuilder;
-import br.com.instrumental_rental.repository.entities.Attendant;
 import br.com.instrumental_rental.service.interfaces.IAttendantService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,7 +17,8 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.List;
 
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 public class AttendantAPITest {
@@ -94,5 +93,38 @@ public class AttendantAPITest {
         when(attendantMapper.convertToDTO(attendantSought)).thenReturn(attendantSoughtDTO);
         AttendantResponseDTO result = attendantAPI.update(attendantSought.getAttendantId(), attendantSoughtDTO);
         Assertions.assertEquals(AttendantResponseDTO.builder().data(attendantSoughtDTO).build(), result);
+    }
+
+    @Test
+    void testUpdateAttendantNotFoundException() throws AttendantNotFoundException {
+        var attendantSought = AttendantBuilder.attendantBuilder();
+        var attendantSoughtDTO = AttendantDTOBuilder.attendantDTOSuccessBuilder();
+        when(attendantMapper.convertToEntity(attendantSoughtDTO)).thenReturn(attendantSought);
+        when(attendantService.update(attendantSought))
+                .thenThrow(new AttendantNotFoundException("A01", "Attendant not found"));
+        AttendantNotFoundException thrown = Assertions.assertThrows(AttendantNotFoundException.class, () ->
+        {attendantAPI.update(attendantSought.getAttendantId(), attendantSoughtDTO);}
+        );
+        Assertions.assertEquals("A01", thrown.getCode());
+        Assertions.assertEquals("Attendant not found", thrown.getMessage());
+    }
+
+    @Test
+    void testDeleteSuccess() throws AttendantNotFoundException {
+        var attendantSought = AttendantBuilder.attendantBuilder();
+        when(attendantService.findAttendantById(attendantSought.getAttendantId())).thenReturn(attendantSought);
+        doNothing().when(attendantService).delete(attendantSought);
+        assertDoesNotThrow(() -> attendantAPI.delete(attendantSought.getAttendantId()));
+    }
+
+    @Test
+    void testDeleteAttendantNotFoundException() throws AttendantNotFoundException {
+        var attendantSought = AttendantBuilder.attendantBuilder();
+        when(attendantService.findAttendantById(attendantSought.getAttendantId()))
+                .thenThrow(new AttendantNotFoundException("A01", "Attendant not found"));
+        AttendantNotFoundException thrown = Assertions.assertThrows(AttendantNotFoundException.class,
+                () -> {attendantAPI.delete(attendantSought.getAttendantId());});
+        Assertions.assertEquals("A01", thrown.getCode());
+        Assertions.assertEquals("Attendant not found", thrown.getMessage());
     }
 }

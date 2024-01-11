@@ -74,8 +74,8 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
-    public void delete(Customer customer) throws CustomerNotFoundException {
-        var customerToDelete = findCustomerById(customer.getCustomerId());
+    public void delete(Long customerId) throws CustomerNotFoundException {
+        var customerToDelete = findCustomerById(customerId);
         customerRepositoryAttribute.delete(customerToDelete);
     }
 

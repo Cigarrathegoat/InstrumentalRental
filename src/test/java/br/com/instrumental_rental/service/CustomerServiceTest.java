@@ -108,7 +108,7 @@ public class CustomerServiceTest {
         var builder = CustomerBuilder.customerBuilder();
         when(customerRepository.findById(builder.getCustomerId()))
                 .thenReturn(Optional.of(builder));
-        customerService.delete(builder);
+        customerService.delete(builder.getCustomerId());
         verify(customerRepository, times(1)).findById(builder.getCustomerId());
         verify(customerRepository, times(1)).delete(builder);
     }

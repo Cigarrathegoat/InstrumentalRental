@@ -17,9 +17,16 @@ import javax.validation.constraints.Positive;
 @NoArgsConstructor
 public class AccountBalanceDTO {
 
+    /*
     @NotNull(message = "Please deposit a minimum balance of $100.00.")
     @Positive(message = "Please deposit a minimum balance of $100.00.")
     @Pattern(regexp = "^[0-9]+$", message = "Field must only have numbers")
     @Min(value = 100, message = "Please deposit a minimum balance of $100.00.")
     private long accountBalance;
+    */
+
+    @NotNull(message = "Please insert some numerical amount")
+    @Positive(message = "Please insert a positive number")
+    @Pattern(regexp = "^[0-9]+$", message = "please insert a numerical digit")
+    private long valueToAddOrWithdraw;
 }

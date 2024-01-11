@@ -3,6 +3,7 @@ package br.com.instrumental_rental.controller;
 import br.com.instrumental_rental.controller.dto.requests.AccountBalanceDTO;
 import br.com.instrumental_rental.controller.dto.requests.CustomerDTO;
 import br.com.instrumental_rental.controller.dto.responses.errors.ErrorSpecificationDTO;
+import br.com.instrumental_rental.controller.dto.responses.responses.AccountBalanceResponseDTO;
 import br.com.instrumental_rental.controller.dto.responses.responses.CustomerListResponseDTO;
 import br.com.instrumental_rental.controller.dto.responses.responses.CustomerResponseDTO;
 import br.com.instrumental_rental.controller.dto.responses.responses.DeleteResponseDTO;
@@ -12,6 +13,8 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.http.ResponseEntity;
+
+import java.math.BigDecimal;
 
 public interface ICustomerAPI {
 
@@ -38,13 +41,19 @@ public interface ICustomerAPI {
     response = CustomerDTO.class)
     @ApiResponses(value = {@ApiResponse(code = 200, message = "success"),
     @ApiResponse(code = 404, response = ErrorSpecificationDTO.class, message = "not found")})
-    public CustomerResponseDTO update() throws CustomerNotFoundException;
+    public CustomerResponseDTO update(Long customerId) throws CustomerNotFoundException;
 
     @ApiOperation(value = "add to accountBalance attribute in Customer object",
-    response = AccountBalanceDTO.class)
+    response = AccountBalanceResponseDTO.class)
     @ApiResponses(value = {@ApiResponse(code = 200, message = "success"),
     @ApiResponse(code = 404, response = ErrorSpecificationDTO.class, message = "not found")})
-    public AccountBalanceDTO addToBalance() throws CustomerNotFoundException;
+    public AccountBalanceResponseDTO addToBalance(Long customerId, BigDecimal addition) throws CustomerNotFoundException;
+
+    @ApiOperation(value = "withdraw value from account balance",
+    response = AccountBalanceResponseDTO.class)
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "success"),
+    @ApiResponse(code = 404, response = ErrorSpecificationDTO.class, message = "not found")})
+    public AccountBalanceResponseDTO withdraw(Long customerId, BigDecimal addition) throws CustomerNotFoundException;
 
     @ApiOperation(value = "delete Customer object",
     response = CustomerDTO.class)

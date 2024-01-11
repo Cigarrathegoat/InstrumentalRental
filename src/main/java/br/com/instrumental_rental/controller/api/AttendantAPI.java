@@ -30,6 +30,7 @@ public class AttendantAPI implements IAttendantAPI {
         this.attendantMapper = attendantMapper;
         this.attendantService = attendantService;
     }
+
     @PostMapping("/new")
     public AttendantResponseDTO add(@RequestBody AttendantDTO attendantDTO) {
         return AttendantResponseDTO.builder()
@@ -44,7 +45,7 @@ public class AttendantAPI implements IAttendantAPI {
     }
 
     @GetMapping("/find/{attendant}")
-    public AttendantResponseDTO find(@PathVariable("attendant")String attendantNumber)
+    public AttendantResponseDTO find(@PathVariable("attendant") String attendantNumber)
             throws AttendantNotFoundException {
 
         return AttendantResponseDTO.builder()
@@ -65,20 +66,20 @@ public class AttendantAPI implements IAttendantAPI {
     }
 
     @PutMapping("/update/attendant/{attendantId}")
-    public AttendantResponseDTO update(@PathVariable("attendantId")Long attendantId,
+    public AttendantResponseDTO update(@PathVariable("attendantId") Long attendantId,
                                        @RequestBody AttendantDTO attendantDTO) throws AttendantNotFoundException {
         return AttendantResponseDTO.builder()
                 .data(
                         attendantMapper.convertToDTO(
                                 attendantService.update(attendantMapper.convertToEntity(attendantDTO
-                                )
+                                        )
                                 )
                         )
                 ).build();
     }
 
     @DeleteMapping("/{attendantId}")
-    public ResponseEntity<DeleteResponseDTO> delete(@PathVariable("attendantId")Long attendantId)
+    public ResponseEntity<DeleteResponseDTO> delete(@PathVariable("attendantId") Long attendantId)
             throws AttendantNotFoundException {
         attendantService.delete(attendantService.findAttendantById(attendantId));
         return ResponseEntity.ok(DeleteResponseDTO
