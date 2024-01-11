@@ -92,4 +92,30 @@ public class CustomerAPITest {
         CustomerResponseDTO result = customerAPI.update(customer.getCustomerId(), customerDTO);
         Assertions.assertEquals(CustomerResponseDTO.builder().data(customerDTO).build(), result);
     }
+
+    /*
+    void testUpdateAttendantNotFoundException() throws AttendantNotFoundException {
+        var attendantSought = AttendantBuilder.attendantBuilder();
+        var attendantSoughtDTO = AttendantDTOBuilder.attendantDTOSuccessBuilder();
+        when(attendantMapper.convertToEntity(attendantSoughtDTO)).thenReturn(attendantSought);
+        when(attendantService.update(attendantSought))
+                .thenThrow(new AttendantNotFoundException("A01", "Attendant not found"));
+        AttendantNotFoundException thrown = Assertions.assertThrows(AttendantNotFoundException.class, () ->
+        {attendantAPI.update(attendantSought.getAttendantId(), attendantSoughtDTO);}
+        );
+        Assertions.assertEquals("A01", thrown.getCode());
+        Assertions.assertEquals("Attendant not found", thrown.getMessage());
+    }
+     */
+    @Test
+    void updateCustomerNotFoundException() throws CustomerNotFoundException {
+        var customer = CustomerBuilder.customerBuilder();
+        var customerDTO = CustomerDTOBuilder.customerDTOBuilder();
+        when(customerMapper.convertToEntity(customerDTO)).thenReturn(customer);
+        when(customerService.update(customer)).thenThrow(new CustomerNotFoundException("C01", "Customer not found"));
+        CustomerNotFoundException thrown = Assertions.assertThrows(CustomerNotFoundException.class, () ->
+        {customerAPI.update(customer.getCustomerId(), customerDTO);});
+        Assertions.assertEquals("C01", thrown.getCode());
+        Assertions.assertEquals("Customer not found", thrown.getMessage());
+    }
 }
