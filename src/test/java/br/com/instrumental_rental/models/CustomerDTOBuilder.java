@@ -8,4 +8,9 @@ public class CustomerDTOBuilder {
         return CustomerDTO.builder()
                 .customerId(1L).name("Jamie").addresses(null).contacts(null).build();
     }
+
+    public static CustomerDTO customerDTONoIdBuilder() {
+        return CustomerDTO.builder()
+                .customerId(null).name("Jamie").addresses(null).contacts(null).build();
+    }
 }

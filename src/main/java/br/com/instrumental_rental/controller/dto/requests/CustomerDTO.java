@@ -9,9 +9,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Range;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
+import javax.validation.constraints.*;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -36,5 +35,11 @@ public class CustomerDTO {
     @Range(min = 8, max = 8, message = "please enter a valid date in the mm-dd-yyyy format")
     @IOverage(message = "must be at least 18 years old")
     private LocalDate dateOfBirth;
+
+    @NotBlank(message = "a deposit must be made")
+    @Pattern(regexp = "^[0-9]+$", message = "value must be numerical digits")
+    @Positive(message = "value must be positive")
+    @Min(value = 100L, message = "deposit must be a minimum of $100.00")
+    private BigDecimal accountBalance;
 
 }
