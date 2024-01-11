@@ -81,4 +81,15 @@ public class CustomerAPITest {
         CustomerListResponseDTO result = customerAPI.listAll();
         Assertions.assertEquals(CustomerListResponseDTO.builder().data(List.of(customerDTO)).build(), result);
     }
+
+    @Test
+    void updateSuccess() throws CustomerNotFoundException {
+        var customer = CustomerBuilder.customerBuilder();
+        var customerDTO = CustomerDTOBuilder.customerDTOBuilder();
+        when(customerMapper.convertToEntity(customerDTO)).thenReturn(customer);
+        when(customerService.update(customer)).thenReturn(customer);
+        when(customerMapper.convertToDto(customer)).thenReturn(customerDTO);
+        CustomerResponseDTO result = customerAPI.update(customer.getCustomerId(), customerDTO);
+        Assertions.assertEquals(CustomerResponseDTO.builder().data(customerDTO).build(), result);
+    }
 }
