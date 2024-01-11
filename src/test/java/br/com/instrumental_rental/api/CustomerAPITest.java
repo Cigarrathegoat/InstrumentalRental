@@ -4,6 +4,7 @@ import br.com.instrumental_rental.Mappers.ICustomerMapper;
 import br.com.instrumental_rental.controller.api.CustomerAPI;
 import br.com.instrumental_rental.controller.dto.requests.CustomerDTO;
 import br.com.instrumental_rental.controller.dto.responses.responses.CustomerResponseDTO;
+import br.com.instrumental_rental.exceptions.CustomerNotFoundException;
 import br.com.instrumental_rental.models.CustomerBuilder;
 import br.com.instrumental_rental.models.CustomerDTOBuilder;
 import br.com.instrumental_rental.service.interfaces.ICustomerService;
@@ -45,5 +46,15 @@ public class CustomerAPITest {
         CustomerResponseDTO result = customerAPI.add(customerDTONoId);
         Assertions.assertEquals(CustomerResponseDTO.builder()
                 .data(customerDTO).build(), result);
+    }
+
+    @Test
+    void findSuccess() throws CustomerNotFoundException {
+        var customer = CustomerBuilder.customerBuilder();
+        var customerDTO = CustomerDTOBuilder.customerDTOBuilder();
+        when(customerService.findCustomerByNumberProvided(customer.getSocialSecurityNumber())).thenReturn(customer);
+        when(customerMapper.convertToDto(customer)).thenReturn(customerDTO);
+        CustomerResponseDTO result = customerAPI.find(customer.getSocialSecurityNumber());
+        Assertions.assertEquals(CustomerResponseDTO.builder().data(customerDTO).build(), result);
     }
 }

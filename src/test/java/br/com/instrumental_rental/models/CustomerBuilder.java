@@ -15,8 +15,8 @@ public class CustomerBuilder {
 
     public static Customer customerBuilder() {
         return Customer.builder()
-                .customerId(1L).name("John").dateOfBirth(LocalDate.parse("1985-08-23",
-                        DateTimeFormatter.ofPattern("yyyy-MM-dd")))
+                .customerId(1L).name("Johnny").dateOfBirth(LocalDate.parse("25-08-1985",
+                        DateTimeFormatter.ofPattern("dd-MM-yyyy")))
                 .socialSecurityNumber("123456789")
                 .driversLicenseNumber("1234567")
                 .accountBalance(BigDecimal.valueOf(500))
@@ -25,8 +25,8 @@ public class CustomerBuilder {
 
     public static Customer customerUpdatedBuilder() {
         return Customer.builder()
-                .customerId(1L).name("Johnny").dateOfBirth(LocalDate.parse("1985-08-25",
-                        DateTimeFormatter.ofPattern("yyyy-MM-dd")))
+                .customerId(1L).name("Johnny").dateOfBirth(LocalDate.parse("25-08-1985",
+                        DateTimeFormatter.ofPattern("dd-MM-yyyy")))
                 .socialSecurityNumber("123456780")
                 .driversLicenseNumber("1234560")
                 .accountBalance(BigDecimal.valueOf(500))
@@ -35,8 +35,8 @@ public class CustomerBuilder {
 
     public static Customer builderAfterWithdrawal() {
         return Customer.builder()
-                .customerId(1L).name("Johnny").dateOfBirth(LocalDate.parse("1985-08-25",
-                        DateTimeFormatter.ofPattern("yyyy-MM-dd")))
+                .customerId(1L).name("Johnny").dateOfBirth(LocalDate.parse("25-08-1985",
+                        DateTimeFormatter.ofPattern("dd-MM-yyyy")))
                 .socialSecurityNumber("123456780")
                 .driversLicenseNumber("1234560")
                 .accountBalance(BigDecimal.valueOf(0))
