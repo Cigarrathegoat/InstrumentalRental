@@ -1,5 +1,6 @@
 package br.com.instrumental_rental.controller.dto.requests;
 
+import br.com.instrumental_rental.customvalidators.IOverage;
 import br.com.instrumental_rental.repository.entities.Contact;
 import br.com.instrumental_rental.repository.entities.TheAddress;
 import lombok.AllArgsConstructor;
@@ -33,6 +34,7 @@ public class CustomerDTO {
     @NotBlank(message = "name field must not be empty")
     @Pattern(regexp = "^[0-9]+$", message = "please enter only numeric digits in the Date of birth field")
     @Range(min = 8, max = 8, message = "please enter a valid date in the mm-dd-yyyy format")
+    @IOverage(message = "must be at least 18 years old")
     private LocalDate dateOfBirth;
 
 }
