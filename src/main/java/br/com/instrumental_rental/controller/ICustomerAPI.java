@@ -41,19 +41,21 @@ public interface ICustomerAPI {
     response = CustomerDTO.class)
     @ApiResponses(value = {@ApiResponse(code = 200, message = "success"),
     @ApiResponse(code = 404, response = ErrorSpecificationDTO.class, message = "not found")})
-    public CustomerResponseDTO update(Long customerId) throws CustomerNotFoundException;
+    public CustomerResponseDTO update(Long customerId, CustomerDTO customerDTO) throws CustomerNotFoundException;
 
     @ApiOperation(value = "add to accountBalance attribute in Customer object",
     response = AccountBalanceResponseDTO.class)
     @ApiResponses(value = {@ApiResponse(code = 200, message = "success"),
     @ApiResponse(code = 404, response = ErrorSpecificationDTO.class, message = "not found")})
-    public AccountBalanceResponseDTO addToBalance(Long customerId, BigDecimal addition) throws CustomerNotFoundException;
+    public AccountBalanceResponseDTO addToBalance(Long customerId, AccountBalanceDTO accountBalanceDTO)
+            throws CustomerNotFoundException;
 
     @ApiOperation(value = "withdraw value from account balance",
     response = AccountBalanceResponseDTO.class)
     @ApiResponses(value = {@ApiResponse(code = 200, message = "success"),
     @ApiResponse(code = 404, response = ErrorSpecificationDTO.class, message = "not found")})
-    public AccountBalanceResponseDTO withdraw(Long customerId, BigDecimal addition) throws CustomerNotFoundException;
+    public AccountBalanceResponseDTO withdraw(Long customerId, AccountBalanceDTO accountBalanceDTO)
+            throws CustomerNotFoundException, WithdrawalGreaterThanBalanceException;
 
     @ApiOperation(value = "delete Customer object",
     response = CustomerDTO.class)

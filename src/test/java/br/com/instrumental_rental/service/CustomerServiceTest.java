@@ -120,7 +120,7 @@ public class CustomerServiceTest {
                 .thenReturn(Optional.empty());
         CustomerNotFoundException thrown = Assertions.assertThrows(
                 CustomerNotFoundException.class, () -> {
-                    customerService.delete(builder);
+                    customerService.delete(builder.getCustomerId());
                 }
         );
         Assertions.assertEquals("C01", thrown.getCode());
