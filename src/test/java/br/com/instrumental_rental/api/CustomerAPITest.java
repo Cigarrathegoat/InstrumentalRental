@@ -2,21 +2,20 @@ package br.com.instrumental_rental.api;
 
 import br.com.instrumental_rental.Mappers.ICustomerMapper;
 import br.com.instrumental_rental.controller.api.CustomerAPI;
-import br.com.instrumental_rental.controller.dto.requests.CustomerDTO;
+import br.com.instrumental_rental.controller.dto.responses.responses.CustomerListResponseDTO;
 import br.com.instrumental_rental.controller.dto.responses.responses.CustomerResponseDTO;
 import br.com.instrumental_rental.exceptions.CustomerNotFoundException;
 import br.com.instrumental_rental.models.CustomerBuilder;
 import br.com.instrumental_rental.models.CustomerDTOBuilder;
 import br.com.instrumental_rental.service.interfaces.ICustomerService;
-import lombok.var;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.test.context.TestPropertySource;
-import org.springframework.util.Assert;
+
+import java.util.List;
 
 import static org.mockito.Mockito.when;
 
@@ -71,5 +70,15 @@ public class CustomerAPITest {
         });
         Assertions.assertEquals("A01", thrown.getCode());
         Assertions.assertEquals("not found", thrown.getMessage());
+    }
+
+    @Test
+    void listAllSuccess() {
+        var customer = CustomerBuilder.customerBuilder();
+        var customerDTO = CustomerDTOBuilder.customerDTOBuilder();
+        when(customerService.findAll()).thenReturn(List.of(customer));
+        when(customerMapper.convertoToListDto(List.of(customer))).thenReturn(List.of(customerDTO));
+        CustomerListResponseDTO result = customerAPI.listAll();
+        Assertions.assertEquals(CustomerListResponseDTO.builder().data(List.of(customerDTO)).build(), result);
     }
 }
