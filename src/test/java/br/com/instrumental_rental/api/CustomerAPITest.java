@@ -104,7 +104,9 @@ public class CustomerAPITest {
         when(customerMapper.convertToEntity(customerDTO)).thenReturn(customer);
         when(customerService.update(customer)).thenThrow(new CustomerNotFoundException("C01", "Customer not found"));
         CustomerNotFoundException thrown = Assertions.assertThrows(CustomerNotFoundException.class, () ->
-        {customerAPI.update(customer.getCustomerId(), customerDTO);});
+        {
+            customerAPI.update(customer.getCustomerId(), customerDTO);
+        });
         Assertions.assertEquals("C01", thrown.getCode());
         Assertions.assertEquals("Customer not found", thrown.getMessage());
     }
@@ -126,7 +128,6 @@ public class CustomerAPITest {
     void addToBalanceSuccess() throws CustomerNotFoundException {
         var value = BigDecimal.valueOf(600);
         var customer = CustomerBuilder.customerBuilder();
-        var customerDTO = CustomerDTOBuilder.customerDTOBuilder();
         when(customerService.addToBalance(customer.getCustomerId(), value))
                 .thenReturn(customer.getAccountBalance().add(value));
         AccountBalanceResponseDTO result = customerAPI.addToBalance(customer.getCustomerId(),
@@ -136,12 +137,63 @@ public class CustomerAPITest {
     }
 
     @Test
+    void addToBalanceCustomerNotFoundException() throws CustomerNotFoundException {
+        var value = BigDecimal.valueOf(600);
+        var customer = CustomerBuilder.customerBuilder();
+        when(customerService.addToBalance(customer.getCustomerId(), value)).thenThrow(
+                new CustomerNotFoundException("C01", "Customer not found"));
+        CustomerNotFoundException thrown = Assertions.assertThrows(CustomerNotFoundException.class, () ->
+        {
+            customerAPI.addToBalance(customer.getCustomerId(), value);
+        });
+        Assertions.assertEquals("C01", thrown.getCode());
+        Assertions.assertEquals("Customer not found", thrown.getMessage());
+    }
+
+    @Test
     void withdrawSuccess() throws CustomerNotFoundException, WithdrawalGreaterThanBalanceException {
         var value = BigDecimal.valueOf(300);
         var customer = CustomerBuilder.customerBuilder();
         when(customerService.withdraw(customer.getCustomerId(), value))
-                .thenReturn(customer.getAccountBalance().add(value));
+                .thenReturn(customer.getAccountBalance().subtract(value));
         AccountBalanceResponseDTO result = customerAPI.withdraw(customer.getCustomerId(), value);
-        Assertions.assertEquals();
+        Assertions.assertEquals(
+                AccountBalanceResponseDTO
+                        .builder()
+                        .data(customer.getAccountBalance().subtract(value))
+                        .build(), result);
+    }
+
+    @Test
+    void withdrawalCustomerNotFoundException()
+            throws CustomerNotFoundException, WithdrawalGreaterThanBalanceException {
+        var value = BigDecimal.valueOf(300);
+        var customer = CustomerBuilder.customerBuilder();
+        when(customerService.withdraw(customer.getCustomerId(), value))
+                .thenThrow(new CustomerNotFoundException("C01", "Customer not found"));
+        CustomerNotFoundException thrown = Assertions.assertThrows(CustomerNotFoundException.class, () ->
+        {
+            customerAPI.withdraw(customer.getCustomerId(), value);
+        });
+        Assertions.assertEquals("C01", thrown.getCode());
+        Assertions.assertEquals("Customer not found", thrown.getMessage());
+    }
+
+    @Test
+    void withdrawalWithdrawalGreaterThanAccountBalanceException()
+            throws CustomerNotFoundException, WithdrawalGreaterThanBalanceException {
+        var value = BigDecimal.valueOf(1000);
+        var customer = CustomerBuilder.customerBuilder();
+        when(customerService.withdraw(customer.getCustomerId(), value))
+                .thenThrow(new WithdrawalGreaterThanBalanceException("C02", "Withdrawal greater than balance"));
+        WithdrawalGreaterThanBalanceException thrown = Assertions.assertThrows(
+                WithdrawalGreaterThanBalanceException.class, () -> {
+                    customerAPI.withdraw(
+                            customer.getCustomerId(), value
+                    );
+                }
+        );
+        Assertions.assertEquals("C02", thrown.getCode());
+        Assertions.assertEquals("Withdrawal greater than balance", thrown.getMessage());
     }
 }

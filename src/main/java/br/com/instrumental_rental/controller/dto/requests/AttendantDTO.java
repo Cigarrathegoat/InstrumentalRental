@@ -1,5 +1,6 @@
 package br.com.instrumental_rental.controller.dto.requests;
 
+import br.com.instrumental_rental.customvalidators.IOverage;
 import br.com.instrumental_rental.repository.entities.Contact;
 import lombok.*;
 
@@ -31,6 +32,7 @@ public class AttendantDTO {
     @Pattern(regexp = "^[0-9]+$", message = "field must only have numbers")
     @Positive(message = "numbers in field must be positive")
     @Pattern(regexp = "^\\d{2}-\\d{2}-\\d{4}$", message = "date entered must be in dd/mm/yyyy format")
+    @IOverage(message = "attendant must be at least 18 years old")
     private LocalDate birthDate;
 
     @NotBlank(message = "socialSecurityNumber field must not be blank")
