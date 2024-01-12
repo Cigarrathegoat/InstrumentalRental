@@ -13,6 +13,9 @@ public interface IInstrumentRepository extends JpaRepository<Instrument, Long> {
     @Query(value = "SELECT i FROM Instrument i WHERE i.make = :makeOrModel OR i.model = :makeOrModel")
     List<Instrument> findInstrumentByMakeOrModel(String makeOrModel);
     //TODO: write query to find IDs of all instruments of a certain type
+
+    @Query(value = "SELECT I.instrumentId FROM Rental R JOIN Instrument I ON R.instrumentId = I.instrumentId")
+    List<Instrument> listAllInstrumentsThatHaveBeenRented();
     //TODO: write query to find IDs of all instruments that have been rented
 
 

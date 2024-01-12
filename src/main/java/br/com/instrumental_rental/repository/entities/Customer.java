@@ -45,8 +45,6 @@ public class Customer {
     @OneToMany(mappedBy = "customer")
     private List<Contact> contacts;
 
-
-
     @Column(name = "DS_ACCOUNT_BALANCE")
     private BigDecimal accountBalance;
 

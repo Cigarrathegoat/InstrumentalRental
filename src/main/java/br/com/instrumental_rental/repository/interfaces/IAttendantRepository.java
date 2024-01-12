@@ -14,5 +14,11 @@ public interface IAttendantRepository extends JpaRepository<Attendant, Long> {
     "WHERE a.socialSecurityNumber = :numberProvided OR a.driversLicenseNumber = :numberProvided")
     Attendant findAttendantByNumberProvided(String numberProvided);
 
+    @Query(value = "SELECT A.attendantId, COUNT(R.rental_id) AS total_rentals" +
+            "FROM Rental R JOIN Attendant A ON R.attendantId = A.attendantId" +
+            "WHERE MONTH(R.rental_date) = <1> GROUP BY A.attendantId" +
+            "ORDER BY total_rentals DESC" +
+            "LIMIT 1")
+    Attendant findAttendantOfTheMonth();
     //TODO run query to find which attendant has made most sales, per month
 }

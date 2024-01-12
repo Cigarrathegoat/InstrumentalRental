@@ -15,7 +15,10 @@ public interface IRentalRepository extends JpaRepository<Rental, Long> {
    "WHERE r.customer = :word OR r.attendant = :word OR r.instrument = :word")
     List<Rental> findRentalByWord(String word);
 
+
    //TODO find all rentals for a particular instrument type
+
     //TODO find all rentals that have not been paid this month yet
+
     //TODO find customer with highest amount of unpaid rentals
 }

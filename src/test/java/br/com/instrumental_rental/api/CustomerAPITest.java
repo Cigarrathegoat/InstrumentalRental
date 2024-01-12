@@ -7,6 +7,7 @@ import br.com.instrumental_rental.controller.dto.responses.responses.AccountBala
 import br.com.instrumental_rental.controller.dto.responses.responses.CustomerListResponseDTO;
 import br.com.instrumental_rental.controller.dto.responses.responses.CustomerResponseDTO;
 import br.com.instrumental_rental.exceptions.CustomerNotFoundException;
+import br.com.instrumental_rental.exceptions.WithdrawalGreaterThanBalanceException;
 import br.com.instrumental_rental.models.CustomerBuilder;
 import br.com.instrumental_rental.models.CustomerDTOBuilder;
 import br.com.instrumental_rental.service.interfaces.ICustomerService;
@@ -126,11 +127,21 @@ public class CustomerAPITest {
         var value = BigDecimal.valueOf(600);
         var customer = CustomerBuilder.customerBuilder();
         var customerDTO = CustomerDTOBuilder.customerDTOBuilder();
-        AccountBalanceDTO accountBalanceDTOBuilder = new AccountBalanceDTO();
         when(customerService.addToBalance(customer.getCustomerId(), value))
                 .thenReturn(customer.getAccountBalance().add(value));
         AccountBalanceResponseDTO result = customerAPI.addToBalance(customer.getCustomerId(),
-                accountBalanceDTOBuilder);
-        Assertions.assertEquals(AccountBalanceResponseDTO.builder().data(accountBalanceDTOBuilder).build(), result);
+                value);
+        Assertions.assertEquals(AccountBalanceResponseDTO.builder()
+                .data(customer.getAccountBalance().add(value)).build(), result);
+    }
+
+    @Test
+    void withdrawSuccess() throws CustomerNotFoundException, WithdrawalGreaterThanBalanceException {
+        var value = BigDecimal.valueOf(300);
+        var customer = CustomerBuilder.customerBuilder();
+        when(customerService.withdraw(customer.getCustomerId(), value))
+                .thenReturn(customer.getAccountBalance().add(value));
+        AccountBalanceResponseDTO result = customerAPI.withdraw(customer.getCustomerId(), value);
+        Assertions.assertEquals();
     }
 }

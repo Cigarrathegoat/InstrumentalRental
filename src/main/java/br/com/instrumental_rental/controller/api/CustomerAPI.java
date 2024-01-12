@@ -88,6 +88,29 @@ public class CustomerAPI implements ICustomerAPI {
                 .build();
     }
 
+    @PutMapping("/add-to-balance/{customerId}/{amount}")
+    public AccountBalanceResponseDTO addToBalance(@PathVariable("customerId") Long customerId,
+                                                  @PathVariable("amount") BigDecimal amount)
+            throws CustomerNotFoundException {
+        return AccountBalanceResponseDTO.builder()
+                .data(
+                        customerServiceAttribute.addToBalance(customerId,
+                                amount)
+                ).build();
+    }
+
+    @PutMapping("/withdraw/{customerId}/{value}")
+    public AccountBalanceResponseDTO withdraw(@PathVariable("customerId") Long customerId,
+                                              @PathVariable BigDecimal value)
+            throws CustomerNotFoundException, WithdrawalGreaterThanBalanceException {
+        return AccountBalanceResponseDTO.builder()
+                .data(
+                        customerServiceAttribute.withdraw(customerId,
+                                value
+                        )
+                ).build();
+    }
+    /*
     @PutMapping("/add-to-balance/{customerId}")
     public AccountBalanceResponseDTO addToBalance(@PathVariable("customerId") Long customerId,
                                                   @RequestBody AccountBalanceDTO accountBalanceDTO)
@@ -99,7 +122,8 @@ public class CustomerAPI implements ICustomerAPI {
                                 BigDecimal.valueOf(accountBalanceDTO.getValueToAddOrWithdraw())))
                 ).build();
     }
-    @PutMapping("/withdraw/{customerId}")
+
+     @PutMapping("/withdraw/{customerId}")
     public AccountBalanceResponseDTO withdraw(@PathVariable("customerId") Long customerId,
                                               @RequestBody AccountBalanceDTO accountBalanceDTO)
         throws CustomerNotFoundException, WithdrawalGreaterThanBalanceException {
@@ -111,9 +135,11 @@ public class CustomerAPI implements ICustomerAPI {
                         )
                 ).build();
     }
+     */
+
 
     @DeleteMapping("/delete/{customerId}")
-    public ResponseEntity<DeleteResponseDTO> delete(@PathVariable("customerId")Long customerId)
+    public ResponseEntity<DeleteResponseDTO> delete(@PathVariable("customerId") Long customerId)
             throws CustomerNotFoundException {
         customerServiceAttribute.delete(customerId);
         return ResponseEntity.ok(DeleteResponseDTO.builder().deleteSuccessMessage("customer deleted")
