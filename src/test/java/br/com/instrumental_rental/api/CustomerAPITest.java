@@ -2,6 +2,8 @@ package br.com.instrumental_rental.api;
 
 import br.com.instrumental_rental.Mappers.ICustomerMapper;
 import br.com.instrumental_rental.controller.api.CustomerAPI;
+import br.com.instrumental_rental.controller.dto.requests.AccountBalanceDTO;
+import br.com.instrumental_rental.controller.dto.responses.responses.AccountBalanceResponseDTO;
 import br.com.instrumental_rental.controller.dto.responses.responses.CustomerListResponseDTO;
 import br.com.instrumental_rental.controller.dto.responses.responses.CustomerResponseDTO;
 import br.com.instrumental_rental.exceptions.CustomerNotFoundException;
@@ -15,6 +17,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import static org.mockito.Mockito.when;
@@ -93,20 +96,6 @@ public class CustomerAPITest {
         Assertions.assertEquals(CustomerResponseDTO.builder().data(customerDTO).build(), result);
     }
 
-    /*
-    void testUpdateAttendantNotFoundException() throws AttendantNotFoundException {
-        var attendantSought = AttendantBuilder.attendantBuilder();
-        var attendantSoughtDTO = AttendantDTOBuilder.attendantDTOSuccessBuilder();
-        when(attendantMapper.convertToEntity(attendantSoughtDTO)).thenReturn(attendantSought);
-        when(attendantService.update(attendantSought))
-                .thenThrow(new AttendantNotFoundException("A01", "Attendant not found"));
-        AttendantNotFoundException thrown = Assertions.assertThrows(AttendantNotFoundException.class, () ->
-        {attendantAPI.update(attendantSought.getAttendantId(), attendantSoughtDTO);}
-        );
-        Assertions.assertEquals("A01", thrown.getCode());
-        Assertions.assertEquals("Attendant not found", thrown.getMessage());
-    }
-     */
     @Test
     void updateCustomerNotFoundException() throws CustomerNotFoundException {
         var customer = CustomerBuilder.customerBuilder();
@@ -117,5 +106,31 @@ public class CustomerAPITest {
         {customerAPI.update(customer.getCustomerId(), customerDTO);});
         Assertions.assertEquals("C01", thrown.getCode());
         Assertions.assertEquals("Customer not found", thrown.getMessage());
+    }
+
+    /*
+     @PutMapping("/add-to-balance/{customerId}")
+    public AccountBalanceResponseDTO addToBalance(@PathVariable("customerId") Long customerId,
+                                                  @RequestBody AccountBalanceDTO accountBalanceDTO)
+            throws CustomerNotFoundException {
+        return AccountBalanceResponseDTO.builder()
+                .data(
+                        customerMapperAttribute.convertAccountBalanceToDTO(
+                                customerServiceAttribute.addToBalance(customerId,
+                                BigDecimal.valueOf(accountBalanceDTO.getValueToAddOrWithdraw())))
+                ).build();
+    }
+     */
+    @Test
+    void addToBalanceSuccess() throws CustomerNotFoundException {
+        var value = BigDecimal.valueOf(600);
+        var customer = CustomerBuilder.customerBuilder();
+        var customerDTO = CustomerDTOBuilder.customerDTOBuilder();
+        AccountBalanceDTO accountBalanceDTOBuilder = new AccountBalanceDTO();
+        when(customerService.addToBalance(customer.getCustomerId(), value))
+                .thenReturn(customer.getAccountBalance().add(value));
+        AccountBalanceResponseDTO result = customerAPI.addToBalance(customer.getCustomerId(),
+                accountBalanceDTOBuilder);
+        Assertions.assertEquals(AccountBalanceResponseDTO.builder().data(accountBalanceDTOBuilder).build(), result);
     }
 }
