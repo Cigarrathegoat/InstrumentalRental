@@ -9,7 +9,7 @@ public interface IAttendantService {
 
     Attendant save(Attendant attendant);
 
-    void delete(Attendant attendant) throws AttendantNotFoundException;
+    void delete(Long attendantId) throws AttendantNotFoundException;
 
     List<Attendant> findAll();
 

@@ -95,7 +95,7 @@ public class AttendantServiceTest {
         var builder = AttendantBuilder.attendantBuilder();
         when(attendantRepository.findById(builder.getAttendantId()))
                 .thenReturn(Optional.of(builder));
-        attendantService.delete(builder);
+        attendantService.delete(builder.getAttendantId());
         verify(attendantRepository).findById(builder.getAttendantId());
         verify(attendantRepository).delete(builder);
     }
@@ -107,7 +107,7 @@ public class AttendantServiceTest {
                 .thenReturn(Optional.empty());
         AttendantNotFoundException thrown = Assertions.assertThrows(
                 AttendantNotFoundException.class, () -> {
-                    attendantService.delete(builder);
+                    attendantService.delete(builder.getAttendantId());
                 });
         Assertions.assertEquals("A01", thrown.getCode());
         Assertions.assertEquals("Attendant not found", thrown.getMessage());

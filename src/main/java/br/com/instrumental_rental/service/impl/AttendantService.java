@@ -40,9 +40,9 @@ public class AttendantService implements IAttendantService {
     }
 
     @Override
-    public void delete(Attendant attendant) throws AttendantNotFoundException {
+    public void delete(Long attendantId) throws AttendantNotFoundException {
 
-        attendantRepository.delete(findAttendantById(attendant.getAttendantId()));
+        attendantRepository.delete(findAttendantById(attendantId));
 
     }
 

@@ -81,7 +81,7 @@ public class AttendantAPI implements IAttendantAPI {
     @DeleteMapping("/{attendantId}")
     public ResponseEntity<DeleteResponseDTO> delete(@PathVariable("attendantId") Long attendantId)
             throws AttendantNotFoundException {
-        attendantService.delete(attendantService.findAttendantById(attendantId));
+        attendantService.delete(attendantId);
         return ResponseEntity.ok(DeleteResponseDTO
                 .builder()
                 .deleteSuccessMessage("Attendant successfully deleted")

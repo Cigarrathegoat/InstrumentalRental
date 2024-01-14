@@ -8,6 +8,7 @@ import br.com.instrumental_rental.exceptions.AttendantNotFoundException;
 import br.com.instrumental_rental.models.AttendantBuilder;
 import br.com.instrumental_rental.models.AttendantDTOBuilder;
 import br.com.instrumental_rental.service.interfaces.IAttendantService;
+import br.com.instrumental_rental.service.interfaces.ICustomerService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,8 +19,7 @@ import org.mockito.MockitoAnnotations;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class AttendantAPITest {
 
@@ -112,16 +112,15 @@ public class AttendantAPITest {
     @Test
     void testDeleteSuccess() throws AttendantNotFoundException {
         var attendantSought = AttendantBuilder.attendantBuilder();
-        when(attendantService.findAttendantById(attendantSought.getAttendantId())).thenReturn(attendantSought);
-        doNothing().when(attendantService).delete(attendantSought);
+        doNothing().when(attendantService).delete(attendantSought.getAttendantId());
         assertDoesNotThrow(() -> attendantAPI.delete(attendantSought.getAttendantId()));
     }
 
     @Test
     void testDeleteAttendantNotFoundException() throws AttendantNotFoundException {
         var attendantSought = AttendantBuilder.attendantBuilder();
-        when(attendantService.findAttendantById(attendantSought.getAttendantId()))
-                .thenThrow(new AttendantNotFoundException("A01", "Attendant not found"));
+        doThrow(new AttendantNotFoundException("A01", "Attendant not found")).when(attendantService)
+                .delete(attendantSought.getAttendantId());
         AttendantNotFoundException thrown = Assertions.assertThrows(AttendantNotFoundException.class,
                 () -> {attendantAPI.delete(attendantSought.getAttendantId());});
         Assertions.assertEquals("A01", thrown.getCode());

@@ -2,7 +2,6 @@ package br.com.instrumental_rental.api;
 
 import br.com.instrumental_rental.Mappers.ICustomerMapper;
 import br.com.instrumental_rental.controller.api.CustomerAPI;
-import br.com.instrumental_rental.controller.dto.requests.AccountBalanceDTO;
 import br.com.instrumental_rental.controller.dto.responses.responses.AccountBalanceResponseDTO;
 import br.com.instrumental_rental.controller.dto.responses.responses.CustomerListResponseDTO;
 import br.com.instrumental_rental.controller.dto.responses.responses.CustomerResponseDTO;
@@ -21,7 +20,8 @@ import org.mockito.MockitoAnnotations;
 import java.math.BigDecimal;
 import java.util.List;
 
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.mockito.Mockito.*;
 
 public class CustomerAPITest {
 
@@ -195,5 +195,32 @@ public class CustomerAPITest {
         );
         Assertions.assertEquals("C02", thrown.getCode());
         Assertions.assertEquals("Withdrawal greater than balance", thrown.getMessage());
+    }
+
+    /*@Test
+    void testDeleteSuccess() throws AttendantNotFoundException {
+        var attendantSought = AttendantBuilder.attendantBuilder();
+        when(attendantService.findAttendantById(attendantSought.getAttendantId())).thenReturn(attendantSought);
+        doNothing().when(attendantService).delete(attendantSought);
+        assertDoesNotThrow(() -> attendantAPI.delete(attendantSought.getAttendantId()));
+    }
+
+     */
+    @Test
+    void deleteSuccess() throws CustomerNotFoundException {
+        var customer = CustomerBuilder.customerBuilder();
+        doNothing().when(customerService).delete(customer.getCustomerId());
+        assertDoesNotThrow(() -> customerAPI.delete(customer.getCustomerId()));
+    }
+
+    @Test
+    void deleteCustomerNotFoundException() throws CustomerNotFoundException {
+        var customer = CustomerBuilder.customerBuilder();
+        doThrow(new CustomerNotFoundException("C01", "Customer not found"))
+                .when(customerService).delete(customer.getCustomerId());
+        CustomerNotFoundException thrown = Assertions.assertThrows(CustomerNotFoundException.class, () ->
+        {customerAPI.delete(customer.getCustomerId());});
+        Assertions.assertEquals("C01", thrown.getCode());
+        Assertions.assertEquals("Customer not found", thrown.getMessage());
     }
 }
