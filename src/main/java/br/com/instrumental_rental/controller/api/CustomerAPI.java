@@ -37,7 +37,7 @@ public class CustomerAPI implements ICustomerAPI {
         this.customerMapperAttribute = customerMapperParameter;
     }
 
-    @PostMapping("/new")
+    @PostMapping("/add")
     public CustomerResponseDTO add(CustomerDTO customerDTO) {
 
         return CustomerResponseDTO.builder()
