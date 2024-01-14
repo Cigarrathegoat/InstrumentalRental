@@ -62,8 +62,9 @@ public class InstrumentAPI implements IInstrumentAPI {
                 ).build();
     }
 
-    @Override
-    public ResponseEntity<DeleteResponseDTO> delete(String instrumentId) throws InstrumentNotFoundException {
+    @DeleteMapping("/delete/{instrumentId}")
+    public ResponseEntity<DeleteResponseDTO> delete(@PathVariable("instrumentId") String instrumentId)
+            throws InstrumentNotFoundException {
         return null;
     }
 }
