@@ -43,14 +43,23 @@ public class InstrumentAPI implements IInstrumentAPI {
                 )).build();
     }
 
-    @Override
-    public InstrumentListResponseDTO findAll() {
-        return null;
+    @GetMapping("/listAll")
+    public InstrumentListResponseDTO listAll() {
+        return InstrumentListResponseDTO.builder()
+                .data(instrumentMapper.convertToListDTO(instrumentService.listAll())).build();
     }
 
-    @Override
-    public InstrumentResponseDTO update(String instrumentID, InstrumentDTO instrumentDTO) throws InstrumentNotFoundException {
-        return null;
+    @PutMapping("/update/{instrumentId}")
+    public InstrumentResponseDTO update(@PathVariable("instrumentId") String instrumentID, InstrumentDTO instrumentDTO)
+            throws InstrumentNotFoundException {
+        return InstrumentResponseDTO.builder()
+                .data(
+                        instrumentMapper.convertToDTO(
+                                instrumentService.update(
+                                        instrumentMapper.convertToEntity(instrumentDTO)
+                                )
+                        )
+                ).build();
     }
 
     @Override

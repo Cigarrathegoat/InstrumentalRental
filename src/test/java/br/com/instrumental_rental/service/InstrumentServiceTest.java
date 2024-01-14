@@ -12,9 +12,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -77,7 +74,7 @@ public class InstrumentServiceTest {
     void testListAll() {
         var builder = InstrumentBuilder.instrumentBuilder();
         when(instrumentRepository.findAll()).thenReturn(List.of(builder));
-        List<Instrument> listed = instrumentService.findAll();
+        List<Instrument> listed = instrumentService.listAll();
         Assertions.assertIterableEquals(List.of(builder), listed);
     }
 

@@ -29,7 +29,7 @@ public interface IInstrumentAPI {
     @ApiOperation(value = "find all Instrument objects",
     response = InstrumentResponseDTO.class)
     @ApiResponses(value = {@ApiResponse(code = 200, message = "success")})
-    public InstrumentListResponseDTO findAll();
+    public InstrumentListResponseDTO listAll();
 
     @ApiOperation(value = "update Instrument object",
     response = InstrumentResponseDTO.class)

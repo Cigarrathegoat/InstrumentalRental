@@ -34,7 +34,7 @@ public class InstrumentService implements IInstrumentService {
     }
 
     @Override
-    public List<Instrument> findAll() {
+    public List<Instrument> listAll() {
         return instrumentRepository.findAll();
     }
 

@@ -9,7 +9,7 @@ public interface IInstrumentService {
 
     public Instrument save(Instrument instrument);
 
-    public List<Instrument> findAll();
+    public List<Instrument> listAll();
 
     Instrument findById(Instrument instrument) throws InstrumentNotFoundException;
 
