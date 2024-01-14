@@ -10,9 +10,7 @@ import br.com.instrumental_rental.exceptions.InstrumentNotFoundException;
 import br.com.instrumental_rental.service.interfaces.IInstrumentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("V1/instrument")
 @RestController
@@ -32,13 +30,17 @@ public class InstrumentAPI implements IInstrumentAPI {
     public InstrumentResponseDTO add(InstrumentDTO instrumentDTO) {
         return InstrumentResponseDTO.builder()
                 .data(
-                        instrumentMapper.convertToDTO(instrumentService.save(instrumentMapper.convertTo))
+                        instrumentMapper.convertToDTO(instrumentService.save(
+                                instrumentMapper.convertToEntity(instrumentDTO)))
                 ).build();
     }
 
-    @Override
-    public InstrumentResponseDTO find(String instrumentName) throws InstrumentNotFoundException {
-        return null;
+    @GetMapping("/find/{instrumentName}")
+    public InstrumentListResponseDTO find(@PathVariable("instrumentName") String instrumentName)
+            throws InstrumentNotFoundException {
+        return InstrumentListResponseDTO.builder()
+                .data(instrumentMapper.convertToListDTO(instrumentService.findInstrumentByMakeOrModel(instrumentName)
+                )).build();
     }
 
     @Override

@@ -14,5 +14,7 @@ public interface IInstrumentMapper {
 
     InstrumentDTO convertToDTO(Instrument instrument);
 
+    Instrument convertToEntity(InstrumentDTO instrumentDTO);
+
     List<InstrumentDTO> convertToListDTO(List<Instrument> instrumentList);
 }

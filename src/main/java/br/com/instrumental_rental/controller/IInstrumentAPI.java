@@ -23,7 +23,7 @@ public interface IInstrumentAPI {
     response = InstrumentResponseDTO.class)
     @ApiResponses(value = {@ApiResponse(code = 200, message = "success"),
     @ApiResponse(code = 404, response = ErrorSpecificationDTO.class, message = "not found")})
-    public InstrumentResponseDTO find(String instrumentName)
+    public InstrumentListResponseDTO find(String instrumentName)
         throws InstrumentNotFoundException;
 
     @ApiOperation(value = "find all Instrument objects",
