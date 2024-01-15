@@ -50,7 +50,7 @@ public class InstrumentAPI implements IInstrumentAPI {
     }
 
     @PutMapping("/update/{instrumentId}")
-    public InstrumentResponseDTO update(@PathVariable("instrumentId") String instrumentID, InstrumentDTO instrumentDTO)
+    public InstrumentResponseDTO update(@PathVariable("instrumentId") Long instrumentID, InstrumentDTO instrumentDTO)
             throws InstrumentNotFoundException {
         return InstrumentResponseDTO.builder()
                 .data(
@@ -63,8 +63,10 @@ public class InstrumentAPI implements IInstrumentAPI {
     }
 
     @DeleteMapping("/delete/{instrumentId}")
-    public ResponseEntity<DeleteResponseDTO> delete(@PathVariable("instrumentId") String instrumentId)
+    public ResponseEntity<DeleteResponseDTO> delete(@PathVariable("instrumentId") Long instrumentId)
             throws InstrumentNotFoundException {
-        return null;
+        instrumentService.delete(instrumentId);
+        return ResponseEntity.ok(DeleteResponseDTO.builder().deleteSuccessMessage("Instrument successfully deleted")
+                .build());
     }
 }

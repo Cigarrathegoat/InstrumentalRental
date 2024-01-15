@@ -15,7 +15,7 @@ public interface IInstrumentService {
 
     public Instrument update(Instrument instrument) throws InstrumentNotFoundException;
 
-    public void delete(Instrument instrument) throws InstrumentNotFoundException;
+    public void delete(Long instrumentId) throws InstrumentNotFoundException;
 
 
     List<Instrument> findInstrumentByMakeOrModel(String makeOrModel) throws InstrumentNotFoundException;

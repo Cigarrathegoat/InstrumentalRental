@@ -109,7 +109,7 @@ public class InstrumentServiceTest {
         var builder = InstrumentBuilder.instrumentBuilder();
         when(instrumentRepository.findById(builder.getInstrumentId()))
                 .thenReturn(Optional.of(builder));
-        instrumentService.delete(builder);
+        instrumentService.delete(builder.getInstrumentId());
         verify(instrumentRepository).findById(builder.getInstrumentId());
         verify(instrumentRepository).delete(builder);
     }
@@ -121,7 +121,7 @@ public class InstrumentServiceTest {
                 .thenReturn(Optional.empty());
         InstrumentNotFoundException thrown = Assertions.assertThrows(
                 InstrumentNotFoundException.class, () -> {
-                    instrumentService.delete(builder);
+                    instrumentService.delete(builder.getInstrumentId());
                 }
         );
         Assertions.assertEquals("I01", thrown.getCode());

@@ -35,13 +35,13 @@ public interface IInstrumentAPI {
     response = InstrumentResponseDTO.class)
     @ApiResponses(value = {@ApiResponse(code = 200, message = "success"),
     @ApiResponse(code = 404, response = ErrorSpecificationDTO.class, message = "not found")})
-    public InstrumentResponseDTO update(String instrumentID, InstrumentDTO instrumentDTO)
+    public InstrumentResponseDTO update(Long instrumentID, InstrumentDTO instrumentDTO)
         throws InstrumentNotFoundException;
 
     @ApiOperation(value = "delete Instrument object",
     response = DeleteResponseDTO.class)
     @ApiResponses(value = {@ApiResponse(code = 200, message = "success"),
     @ApiResponse(code = 404, response = ErrorSpecificationDTO.class, message = "not found")})
-    public ResponseEntity<DeleteResponseDTO> delete(String instrumentId)
+    public ResponseEntity<DeleteResponseDTO> delete(Long instrumentId)
         throws InstrumentNotFoundException;
 }

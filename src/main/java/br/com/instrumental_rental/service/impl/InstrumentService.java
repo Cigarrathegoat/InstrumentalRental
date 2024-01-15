@@ -63,8 +63,8 @@ public class InstrumentService implements IInstrumentService {
     }
 
     @Override
-    public void delete(Instrument instrument) throws InstrumentNotFoundException {
-        var instrumentToDelete = instrumentRepository.findById(instrument.getInstrumentId())
+    public void delete(Long instrumentId) throws InstrumentNotFoundException {
+        var instrumentToDelete = instrumentRepository.findById(instrumentId)
                 .orElseThrow(
                         () -> new InstrumentNotFoundException(
                                 "I01", "Instrument not found")
