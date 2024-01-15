@@ -65,7 +65,9 @@ public class InstrumentAPITest {
         when(instrumentService.findInstrumentByMakeOrModel(instrument.getModel()))
                 .thenThrow(new InstrumentNotFoundException("I01", "Instrument not found"));
         InstrumentNotFoundException thrown = Assertions.assertThrows(InstrumentNotFoundException.class, () ->
-        {instrumentAPI.find(instrument.getModel());});
+        {
+            instrumentAPI.find(instrument.getModel());
+        });
         Assertions.assertEquals("I01", thrown.getCode());
         Assertions.assertEquals("Instrument not found", thrown.getMessage());
     }
@@ -78,5 +80,21 @@ public class InstrumentAPITest {
         when(instrumentMapper.convertToListDTO(List.of(instrument))).thenReturn(List.of(instrumentDTO));
         InstrumentListResponseDTO result = instrumentAPI.listAll();
         Assertions.assertEquals(InstrumentListResponseDTO.builder().data(List.of(instrumentDTO)).build(), result);
+    }
+
+    @Test
+    void updateSuccess() throws InstrumentNotFoundException {
+        var instrument = InstrumentBuilder.instrumentBuilder();
+        var instrumentDTO = InstrumentDTOBuilder.instrumentDTOBuilder();
+        when(instrumentMapper.convertToEntity(instrumentDTO)).thenReturn(instrument);
+        when(instrumentService.update(instrument)).thenReturn(instrument);
+        when(instrumentMapper.convertToDTO(instrument)).thenReturn(instrumentDTO);
+        InstrumentResponseDTO result = instrumentAPI.update(instrument.getInstrumentId(), instrumentDTO);
+        Assertions.assertEquals(InstrumentResponseDTO.builder().data(instrumentDTO).build(), result);
+    }
+
+    @Test
+    void updateINstrumentNotFoundException() throws InstrumentNotFoundException {
+
     }
 }
