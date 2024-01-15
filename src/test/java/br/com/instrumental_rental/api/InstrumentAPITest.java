@@ -107,7 +107,9 @@ public class InstrumentAPITest {
                 new InstrumentNotFoundException("I01", "Instrument not found")
         );
         InstrumentNotFoundException thrown = Assertions.assertThrows(InstrumentNotFoundException.class, () ->
-        {instrumentAPI.update(instrument.getInstrumentId(), instrumentDTO);});
+        {
+            instrumentAPI.update(instrument.getInstrumentId(), instrumentDTO);
+        });
         Assertions.assertEquals("I01", thrown.getCode());
         Assertions.assertEquals("Instrument not found", thrown.getMessage());
     }
@@ -121,5 +123,16 @@ public class InstrumentAPITest {
     }
 
     @Test
-    void deleteInstrumentNotFoundException() throws InstrumentNotFoundException
+    void deleteInstrumentNotFoundException() throws InstrumentNotFoundException {
+        var instrument = InstrumentBuilder.instrumentBuilder();
+        doThrow(new InstrumentNotFoundException("I01", "Instrument not found"))
+                .when(instrumentService).delete(instrument.getInstrumentId());
+        InstrumentNotFoundException thrown = Assertions.assertThrows(InstrumentNotFoundException.class, () ->
+                {
+                    instrumentAPI.delete(instrument.getInstrumentId());
+                }
+        );
+        Assertions.assertEquals("I01", thrown.getCode());
+        Assertions.assertEquals("Instrument not found", thrown.getMessage());
+    }
 }
