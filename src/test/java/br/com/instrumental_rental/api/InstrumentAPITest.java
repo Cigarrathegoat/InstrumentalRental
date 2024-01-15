@@ -59,5 +59,14 @@ public class InstrumentAPITest {
         Assertions.assertEquals(InstrumentListResponseDTO.builder().data(List.of(instrumentDTO)).build(), result);
     }
 
-
+    @Test
+    void testFindInstrumentNotFoundException() throws InstrumentNotFoundException {
+        var instrument = InstrumentBuilder.instrumentBuilder();
+        when(instrumentService.findInstrumentByMakeOrModel(instrument.getModel()))
+                .thenThrow(new InstrumentNotFoundException("I01", "Instrument not found"));
+        InstrumentNotFoundException thrown = Assertions.assertThrows(InstrumentNotFoundException.class, () ->
+        {instrumentAPI.find(instrument.getModel());});
+        Assertions.assertEquals("I01", thrown.getCode());
+        Assertions.assertEquals("Instrument not found", thrown.getMessage());
+    }
 }
