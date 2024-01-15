@@ -5,7 +5,7 @@ import br.com.instrumental_rental.controller.dto.responses.errors.ErrorSpecifica
 import br.com.instrumental_rental.controller.dto.responses.responses.DeleteResponseDTO;
 import br.com.instrumental_rental.controller.dto.responses.responses.RentalListResponseDTO;
 import br.com.instrumental_rental.controller.dto.responses.responses.RentalResponseDTO;
-import br.com.instrumental_rental.exceptions.RentalNotFoundException;
+import br.com.instrumental_rental.exceptions.*;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -18,13 +18,15 @@ public interface IRentalAPI {
     @ApiResponses(value = {@ApiResponse(code = 200, message = "success"),
     @ApiResponse(code = 404, response = ErrorSpecificationDTO.class, message = "not found")})
     public RentalResponseDTO add(RentalDTO rentalDTO)
-        throws RentalNotFoundException;
+            throws CustomerNotFoundException, InstrumentNotFoundException,
+            AttendantNotFoundException, WithdrawalGreaterThanBalanceException,
+            EndDateNotAfterStartDateException;
 
     @ApiOperation(value = "find Rental object",
     response = RentalResponseDTO.class)
     @ApiResponses(value = {@ApiResponse(code = 200, message = "success"),
     @ApiResponse(code = 404, response = ErrorSpecificationDTO.class, message = "not found")})
-    public RentalResponseDTO find(String rentalId) throws RentalNotFoundException;
+    public RentalListResponseDTO find(String keyWord) throws RentalNotFoundException;
 
     @ApiOperation(value = "find all Rental objects",
     response = RentalResponseDTO.class)

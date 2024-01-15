@@ -50,7 +50,8 @@ public class InstrumentAPI implements IInstrumentAPI {
     }
 
     @PutMapping("/update/{instrumentId}")
-    public InstrumentResponseDTO update(@PathVariable("instrumentId") Long instrumentID, InstrumentDTO instrumentDTO)
+    public InstrumentResponseDTO update(@PathVariable("instrumentId") Long instrumentID,
+                                        @RequestBody InstrumentDTO instrumentDTO)
             throws InstrumentNotFoundException {
         return InstrumentResponseDTO.builder()
                 .data(
