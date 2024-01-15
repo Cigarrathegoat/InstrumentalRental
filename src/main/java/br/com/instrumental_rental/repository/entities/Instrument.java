@@ -39,7 +39,7 @@ public class Instrument {
     private LocalDate manufactureDate;
 
     @Column(name = "DS_AVAILABLE")
-    private boolean available;
+    private boolean available = true;
 
     @Column(name = "ID_RENTAL")
     @JoinColumn(name = "RENTAL_DS")
