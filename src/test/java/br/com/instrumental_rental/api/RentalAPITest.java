@@ -19,6 +19,7 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.List;
 
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 public class RentalAPITest {
@@ -167,6 +168,20 @@ public class RentalAPITest {
         when(rentalService.findAll()).thenReturn(List.of(rental));
         when(rentalMapper.convertToListDto(List.of(rental))).thenReturn(List.of(rentalDTO));
         RentalListResponseDTO result = rentalAPI.findAll();
+        Assertions.assertEquals(RentalListResponseDTO.builder().data(List.of(rentalDTO)).build(), result);
+    }
+
+    @Test
+    void findSuccess() throws RentalNotFoundException {
+        var customer = CustomerBuilder.customerBuilder();
+        var attendant = AttendantBuilder.attendantBuilder();
+        var instrument = InstrumentBuilder.instrumentBuilder();
+        var rental = RentalBuilder.rentalBuilder(customer, instrument, attendant);
+        var rentalDTO = RentalDTOBuilder.rentalDTOBuilder(customer.getCustomerId(),
+                instrument.getInstrumentId(), attendant.getAttendantId());
+        when(rentalService.findRentalListByWord(customer.getName())).thenReturn(List.of(rental));
+        when(rentalMapper.convertToListDto(List.of(rental))).thenReturn(List.of(rentalDTO));
+        RentalListResponseDTO result = rentalAPI.find(customer.getName());
         Assertions.assertEquals(RentalListResponseDTO.builder().data(List.of(rentalDTO)).build(), result);
     }
 }
