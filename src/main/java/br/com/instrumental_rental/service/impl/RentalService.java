@@ -116,8 +116,8 @@ public class RentalService implements IRentalService {
     }
 
     @Override
-    public void delete(Rental rental) throws RentalNotFoundException {
-        var rentalToDelete = findById(rental.getRentalId());
+    public void delete(Long rentalId) throws RentalNotFoundException {
+        var rentalToDelete = findById(rentalId);
         rentalRepositoryAttribute.delete(rentalToDelete);
     }
 

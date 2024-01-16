@@ -63,8 +63,9 @@ public class RentalAPI implements IRentalAPI {
                 ).build();
     }
 
-    @Override
-    public ResponseEntity<DeleteResponseDTO> delete(String rentalId) throws RentalNotFoundException {
-        return null;
+    @DeleteMapping("/delete/{rentalId}")
+    public ResponseEntity<DeleteResponseDTO> delete(@PathVariable("rentalId") Long rentalId) throws RentalNotFoundException {
+        rentalService.delete(rentalId);
+        return ResponseEntity.ok(DeleteResponseDTO.builder().deleteSuccessMessage("Rental deleted successfully").build());
     }
 }

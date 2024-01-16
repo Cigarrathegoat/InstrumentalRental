@@ -11,7 +11,7 @@ public interface IRentalService extends IService<Rental, Exception> {
             EndDateNotAfterStartDateException, CustomerNotFoundException, InstrumentNotFoundException,
             AttendantNotFoundException;
 
-    public void delete(Rental rental) throws RentalNotFoundException;
+    public void delete(Long rentalId) throws RentalNotFoundException;
 
     public List<Rental> findAll();
 
