@@ -25,15 +25,15 @@ public class RentalDTO {
     @NotBlank(message = "field cannot be left blank")
     @Pattern(regexp = "^[0-9]+$", message = "Field must be a number")
     @Positive(message = "field must not be a negative number")
-    private String customerId;
+    private Long customerId;
 
     @NotBlank(message = "field cannot be left blank")
     @Pattern(regexp = "^[0-9]+$", message = "Field must be a number")
     @Positive(message = "field must not be a negative number")
-    private String attendantId;
+    private Long attendantId;
 
     @NotBlank(message = "field cannot be left blank")
-    private InstrumentDTO instrument;
+    private Long instrumentId;
 
     @NotBlank(message = "field cannot be left blank")
     @Pattern(regexp = "^[0-9]+$", message = "Field must be a number")

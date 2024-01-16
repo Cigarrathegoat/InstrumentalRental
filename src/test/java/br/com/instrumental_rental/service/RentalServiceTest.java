@@ -61,7 +61,7 @@ public class RentalServiceTest {
         var instrument = InstrumentBuilder.instrumentBuilder();
         var attendant = AttendantBuilder.attendantBuilder();
         var rentalBuilderBeforeSave = RentalBuilder.rentalBuilderBeforeSave(customer, instrument, attendant);
-        var rentalBuilderAfterSave = RentalBuilder.rentalBuilderAfterSave(customer, instrument, attendant);
+        var rentalBuilderAfterSave = RentalBuilder.rentalBuilder(customer, instrument, attendant);
 
         when(rentalRepository.save(rentalBuilderBeforeSave)).thenReturn(rentalBuilderAfterSave);
         Rental result = rentalService.save(rentalBuilderBeforeSave);
@@ -158,10 +158,10 @@ public class RentalServiceTest {
         var customer = CustomerBuilder.customerBuilder();
         var instrument = InstrumentBuilder.instrumentBuilder();
         var attendant = AttendantBuilder.attendantBuilder();
-        var rentalBuilderAfterSave = RentalBuilder.rentalBuilderAfterSave(customer, instrument, attendant);
+        var rentalBuilderAfterSave = RentalBuilder.rentalBuilder(customer, instrument, attendant);
         when(rentalRepository.findById(rentalBuilderAfterSave.getRentalId()))
                 .thenReturn(Optional.of(rentalBuilderAfterSave));
-        rentalService.delete(rentalBuilderAfterSave);
+        rentalService.delete(rentalBuilderAfterSave.getRentalId());
         /*Assertions.assertNull(rentalBuilderAfterSave);*/
         /*TODO never return a null*/
         verify(rentalRepository).findById(rentalBuilderAfterSave.getRentalId());
@@ -173,11 +173,11 @@ public class RentalServiceTest {
         var customer = CustomerBuilder.customerBuilder();
         var instrument = InstrumentBuilder.instrumentBuilder();
         var attendant = AttendantBuilder.attendantBuilder();
-        var rentalBuilderAfterSave = RentalBuilder.rentalBuilderAfterSave(customer, instrument, attendant);
+        var rentalBuilderAfterSave = RentalBuilder.rentalBuilder(customer, instrument, attendant);
         when(rentalRepository.findById(rentalBuilderAfterSave.getRentalId()))
                 .thenReturn(Optional.empty());
         RentalNotFoundException thrown = Assertions.assertThrows(RentalNotFoundException.class,
-                () -> {rentalService.delete(rentalBuilderAfterSave);});
+                () -> {rentalService.delete(rentalBuilderAfterSave.getRentalId());});
         Assertions.assertEquals("R01", thrown.getCode());
         Assertions.assertEquals("Rental not found", thrown.getMessage());
     }
@@ -187,7 +187,7 @@ public class RentalServiceTest {
         var customer = CustomerBuilder.customerBuilder();
         var instrument = InstrumentBuilder.instrumentBuilder();
         var attendant = AttendantBuilder.attendantBuilder();
-        var rentalBuilderAfterSave = RentalBuilder.rentalBuilderAfterSave(customer, instrument, attendant);
+        var rentalBuilderAfterSave = RentalBuilder.rentalBuilder(customer, instrument, attendant);
         when(rentalRepository.findAll()).thenReturn(List.of(rentalBuilderAfterSave));
         List<Rental> result = rentalService.findAll();
         Assertions.assertEquals(List.of(rentalBuilderAfterSave), result);
@@ -200,7 +200,7 @@ public class RentalServiceTest {
         var customer = CustomerBuilder.customerBuilder();
         var instrument = InstrumentBuilder.instrumentBuilder();
         var attendant = AttendantBuilder.attendantBuilder();
-        var rentalBuilderAfterSave = RentalBuilder.rentalBuilderAfterSave(customer, instrument, attendant);
+        var rentalBuilderAfterSave = RentalBuilder.rentalBuilder(customer, instrument, attendant);
         when(rentalRepository.findRentalByWord(rentalBuilderAfterSave.getCustomer().getName()))
                 .thenReturn(List.of(rentalBuilderAfterSave));
         List<Rental> result = rentalService.findRentalListByWord(
@@ -214,7 +214,7 @@ public class RentalServiceTest {
         var customer = CustomerBuilder.customerBuilder();
         var instrument = InstrumentBuilder.instrumentBuilder();
         var attendant = AttendantBuilder.attendantBuilder();
-        var rentalBuilderAfterSave = RentalBuilder.rentalBuilderAfterSave(customer, instrument, attendant);
+        var rentalBuilderAfterSave = RentalBuilder.rentalBuilder(customer, instrument, attendant);
         when(rentalRepository.findRentalByWord(anyString())).thenReturn(List.of());
         RentalNotFoundException thrown = Assertions.assertThrows(RentalNotFoundException.class,
                 () -> {rentalService.findRentalListByWord(anyString());});

@@ -30,7 +30,7 @@ public class RentalBuilder {
     }
 
     /*TODO turn all id parameters into longs now*/
-    public static Rental rentalBuilderAfterSave(Customer customer, Instrument instrument,
+    public static Rental rentalBuilder(Customer customer, Instrument instrument,
                                                 Attendant attendant) {
 
 

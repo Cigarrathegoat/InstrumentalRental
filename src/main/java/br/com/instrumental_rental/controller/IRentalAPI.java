@@ -37,12 +37,12 @@ public interface IRentalAPI {
     response = RentalResponseDTO.class)
     @ApiResponses(value = {@ApiResponse(code = 200, message = "success"),
     @ApiResponse(code = 404, response = ErrorSpecificationDTO.class, message = "not found")})
-    public RentalResponseDTO update(String rentalId);
+    public RentalResponseDTO update(Long rentalId, RentalDTO rentalDTO) throws RentalNotFoundException;
 
     @ApiOperation(value = "delete Rental object",
     response = DeleteResponseDTO.class)
     @ApiResponses(value = {@ApiResponse(code = 200, message = "success"),
     @ApiResponse(code = 404, response = ErrorSpecificationDTO.class, message = "not found")})
-    public ResponseEntity<DeleteResponseDTO> delete(String rentalId)
+    public ResponseEntity<DeleteResponseDTO> delete(Long rentalId)
         throws RentalNotFoundException;
 }

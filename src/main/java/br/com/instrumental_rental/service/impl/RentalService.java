@@ -146,4 +146,5 @@ public class RentalService implements IRentalService {
         rentalRepositoryAttribute.save(rentalToUpdate);
         return rentalToUpdate;
     }
+
 }
