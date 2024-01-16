@@ -61,4 +61,38 @@ public class RentalAPITest {
         RentalResponseDTO result = rentalAPI.add(rentalDTONoId);
         Assertions.assertEquals(RentalResponseDTO.builder().data(rentalDTO).build(), result);
     }
+
+    @Test
+    void saveCustomerNotFoundException() throws CustomerNotFoundException, AttendantNotFoundException, InstrumentNotFoundException,
+            EndDateNotAfterStartDateException, WithdrawalGreaterThanBalanceException {
+        var customer = CustomerBuilder.customerBuilder();
+        var attendant = AttendantBuilder.attendantBuilder();
+        var instrument = InstrumentBuilder.instrumentBuilder();
+        var rentalNoId = RentalBuilder.rentalBuilderBeforeSave(customer, instrument, attendant);
+        var rentalDTONoId = RentalDTOBuilder.rentalDTOBuilderBeforeSave(
+                customer.getCustomerId(), instrument.getInstrumentId(), attendant.getAttendantId());
+        when(rentalMapper.convertToEntity(rentalDTONoId)).thenReturn(rentalNoId);
+        when(rentalService.save(rentalNoId)).thenThrow(new CustomerNotFoundException("C01", "Customer not found"));
+        CustomerNotFoundException thrown = Assertions.assertThrows(CustomerNotFoundException.class, () ->
+        {rentalAPI.add(rentalDTONoId);});
+        Assertions.assertEquals("C01", thrown.getCode());
+        Assertions.assertEquals("Customer not found", thrown.getMessage());
+    }
+
+    @Test
+    void saveAttendantNotFoundException() throws CustomerNotFoundException, AttendantNotFoundException, InstrumentNotFoundException,
+            EndDateNotAfterStartDateException, WithdrawalGreaterThanBalanceException {
+        var customer = CustomerBuilder.customerBuilder();
+        var attendant = AttendantBuilder.attendantBuilder();
+        var instrument = InstrumentBuilder.instrumentBuilder();
+        var rentalNoId = RentalBuilder.rentalBuilderBeforeSave(customer, instrument, attendant);
+        var rentalDTONoId = RentalDTOBuilder.rentalDTOBuilderBeforeSave(
+                customer.getCustomerId(), instrument.getInstrumentId(), attendant.getAttendantId());
+        when(rentalMapper.convertToEntity(rentalDTONoId)).thenReturn(rentalNoId);
+        when(rentalService.save(rentalNoId)).thenThrow(new AttendantNotFoundException("A01", "Attendant not found"));
+        AttendantNotFoundException thrown = Assertions.assertThrows(AttendantNotFoundException.class, () ->
+        {rentalAPI.add(rentalDTONoId);});
+        Assertions.assertEquals("A01", thrown.getCode());
+        Assertions.assertEquals("Attendant not found", thrown.getMessage());
+    }
 }
