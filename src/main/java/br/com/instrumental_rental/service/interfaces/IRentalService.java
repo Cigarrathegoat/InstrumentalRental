@@ -15,7 +15,7 @@ public interface IRentalService extends IService<Rental, Exception> {
 
     public List<Rental> findAll();
 
-    public Rental update(Rental rental) throws RentalNotFoundException;
+    public Rental update(Long rentalId) throws RentalNotFoundException;
 
     public List<Rental> findRentalListByWord(String word) throws RentalNotFoundException;
 

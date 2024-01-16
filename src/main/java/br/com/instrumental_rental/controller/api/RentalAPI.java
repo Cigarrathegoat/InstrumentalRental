@@ -59,7 +59,7 @@ public class RentalAPI implements IRentalAPI {
                                     @RequestBody RentalDTO rentalDTO) throws RentalNotFoundException {
         return RentalResponseDTO.builder()
                 .data(
-                        rentalMapper.convertToDTO(rentalService.update(rentalMapper.convertToEntity(rentalDTO)))
+                        rentalMapper.convertToDTO(rentalService.update(rentalId))
                 ).build();
     }
 

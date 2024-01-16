@@ -134,14 +134,14 @@ public class RentalService implements IRentalService {
     }
 
     @Override
-    public Rental update(Rental rental) throws RentalNotFoundException {
-        var rentalToUpdate = findById(rental.getRentalId());
-        rentalToUpdate.setCustomer(rental.getCustomer());
-        rentalToUpdate.setAttendant(rental.getAttendant());
-        rentalToUpdate.setInstrument(rental.getInstrument());
-        rentalToUpdate.setPrice(rental.getPrice());
-        rentalToUpdate.setStartDate(rental.getStartDate());
-        rentalToUpdate.setEndDate(rental.getEndDate());
+    public Rental update(Long rentalId) throws RentalNotFoundException {
+        var rentalToUpdate = findById(rentalId);
+        rentalToUpdate.setCustomer(rentalToUpdate.getCustomer());
+        rentalToUpdate.setAttendant(rentalToUpdate.getAttendant());
+        rentalToUpdate.setInstrument(rentalToUpdate.getInstrument());
+        rentalToUpdate.setPrice(rentalToUpdate.getPrice());
+        rentalToUpdate.setStartDate(rentalToUpdate.getStartDate());
+        rentalToUpdate.setEndDate(rentalToUpdate.getEndDate());
 
         rentalRepositoryAttribute.save(rentalToUpdate);
         return rentalToUpdate;

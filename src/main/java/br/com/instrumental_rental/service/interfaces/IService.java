@@ -8,5 +8,4 @@ public interface IService<T, E extends Throwable> {
 
     List<T> findAll();
 
-    T update(T t) throws E;
 }
