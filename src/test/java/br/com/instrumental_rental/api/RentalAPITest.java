@@ -2,6 +2,7 @@ package br.com.instrumental_rental.api;
 
 import br.com.instrumental_rental.Mappers.IRentalMapper;
 import br.com.instrumental_rental.controller.api.RentalAPI;
+import br.com.instrumental_rental.controller.dto.responses.responses.RentalListResponseDTO;
 import br.com.instrumental_rental.controller.dto.responses.responses.RentalResponseDTO;
 import br.com.instrumental_rental.exceptions.*;
 import br.com.instrumental_rental.models.*;
@@ -15,6 +16,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+
+import java.util.List;
 
 import static org.mockito.Mockito.when;
 
@@ -151,5 +154,19 @@ public class RentalAPITest {
         );
         Assertions.assertEquals("R03", thrown.getCode());
         Assertions.assertEquals("End date before start date", thrown.getMessage());
+    }
+
+    @Test
+    void listAll() {
+        var customer = CustomerBuilder.customerBuilder();
+        var attendant = AttendantBuilder.attendantBuilder();
+        var instrument = InstrumentBuilder.instrumentBuilder();
+        var rental = RentalBuilder.rentalBuilder(customer, instrument, attendant);
+        var rentalDTO = RentalDTOBuilder.rentalDTOBuilder(customer.getCustomerId(),
+                instrument.getInstrumentId(), attendant.getAttendantId());
+        when(rentalService.findAll()).thenReturn(List.of(rental));
+        when(rentalMapper.convertToListDto(List.of(rental))).thenReturn(List.of(rentalDTO));
+        RentalListResponseDTO result = rentalAPI.findAll();
+        Assertions.assertEquals(RentalListResponseDTO.builder().data(List.of(rentalDTO)).build(), result);
     }
 }
