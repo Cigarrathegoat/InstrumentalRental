@@ -78,7 +78,9 @@ public class RentalAPITest {
         when(rentalMapper.convertToEntity(rentalDTONoId)).thenReturn(rentalNoId);
         when(rentalService.save(rentalNoId)).thenThrow(new CustomerNotFoundException("C01", "Customer not found"));
         CustomerNotFoundException thrown = Assertions.assertThrows(CustomerNotFoundException.class, () ->
-        {rentalAPI.add(rentalDTONoId);});
+        {
+            rentalAPI.add(rentalDTONoId);
+        });
         Assertions.assertEquals("C01", thrown.getCode());
         Assertions.assertEquals("Customer not found", thrown.getMessage());
     }
@@ -95,7 +97,9 @@ public class RentalAPITest {
         when(rentalMapper.convertToEntity(rentalDTONoId)).thenReturn(rentalNoId);
         when(rentalService.save(rentalNoId)).thenThrow(new AttendantNotFoundException("A01", "Attendant not found"));
         AttendantNotFoundException thrown = Assertions.assertThrows(AttendantNotFoundException.class, () ->
-        {rentalAPI.add(rentalDTONoId);});
+        {
+            rentalAPI.add(rentalDTONoId);
+        });
         Assertions.assertEquals("A01", thrown.getCode());
         Assertions.assertEquals("Attendant not found", thrown.getMessage());
     }
@@ -112,7 +116,9 @@ public class RentalAPITest {
         when(rentalMapper.convertToEntity(rentalDTONoId)).thenReturn(rentalNoId);
         when(rentalService.save(rentalNoId)).thenThrow(new InstrumentNotFoundException("I01", "Instrument not found"));
         InstrumentNotFoundException thrown = Assertions.assertThrows(InstrumentNotFoundException.class, () ->
-        {rentalAPI.add(rentalDTONoId);});
+        {
+            rentalAPI.add(rentalDTONoId);
+        });
         Assertions.assertEquals("I01", thrown.getCode());
         Assertions.assertEquals("Instrument not found", thrown.getMessage());
     }
@@ -131,7 +137,9 @@ public class RentalAPITest {
         when(rentalService.save(rentalNoId))
                 .thenThrow(new WithdrawalGreaterThanBalanceException("R02", "Withdrawal greater than balance"));
         WithdrawalGreaterThanBalanceException thrown = Assertions.assertThrows(
-                WithdrawalGreaterThanBalanceException.class, () -> {rentalAPI.add(rentalDTONoId);}
+                WithdrawalGreaterThanBalanceException.class, () -> {
+                    rentalAPI.add(rentalDTONoId);
+                }
         );
         Assertions.assertEquals("R02", thrown.getCode());
         Assertions.assertEquals("Withdrawal greater than balance", thrown.getMessage());
@@ -151,7 +159,9 @@ public class RentalAPITest {
         when(rentalService.save(rentalNoId))
                 .thenThrow(new EndDateNotAfterStartDateException("R03", "End date before start date"));
         EndDateNotAfterStartDateException thrown = Assertions.assertThrows(
-                EndDateNotAfterStartDateException.class, () -> {rentalAPI.add(rentalDTONoId);}
+                EndDateNotAfterStartDateException.class, () -> {
+                    rentalAPI.add(rentalDTONoId);
+                }
         );
         Assertions.assertEquals("R03", thrown.getCode());
         Assertions.assertEquals("End date before start date", thrown.getMessage());
@@ -183,5 +193,18 @@ public class RentalAPITest {
         when(rentalMapper.convertToListDto(List.of(rental))).thenReturn(List.of(rentalDTO));
         RentalListResponseDTO result = rentalAPI.find(customer.getName());
         Assertions.assertEquals(RentalListResponseDTO.builder().data(List.of(rentalDTO)).build(), result);
+    }
+
+    @Test
+    void findRentalNotFoundException() throws RentalNotFoundException {
+        var customer = CustomerBuilder.customerBuilder();
+        when(rentalService.findRentalListByWord(customer.getName()))
+                .thenThrow(new RentalNotFoundException("R01", "Rental not found"));
+        RentalNotFoundException thrown = Assertions.assertThrows(RentalNotFoundException.class, () ->
+        {
+            rentalAPI.find(customer.getName());
+        });
+        Assertions.assertEquals("R01", thrown.getCode());
+        Assertions.assertEquals("Rental not found", thrown.getMessage());
     }
 }
