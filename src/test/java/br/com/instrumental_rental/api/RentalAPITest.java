@@ -20,7 +20,7 @@ import org.mockito.MockitoAnnotations;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class RentalAPITest {
 
@@ -217,7 +217,7 @@ public class RentalAPITest {
         var rentalDTO = RentalDTOBuilder.rentalDTOBuilder(customer.getCustomerId(),
                 instrument.getInstrumentId(), attendant.getAttendantId());
         when(rentalMapper.convertToEntity(rentalDTO)).thenReturn(rental);
-        when(rentalService.update(rental.getRentalId())).thenReturn(rental);
+        when(rentalService.update(rental)).thenReturn(rental);
         when(rentalMapper.convertToDTO(rental)).thenReturn(rentalDTO);
         RentalResponseDTO result = rentalAPI.update(rental.getRentalId(), rentalDTO);
         Assertions.assertEquals(RentalResponseDTO.builder().data(rentalDTO).build(), result);
@@ -231,12 +231,23 @@ public class RentalAPITest {
         var rental = RentalBuilder.rentalBuilder(customer, instrument, attendant);
         var rentalDTO = RentalDTOBuilder.rentalDTOBuilder(customer.getCustomerId(),
                 instrument.getInstrumentId(), attendant.getAttendantId());
-        when(rentalService.update(rental.getRentalId()))
+        when(rentalMapper.convertToEntity(rentalDTO)).thenReturn(rental);
+        when(rentalService.update(rental))
                 .thenThrow(new RentalNotFoundException("R01", "Rental not found"));
         RentalNotFoundException thrown = Assertions.assertThrows(RentalNotFoundException.class, () ->
         {rentalAPI.update(rental.getRentalId(), rentalDTO);});
         Assertions.assertEquals("R01", thrown.getCode());
         Assertions.assertEquals("Rental not found", thrown.getMessage());
+    }
 
+    @Test
+    void deleteSuccess() throws RentalNotFoundException {
+        var customer = CustomerBuilder.customerBuilder();
+        var attendant = AttendantBuilder.attendantBuilder();
+        var instrument = InstrumentBuilder.instrumentBuilder();
+        var rental = RentalBuilder.rentalBuilder(customer, instrument, attendant);
+        doNothing().when(rentalService).delete(rental.getRentalId());
+        rentalAPI.delete(rental.getRentalId());
+        verify(rentalService, times(1)).delete(rental.getRentalId());
     }
 }
