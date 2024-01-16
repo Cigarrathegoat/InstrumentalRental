@@ -46,14 +46,21 @@ public class RentalAPI implements IRentalAPI {
                 ).build();
     }
 
-    @Override
+    @PostMapping("/listAll")
     public RentalListResponseDTO findAll() {
-        return null;
+        return RentalListResponseDTO.builder()
+                .data(
+                        rentalMapper.convertToListDto(rentalService.findAll())
+                ).build();
     }
 
-    @Override
-    public RentalResponseDTO update(String rentalId) {
-        return null;
+    @PutMapping("/update/{rentalId}")
+    public RentalResponseDTO update(@PathVariable("rentalId") Long rentalId,
+                                    @RequestBody RentalDTO rentalDTO) throws RentalNotFoundException {
+        return RentalResponseDTO.builder()
+                .data(
+                        rentalMapper.convertToDTO(rentalService.update(rentalMapper.convertToEntity(rentalDTO)))
+                ).build();
     }
 
     @Override
