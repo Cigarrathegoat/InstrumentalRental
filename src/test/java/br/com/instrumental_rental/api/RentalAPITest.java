@@ -250,4 +250,17 @@ public class RentalAPITest {
         rentalAPI.delete(rental.getRentalId());
         verify(rentalService, times(1)).delete(rental.getRentalId());
     }
+
+    @Test
+    void deleteRentalNotFoundException() throws RentalNotFoundException {
+        var customer = CustomerBuilder.customerBuilder();
+        var attendant = AttendantBuilder.attendantBuilder();
+        var instrument = InstrumentBuilder.instrumentBuilder();
+        var rental = RentalBuilder.rentalBuilder(customer, instrument, attendant);
+        doThrow(new RentalNotFoundException("R01", "Rental not found")).when(rentalService).delete(rental.getRentalId());
+        RentalNotFoundException thrown = Assertions.assertThrows(RentalNotFoundException.class, () ->
+        {rentalAPI.delete(rental.getRentalId());});
+        Assertions.assertEquals("R01", thrown.getCode());
+        Assertions.assertEquals("Rental not found", thrown.getMessage());
+    }
 }
