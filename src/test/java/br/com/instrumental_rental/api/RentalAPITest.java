@@ -207,4 +207,19 @@ public class RentalAPITest {
         Assertions.assertEquals("R01", thrown.getCode());
         Assertions.assertEquals("Rental not found", thrown.getMessage());
     }
+
+    @Test
+    void updateSuccess() throws RentalNotFoundException {
+        var customer = CustomerBuilder.customerBuilder();
+        var attendant = AttendantBuilder.attendantBuilder();
+        var instrument = InstrumentBuilder.instrumentBuilder();
+        var rental = RentalBuilder.rentalBuilder(customer, instrument, attendant);
+        var rentalDTO = RentalDTOBuilder.rentalDTOBuilder(customer.getCustomerId(),
+                instrument.getInstrumentId(), attendant.getAttendantId());
+        when(rentalMapper.convertToEntity(rentalDTO)).thenReturn(rental);
+        when(rentalService.update(rental)).thenReturn(rental);
+        when(rentalMapper.convertToDTO(rental)).thenReturn(rentalDTO);
+        RentalResponseDTO result = rentalAPI.update(rental.getRentalId(), rentalDTO);
+        Assertions.assertEquals(RentalResponseDTO.builder().data(rentalDTO).build(), result);
+    }
 }
