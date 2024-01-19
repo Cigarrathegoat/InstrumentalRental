@@ -4,7 +4,7 @@ import br.com.instrumental_rental.repository.entities.TheAddress;
 
 public class TheAddressBuilder {
 
-    public TheAddress theAddressBuilder() {
+    public static TheAddress theAddressBuilder() {
         return TheAddress.builder()
                 .addressId(1L)
                 .state("SP")
@@ -17,7 +17,7 @@ public class TheAddressBuilder {
                 .build();
     }
 
-    public TheAddress theAddressNoIdBuilder() {
+    public static TheAddress theAddressNoIdBuilder() {
         return TheAddress.builder()
                 .addressId(null)
                 .state("SP")
