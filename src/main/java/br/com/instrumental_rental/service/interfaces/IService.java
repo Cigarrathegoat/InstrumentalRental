@@ -4,8 +4,10 @@ import java.util.List;
 
 public interface IService<T, E extends Throwable> {
 
-    T save (T t) throws E;
+    T save (T t);
 
     List<T> findAll();
+
+
 
 }
