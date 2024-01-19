@@ -1,4 +1,6 @@
 package br.com.instrumental_rental.service.interfaces;
 
-public interface ITheAddressService {
+import br.com.instrumental_rental.repository.entities.TheAddress;
+
+public interface ITheAddressService extends IService<TheAddress, Exception> {
 }
