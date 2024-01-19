@@ -48,8 +48,8 @@ public class TheAddressService implements ITheAddressService {
         return save(addressToUpdate);
     }
 
-    public void delete(Long addressId) throws TheAddressNotFoundException {
-        var addressToDelete = findById(addressId);
+    public void delete(Long id) throws TheAddressNotFoundException {
+        var addressToDelete = findById(id);
         theAddressRepository.delete(addressToDelete);
     }
 }
