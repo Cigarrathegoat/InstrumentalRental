@@ -34,4 +34,18 @@ public class TheAddressService implements ITheAddressService {
     public List<TheAddress> findAll() {
         return null;
     }
+
+    public TheAddress update(TheAddress theAddress) throws TheAddressNotFoundException {
+        var addressToUpdate = findById(theAddress.getAddressId());
+        addressToUpdate.setStreetNumber(theAddress.getStreetNumber());
+        addressToUpdate.setStreetName(theAddress.getStreetName());
+        addressToUpdate.setBorough(theAddress.getBorough());
+        addressToUpdate.setCity(theAddress.getCity());
+        addressToUpdate.setState(theAddress.getState());
+        addressToUpdate.setCountry(theAddress.getCountry());
+        addressToUpdate.setZipCode(theAddress.getZipCode());
+
+        return save(addressToUpdate);
+
+    }
 }
