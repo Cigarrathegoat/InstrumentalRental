@@ -26,6 +26,20 @@ public class ApplicationExceptionHandler {
                 );
     }
 
+    @ExceptionHandler(TheAddressNotFoundException.class)
+    public ResponseEntity<ErrorResponseDTO> TheAddressNotFoundExceptionHandler(
+            TheAddressNotFoundException exception
+    ) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(ErrorResponseDTO.builder()
+                        .data(ErrorSpecificationDTO.builder()
+                                .errorCode("400")
+                                .errorMessage(exception.getMessage()
+                                ).build()
+                        ).build()
+                );
+    }
+
     @ExceptionHandler(AttendantNotFoundException.class)
     public ResponseEntity<ErrorResponseDTO> attendantNotFoundExceptionHandler(
             AttendantNotFoundException exception) {
