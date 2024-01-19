@@ -20,6 +20,13 @@ public class ContactService implements IContactService {
     public ContactService(IContactRepository contactRepository) {
         this.contactRepository = contactRepository;
     }
+
+    public Contact findById(Long contactId) throws ContactNotFoundException {
+        var contact = contactRepository.findById(contactId)
+                .orElseThrow(() -> new ContactNotFoundException("C01", "Contact not found"));
+        return contact;
+    }
+
     @Override
     public Contact save(Contact contact) {
         return contactRepository.save(contact);
@@ -32,7 +39,11 @@ public class ContactService implements IContactService {
 
     @Override
     public Contact update(Contact contact) throws ContactNotFoundException {
-        return null;
+        var contactToUpdate = findById(contact.getContactId());
+        contactToUpdate.setContactContent(contact.getContactContent());
+        contactToUpdate.setContactType(contact.getContactType());
+        contactRepository.save(contactToUpdate);
+        return contactToUpdate;
     }
 
     @Override
