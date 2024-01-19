@@ -47,7 +47,8 @@ public class ContactService implements IContactService {
     }
 
     @Override
-    public void delete(Long id) throws Exception {
-
+    public void delete(Long id) throws ContactNotFoundException {
+        var contactToDelete = findById(id);
+        contactRepository.delete(contactToDelete);
     }
 }
