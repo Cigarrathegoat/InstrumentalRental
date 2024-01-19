@@ -26,6 +26,19 @@ public class ApplicationExceptionHandler {
                 );
     }
 
+    @ExceptionHandler(ContactNotFoundException.class)
+    public ResponseEntity<ErrorResponseDTO> contactNotFoundExceptionHandler(
+            ContactNotFoundException exception) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(ErrorResponseDTO.builder()
+                        .data(ErrorSpecificationDTO.builder()
+                                .errorCode("400")
+                                .errorMessage(exception.getMessage()
+                                ).build()
+
+                        ).build());
+    }
+
     @ExceptionHandler(TheAddressNotFoundException.class)
     public ResponseEntity<ErrorResponseDTO> TheAddressNotFoundExceptionHandler(
             TheAddressNotFoundException exception

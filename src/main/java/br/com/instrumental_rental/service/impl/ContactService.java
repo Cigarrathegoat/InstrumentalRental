@@ -1,5 +1,6 @@
 package br.com.instrumental_rental.service.impl;
 
+import br.com.instrumental_rental.exceptions.ContactNotFoundException;
 import br.com.instrumental_rental.repository.entities.Contact;
 import br.com.instrumental_rental.repository.interfaces.IContactRepository;
 import br.com.instrumental_rental.service.interfaces.IContactService;
