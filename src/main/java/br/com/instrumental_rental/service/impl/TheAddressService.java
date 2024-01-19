@@ -32,7 +32,7 @@ public class TheAddressService implements ITheAddressService {
 
     @Override
     public List<TheAddress> findAll() {
-        return null;
+        return theAddressRepository.findAll();
     }
 
     public TheAddress update(TheAddress theAddress) throws TheAddressNotFoundException {
@@ -46,6 +46,10 @@ public class TheAddressService implements ITheAddressService {
         addressToUpdate.setZipCode(theAddress.getZipCode());
 
         return save(addressToUpdate);
+    }
 
+    public void delete(Long addressId) throws TheAddressNotFoundException {
+        var addressToDelete = findById(addressId);
+        theAddressRepository.delete(addressToDelete);
     }
 }
