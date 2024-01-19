@@ -1,6 +1,6 @@
 package br.com.instrumental_rental.controller.dto.requests;
 
-import br.com.instrumental_rental.customvalidators.IOverage;
+import br.com.instrumental_rental.customvalidators.agevalidators.IOverage;
 import br.com.instrumental_rental.repository.entities.Contact;
 import br.com.instrumental_rental.repository.entities.TheAddress;
 import lombok.AllArgsConstructor;

@@ -1,4 +1,4 @@
-package br.com.instrumental_rental.customvalidators;
+package br.com.instrumental_rental.customvalidators.agevalidators;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
