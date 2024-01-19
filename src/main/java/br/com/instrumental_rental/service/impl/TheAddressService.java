@@ -1,6 +1,8 @@
 package br.com.instrumental_rental.service.impl;
 
+import br.com.instrumental_rental.exceptions.TheAddressNotFoundException;
 import br.com.instrumental_rental.repository.entities.TheAddress;
+import br.com.instrumental_rental.repository.interfaces.ITheAddressRepository;
 import br.com.instrumental_rental.service.interfaces.ITheAddressService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,20 +14,20 @@ import java.util.List;
 @Slf4j
 public class TheAddressService implements ITheAddressService {
 
-    ITheAddressRepository theAddressService;
+    ITheAddressRepository theAddressRepository;
 
     @Autowired
-    public TheAddressService(ITheAddressService theAddressService) {
-        this.theAddressService = theAddressService;
+    public TheAddressService(ITheAddressRepository theAddressRepository) {
+        this.theAddressRepository = theAddressRepository;
     }
     @Override
     public TheAddress save(TheAddress theAddress) {
-        return ;
+        return theAddressRepository.save(theAddress);
     }
 
-    @Override
-    public TheAddress findById(Long addressID) throws AddressNotFoundException {
-
+    public TheAddress findById(Long addressId) throws TheAddressNotFoundException {
+        return theAddressRepository.findById(addressId).orElseThrow(() ->
+                new TheAddressNotFoundException("A01", "Address not found"));
     }
 
     @Override
