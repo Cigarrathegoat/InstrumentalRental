@@ -47,4 +47,11 @@ public class TheAddressServiceTest {
         Assertions.assertEquals(builder, result);
     }
 
+    @Test
+    void findByIdTheAddressNotFoundException() throws TheAddressNotFoundException {
+    var builder = TheAddressBuilder.theAddressBuilder();
+    when(theAddressRepository.findById(builder.getAddressId())).thenReturn(Optional.of(null));
+    TheAddressNotFoundException thrown = assertions.assertThrows
+    }
+
 }
