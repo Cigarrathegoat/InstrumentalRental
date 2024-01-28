@@ -15,7 +15,7 @@ import org.mockito.MockitoAnnotations;
 import java.util.List;
 import java.util.Optional;
 
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class TheAddressServiceTest {
 
@@ -89,6 +89,11 @@ public class TheAddressServiceTest {
 
     @Test
     void deleteSuccess() throws TheAddressNotFoundException {
-
+        var builder = TheAddressBuilder.theAddressBuilder();
+        when(theAddressRepository.findById(builder.getAddressId())).thenReturn(Optional.of(builder));
+        theAddressService.delete(builder.getAddressId());
+        doNothing().when(theAddressRepository).delete(builder);
+        verify(theAddressRepository).findById(builder.getAddressId());
+        verify(theAddressRepository).delete(builder);
     }
 }
