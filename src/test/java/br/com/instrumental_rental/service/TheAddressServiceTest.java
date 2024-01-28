@@ -96,4 +96,14 @@ public class TheAddressServiceTest {
         verify(theAddressRepository).findById(builder.getAddressId());
         verify(theAddressRepository).delete(builder);
     }
+
+    @Test
+    void deleteTheAddressNotFoundException() throws TheAddressNotFoundException {
+        var builder = TheAddressBuilder.theAddressBuilder();
+        when(theAddressRepository.findById(builder.getAddressId())).thenReturn(Optional.empty());
+        TheAddressNotFoundException thrown = Assertions.assertThrows(TheAddressNotFoundException.class,
+                () -> {theAddressService.delete(builder.getAddressId());});
+        Assertions.assertEquals("A01", thrown.getCode());
+        Assertions.assertEquals("Address not found", thrown.getMessage());
+    }
 }
