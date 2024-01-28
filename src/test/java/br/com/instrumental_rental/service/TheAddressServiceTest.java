@@ -51,7 +51,13 @@ public class TheAddressServiceTest {
     void findByIdTheAddressNotFoundException() throws TheAddressNotFoundException {
     var builder = TheAddressBuilder.theAddressBuilder();
     when(theAddressRepository.findById(builder.getAddressId())).thenReturn(Optional.of(null));
-    TheAddressNotFoundException thrown = assertions.assertThrows
+    TheAddressNotFoundException thrown = Assertions.assertThrows(
+            TheAddressNotFoundException.class, () -> {
+                theAddressService.findById(builder.getAddressId());}
+    );
+        Assertions.assertEquals("A01", thrown.getCode());
+        Assertions.assertEquals("Address not found", thrown.getMessage());
     }
+
 
 }
