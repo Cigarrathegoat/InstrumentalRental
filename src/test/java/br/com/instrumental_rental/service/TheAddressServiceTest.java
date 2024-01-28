@@ -69,5 +69,26 @@ public class TheAddressServiceTest {
     }
 
     @Test
-    void updateSuccess() throws TheAddressNo
+    void updateSuccess() throws TheAddressNotFoundException {
+        var builder = TheAddressBuilder.theAddressBuilder();
+        when(theAddressRepository.findById(builder.getAddressId())).thenReturn(Optional.of(builder));
+        when(theAddressRepository.save(builder)).thenReturn(builder);
+        TheAddress thrown = theAddressService.update(builder);
+        Assertions.assertEquals(builder, thrown);
+    }
+
+    @Test
+    void updateTheAddressNotFoundException() throws TheAddressNotFoundException {
+    var builder = TheAddressBuilder.theAddressBuilder();
+    when(theAddressRepository.findById(builder.getAddressId())).thenReturn(Optional.empty());
+    TheAddressNotFoundException thrown = Assertions.assertThrows(TheAddressNotFoundException.class,
+            () -> {theAddressService.update(builder);});
+    Assertions.assertEquals("A01", thrown.getCode());
+    Assertions.assertEquals("Address not found", thrown.getMessage());
+    }
+
+    @Test
+    void deleteSuccess() throws TheAddressNotFoundException {
+
+    }
 }
