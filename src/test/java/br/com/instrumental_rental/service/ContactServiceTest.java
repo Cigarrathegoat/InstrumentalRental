@@ -63,4 +63,13 @@ public class ContactServiceTest {
         List<Contact> result = contactService.findAll();
         Assertions.assertEquals(List.of(builder), result);
     }
+
+    @Test
+    void testUpdateSuccess() throws ContactNotFoundException {
+        var builder = ContactBuilder.contactBuilder();
+        when(contactRepository.findById(builder.getContactId())).thenReturn(Optional.of(builder));
+        when(contactRepository.save(builder)).thenReturn(builder);
+        Contact result = contactService.update(builder);
+        Assertions.assertEquals(builder, result);
+    }
 }
