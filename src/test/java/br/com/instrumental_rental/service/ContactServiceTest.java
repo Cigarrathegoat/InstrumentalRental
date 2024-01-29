@@ -1,5 +1,6 @@
 package br.com.instrumental_rental.service;
 
+import br.com.instrumental_rental.exceptions.ContactNotFoundException;
 import br.com.instrumental_rental.models.ContactBuilder;
 import br.com.instrumental_rental.repository.entities.Contact;
 import br.com.instrumental_rental.repository.interfaces.IContactRepository;
@@ -10,6 +11,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+
+import java.util.Optional;
 
 import static org.mockito.Mockito.when;
 
@@ -32,5 +35,13 @@ public class ContactServiceTest {
         when(contactRepository.save(builder)).thenReturn(builder);
         Contact save = contactService.save(builder);
         Assertions.assertEquals(builder, save);
+    }
+
+    @Test
+    void testFindSuccess() throws ContactNotFoundException {
+        var builder = ContactBuilder.contactBuilder();
+        when(contactRepository.findById(builder.getContactId())).thenReturn(Optional.of(builder));
+        Contact result = contactService.findById(builder.getContactId());
+        Assertions.assertEquals(builder, result);
     }
 }
