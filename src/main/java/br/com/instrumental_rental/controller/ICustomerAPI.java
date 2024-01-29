@@ -19,13 +19,13 @@ import java.math.BigDecimal;
 public interface ICustomerAPI {
 
     @ApiOperation(value = "add Customer object",
-    response = CustomerDTO.class)
+    response = CustomerResponseDTO.class)
     @ApiResponses(value = {@ApiResponse(code = 200, message = "success"),
     @ApiResponse(code =404, response = ErrorSpecificationDTO.class, message = "not found")})
     CustomerResponseDTO add(CustomerDTO customerDTO);
 
     @ApiOperation(value = "find Customer object",
-    response = CustomerDTO.class)
+    response = CustomerResponseDTO.class)
     @ApiResponses(value = {@ApiResponse(code = 200, message = "success"),
     @ApiResponse(code = 404, response = ErrorSpecificationDTO.class, message = "not found")})
     public CustomerResponseDTO find(String number)
@@ -37,7 +37,7 @@ public interface ICustomerAPI {
     public CustomerListResponseDTO listAll();
 
     @ApiOperation(value = "update Customer object",
-    response = CustomerDTO.class)
+    response = CustomerResponseDTO.class)
     @ApiResponses(value = {@ApiResponse(code = 200, message = "success"),
     @ApiResponse(code = 404, response = ErrorSpecificationDTO.class, message = "not found")})
     public CustomerResponseDTO update(Long customerId, CustomerDTO customerDTO) throws CustomerNotFoundException;
@@ -57,7 +57,7 @@ public interface ICustomerAPI {
             throws CustomerNotFoundException, WithdrawalGreaterThanBalanceException;
 
     @ApiOperation(value = "delete Customer object",
-    response = CustomerDTO.class)
+    response = ResponseEntity.class)
     @ApiResponses(value = {@ApiResponse(code = 200, message = "success"),
     @ApiResponse(code = 404, response = ErrorSpecificationDTO.class, message = "not found")})
     public ResponseEntity<DeleteResponseDTO> delete(Long customerId)
