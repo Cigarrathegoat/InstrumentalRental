@@ -12,6 +12,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.Mockito.when;
@@ -56,5 +57,10 @@ public class ContactServiceTest {
     }
 
     @Test
-    void testListAll()
+    void testListAll() {
+        var builder = ContactBuilder.contactBuilder();
+        when(contactRepository.findAll()).thenReturn(List.of(builder));
+        List<Contact> result = contactService.findAll();
+        Assertions.assertEquals(List.of(builder), result);
+    }
 }
