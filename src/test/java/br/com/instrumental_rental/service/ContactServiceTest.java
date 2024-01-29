@@ -15,7 +15,7 @@ import org.mockito.MockitoAnnotations;
 import java.util.List;
 import java.util.Optional;
 
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class ContactServiceTest {
 
@@ -81,5 +81,15 @@ public class ContactServiceTest {
                 () -> {contactService.update(builder);});
         Assertions.assertEquals("C01", thrown.getCode());
         Assertions.assertEquals("Contact not found", thrown.getMessage());
+    }
+
+    @Test
+    void testDeleteSuccess() throws ContactNotFoundException {
+        var builder = ContactBuilder.contactBuilder();
+        when(contactRepository.findById(builder.getContactId())).thenReturn(Optional.of(builder));
+        doNothing().when(contactRepository).delete(builder);
+        contactService.delete(builder.getContactId());
+        verify(contactRepository).findById(builder.getContactId());
+        verify(contactRepository).delete(builder);
     }
 }
