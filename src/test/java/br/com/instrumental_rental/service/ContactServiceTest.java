@@ -92,4 +92,14 @@ public class ContactServiceTest {
         verify(contactRepository).findById(builder.getContactId());
         verify(contactRepository).delete(builder);
     }
+
+    @Test
+    void testDeleteContactNotFoundException() throws ContactNotFoundException {
+        var builder = ContactBuilder.contactBuilder();
+        when(contactRepository.findById(builder.getContactId())).thenReturn(Optional.empty());
+        ContactNotFoundException thrown = Assertions.assertThrows(ContactNotFoundException.class,
+                () -> {contactService.delete(builder.getContactId());});
+        Assertions.assertEquals("C01", thrown.getCode());
+        Assertions.assertEquals("Contact not found", thrown.getMessage());
+    }
 }
