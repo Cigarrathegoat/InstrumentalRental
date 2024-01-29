@@ -44,4 +44,17 @@ public class ContactServiceTest {
         Contact result = contactService.findById(builder.getContactId());
         Assertions.assertEquals(builder, result);
     }
+
+    @Test
+    void testFindContactNotFoundException() throws ContactNotFoundException {
+        var builder = ContactBuilder.contactBuilder();
+        when(contactRepository.findById(builder.getContactId())).thenReturn(Optional.empty());
+        ContactNotFoundException thrown = Assertions.assertThrows(ContactNotFoundException.class,
+                () -> {contactService.findById(builder.getContactId());});
+        Assertions.assertEquals("C01", thrown.getCode());
+        Assertions.assertEquals("Contact not found", thrown.getMessage());
+    }
+
+    @Test
+    void testListAll()
 }
