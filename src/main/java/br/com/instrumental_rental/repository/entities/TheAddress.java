@@ -18,10 +18,10 @@ public class TheAddress {
     @Column(name = "ID_ADDRESS")
     private Long addressId;
 
-    @Column(name = "DS_STREETNAME")
+    @Column(name = "DS_STREET_NAME")
     private String streetName;
 
-    @Column(name = "DS_STREETNUMBER")
+    @Column(name = "DS_STREET_NUMBER")
     private String streetNumber;
 
     @Column(name = "DS_BOROUGH")
@@ -39,7 +39,7 @@ public class TheAddress {
     @Column(name = "DS_ZIPCODE")
     private String zipCode;
 
-    @Column(name = "ID_CUSTOMER")
-    @JoinColumn(name = "CUSTOMER_ID")
-    private Customer customer;
+    @Column(name = "ID_PERSON")
+    @JoinColumn(name = "PERSON_ID")
+    private Person person;
 }
