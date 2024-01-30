@@ -28,4 +28,10 @@ public interface ITheAddressAPI {
     @ApiResponses(value = {@ApiResponse(code = 200, message = "success"),
     @ApiResponse(code = 400, response = ErrorSpecificationDTO.class, message = "not found")})
     TheAddressResponseDTO find(Long theAddressID) throws TheAddressNotFoundException;
+
+    @ApiOperation(value = "update TheAddress object",
+    response = TheAddressResponseDTO.class)
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "success"),
+    @ApiResponse(code = 400, response = ErrorSpecificationDTO.class, message = "not found")})
+    TheAddressResponseDTO update(Long theAddressID) throws TheAddressNotFoundException;
 }
