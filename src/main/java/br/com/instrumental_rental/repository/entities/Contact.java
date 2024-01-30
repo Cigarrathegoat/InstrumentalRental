@@ -19,9 +19,9 @@ public class Contact {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_CONTACTS")
     private Long contactId;
 
-    @Column(name = "ID_CUSTOMER")
-    @JoinColumn(name = "CUSTOMER_ID")
-    private Customer customer;
+    @Column(name = "ID_PERSON")
+    @JoinColumn(name = "PERSON_ID")
+    private Person person;
 
     @Column(name = "DS_TYPE")
     private String contactType;
