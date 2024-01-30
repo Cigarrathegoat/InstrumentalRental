@@ -8,10 +8,7 @@ import br.com.instrumental_rental.controller.dto.responses.responses.TheAddressR
 import br.com.instrumental_rental.exceptions.TheAddressNotFoundException;
 import br.com.instrumental_rental.service.interfaces.ITheAddressService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("V1/TheAddress")
@@ -30,17 +27,22 @@ public class TheAddressAPI implements ITheAddressAPI {
     public TheAddressResponseDTO add(@RequestBody TheAddressDTO theAddressDTO) {
         return TheAddressResponseDTO.builder()
                 .data(theAddressMapper.convertToDto(
-                        theAddressService.save(
-                                theAddressMapper.convertToEntity(
-                                        theAddressDTO)
+                                theAddressService.save(
+                                        theAddressMapper.convertToEntity(
+                                                theAddressDTO)
+                                )
                         )
-                )
                 ).build();
     }
 
-    @Override
-    public TheAddressResponseDTO find(Long theAddressID) throws TheAddressNotFoundException {
-        return null;
+    @GetMapping("/find/{address_id}")
+    public TheAddressResponseDTO find(@PathVariable("address_id") Long theAddressID)
+            throws TheAddressNotFoundException {
+        return TheAddressResponseDTO.builder()
+                .data(theAddressMapper.convertToDto(theAddressService.findById(theAddressID
+                                )
+                        )
+                ).build();
     }
 
     @Override
