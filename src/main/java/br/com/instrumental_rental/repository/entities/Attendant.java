@@ -1,23 +1,29 @@
 package br.com.instrumental_rental.repository.entities;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.util.List;
 
 @Entity
 @Table(name = "TB_ATTENDANT")
 @SequenceGenerator(name = "SEQ_ATTENDANT")
 
 @Data
-@Builder
+@SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
-public class Attendant {
+public class Attendant extends Person {
 
+    /*
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_ATTENDANT")
     @Column(name = "ID_ATTENDANT")
@@ -44,6 +50,8 @@ public class Attendant {
     @JoinColumn(name = "CONTACTS_DS")
     @OneToMany(mappedBy = "customer")
     private List<Contact> contacts;
+
+     */
 
     @Column(name = "DS_TOTAL_COMMISSION")
     private BigDecimal totalCommission;
