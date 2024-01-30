@@ -1,6 +1,9 @@
 package br.com.instrumental_rental.repository.entities;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
@@ -37,7 +40,7 @@ public class Person {
 
     @Column(name = "DS_ADDRESS")
     @JoinColumn(name = "ADDRESS_DS")
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "person")
     private List<TheAddress> address;
 
     @Column(name = "DS_RENTAL")
