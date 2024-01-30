@@ -5,5 +5,7 @@ import br.com.instrumental_rental.repository.entities.TheAddress;
 
 public interface ITheAddressService extends IService<TheAddress, Exception> {
 
+    public TheAddress update(TheAddress theAddress) throws TheAddressNotFoundException;
+
     public TheAddress findById(Long addressId) throws TheAddressNotFoundException;
 }
