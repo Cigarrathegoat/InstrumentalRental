@@ -35,6 +35,7 @@ public class TheAddressService implements ITheAddressService {
         return theAddressRepository.findAll();
     }
 
+    @Override
     public TheAddress update(TheAddress theAddress) throws TheAddressNotFoundException {
         var addressToUpdate = findById(theAddress.getAddressId());
         addressToUpdate.setStreetNumber(theAddress.getStreetNumber());

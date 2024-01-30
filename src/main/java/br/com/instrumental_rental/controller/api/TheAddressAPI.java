@@ -45,9 +45,14 @@ public class TheAddressAPI implements ITheAddressAPI {
                 ).build();
     }
 
-    @Override
-    public TheAddressResponseDTO update(Long theAddressID) throws TheAddressNotFoundException {
-        return null;
+    @PutMapping("/update/{address_id}")
+    public TheAddressResponseDTO update(@PathVariable("address_id")Long theAddressID,
+                                        @RequestBody TheAddressDTO theAddressDTO)
+            throws TheAddressNotFoundException {
+        return TheAddressResponseDTO.builder()
+                .data(theAddressMapper.convertToDto(theAddressService.update(
+                        theAddressMapper.convertToEntity(theAddressDTO)
+                ))).build();
     }
 
     @Override
