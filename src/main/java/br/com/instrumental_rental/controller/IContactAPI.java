@@ -13,13 +13,6 @@ import org.springframework.http.ResponseEntity;
 
 public interface IContactAPI {
 
-    /* @ApiOperation(value = "add Customer object",
-    response = CustomerDTO.class)
-    @ApiResponses(value = {@ApiResponse(code = 200, message = "success"),
-    @ApiResponse(code =404, response = ErrorSpecificationDTO.class, message = "not found")})
-    CustomerResponseDTO add(CustomerDTO customerDTO);
-     */
-
     @ApiOperation(value = "add Contacts object",
     response = ContactsResponseDTO.class)
     @ApiResponses(value = {@ApiResponse(code = 200, message = "success"),
