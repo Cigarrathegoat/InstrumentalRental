@@ -4,6 +4,7 @@ import br.com.instrumental_rental.Mappers.ITheAddressMapper;
 import br.com.instrumental_rental.controller.ITheAddressAPI;
 import br.com.instrumental_rental.controller.dto.requests.TheAddressDTO;
 import br.com.instrumental_rental.controller.dto.responses.responses.DeleteResponseDTO;
+import br.com.instrumental_rental.controller.dto.responses.responses.TheAddressListResponseDTO;
 import br.com.instrumental_rental.controller.dto.responses.responses.TheAddressResponseDTO;
 import br.com.instrumental_rental.exceptions.TheAddressNotFoundException;
 import br.com.instrumental_rental.service.interfaces.ITheAddressService;
@@ -43,6 +44,12 @@ public class TheAddressAPI implements ITheAddressAPI {
                                 )
                         )
                 ).build();
+    }
+
+    @PostMapping("/list_all")
+    public TheAddressListResponseDTO listAll() throws TheAddressNotFoundException {
+        return TheAddressListResponseDTO.builder()
+                .data(theAddressMapper.convertToListDTO(theAddressService.findAll())).build();
     }
 
     @PutMapping("/update/{address_id}")
