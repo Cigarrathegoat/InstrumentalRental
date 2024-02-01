@@ -90,4 +90,7 @@ public class TheAddressAPITest {
         TheAddressResponseDTO result = theAddressAPI.update(builder.getAddressId(), builderDTO);
         Assertions.assertEquals(TheAddressResponseDTO.builder().data(builderDTO).build(), result);
     }
+
+    @Test
+    void testUpdateTheAddressNotFoundException() throws TheAddressNotFoundException
 }
