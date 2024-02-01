@@ -62,8 +62,19 @@ public class TheAddressAPI implements ITheAddressAPI {
                 ))).build();
     }
 
-    @Override
-    public ResponseEntity<DeleteResponseDTO> delete(Long theAddressID) throws TheAddressNotFoundException {
+    @DeleteMapping("/delete/{the_address_Id}")
+    public ResponseEntity<DeleteResponseDTO> delete(@PathVariable("the_address_Id") Long theAddressID)
+            throws TheAddressNotFoundException {
         return null;
     }
+
+    /*@DeleteMapping("/delete/{instrumentId}")
+    public ResponseEntity<DeleteResponseDTO> delete(@PathVariable("instrumentId") Long instrumentId)
+            throws InstrumentNotFoundException {
+        instrumentService.delete(instrumentId);
+        return ResponseEntity.ok(DeleteResponseDTO.builder().deleteSuccessMessage("Instrument successfully deleted")
+                .build());
+    }
+
+     */
 }
