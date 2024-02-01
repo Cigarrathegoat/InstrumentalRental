@@ -31,7 +31,7 @@ public class TheAddressAPITest {
     void setUp(){MockitoAnnotations.openMocks(this);}
 
     @Test
-    void testSaveSuccess() throws TheAddressNotFoundException {
+    void testSaveSuccess() {
         var builderNoId = TheAddressBuilder.theAddressNoIdBuilder();
         var builder = TheAddressBuilder.theAddressBuilder();
         var builderNoIdDTO = TheAddressDTOBuilder.theAddressDTONoIdBuilder();
@@ -40,6 +40,16 @@ public class TheAddressAPITest {
         when(theAddressService.save(builderNoId)).thenReturn(builder);
         when(theAddressMapper.convertToDto(builder)).thenReturn(builderDTO);
         TheAddressResponseDTO result = theAddressAPI.add(builderNoIdDTO);
+        Assertions.assertEquals(TheAddressResponseDTO.builder().data(builderDTO).build(), result);
+    }
+
+    @Test
+    void testFindSuccess() throws TheAddressNotFoundException {
+        var builder = TheAddressBuilder.theAddressBuilder();
+        var builderDTO = TheAddressDTOBuilder.theAddressDTOBuilder();
+        when(theAddressService.findById(builder.getAddressId())).thenReturn(builder);
+        when(theAddressMapper.convertToDto(builder)).thenReturn(builderDTO);
+        TheAddressResponseDTO result = theAddressAPI.find(builder.getAddressId());
         Assertions.assertEquals(TheAddressResponseDTO.builder().data(builderDTO).build(), result);
     }
 }
