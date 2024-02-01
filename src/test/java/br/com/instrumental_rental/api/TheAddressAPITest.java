@@ -52,4 +52,15 @@ public class TheAddressAPITest {
         TheAddressResponseDTO result = theAddressAPI.find(builder.getAddressId());
         Assertions.assertEquals(TheAddressResponseDTO.builder().data(builderDTO).build(), result);
     }
+
+    @Test
+    void testFindTheAddressNotFoundException() throws TheAddressNotFoundException {
+        var builder = TheAddressBuilder.theAddressNoIdBuilder();
+        when(theAddressService.findById(builder.getAddressId()))
+                .thenThrow(new TheAddressNotFoundException("A01", "Address not found"));
+        TheAddressNotFoundException thrown = Assertions.assertThrows(TheAddressNotFoundException.class,
+                () -> {theAddressAPI.find(builder.getAddressId());});
+        Assertions.assertEquals("A01", thrown.getCode());
+        Assertions.assertEquals("Address not found", thrown.getMessage());
+    }
 }
