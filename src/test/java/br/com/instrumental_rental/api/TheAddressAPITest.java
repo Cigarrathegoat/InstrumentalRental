@@ -6,6 +6,7 @@ import br.com.instrumental_rental.service.interfaces.ITheAddressService;
 import org.junit.jupiter.api.BeforeEach;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 public class TheAddressAPITest {
 
@@ -19,5 +20,5 @@ public class TheAddressAPITest {
     ITheAddressAPI theAddressAPI;
 
     @BeforeEach
-    void setUp()
+    void setUp(){MockitoAnnotations.openMocks(this);}
 }

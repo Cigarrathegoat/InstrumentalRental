@@ -173,8 +173,8 @@ public class RentalAPITest {
         var attendant = AttendantBuilder.attendantBuilder();
         var instrument = InstrumentBuilder.instrumentBuilder();
         var rental = RentalBuilder.rentalBuilder(customer, instrument, attendant);
-        var rentalDTO = RentalDTOBuilder.rentalDTOBuilder(customer.getCustomerId(),
-                instrument.getInstrumentId(), attendant.getAttendantId());
+        var rentalDTO = RentalDTOBuilder.rentalDTOBuilder(customer.getPersonId(),
+                instrument.getInstrumentId(), attendant.getPersonId());
         when(rentalService.findAll()).thenReturn(List.of(rental));
         when(rentalMapper.convertToListDto(List.of(rental))).thenReturn(List.of(rentalDTO));
         RentalListResponseDTO result = rentalAPI.findAll();
@@ -187,8 +187,8 @@ public class RentalAPITest {
         var attendant = AttendantBuilder.attendantBuilder();
         var instrument = InstrumentBuilder.instrumentBuilder();
         var rental = RentalBuilder.rentalBuilder(customer, instrument, attendant);
-        var rentalDTO = RentalDTOBuilder.rentalDTOBuilder(customer.getCustomerId(),
-                instrument.getInstrumentId(), attendant.getAttendantId());
+        var rentalDTO = RentalDTOBuilder.rentalDTOBuilder(customer.getPersonId(),
+                instrument.getInstrumentId(), attendant.getPersonId());
         when(rentalService.findRentalListByWord(customer.getName())).thenReturn(List.of(rental));
         when(rentalMapper.convertToListDto(List.of(rental))).thenReturn(List.of(rentalDTO));
         RentalListResponseDTO result = rentalAPI.find(customer.getName());
@@ -214,8 +214,8 @@ public class RentalAPITest {
         var attendant = AttendantBuilder.attendantBuilder();
         var instrument = InstrumentBuilder.instrumentBuilder();
         var rental = RentalBuilder.rentalBuilder(customer, instrument, attendant);
-        var rentalDTO = RentalDTOBuilder.rentalDTOBuilder(customer.getCustomerId(),
-                instrument.getInstrumentId(), attendant.getAttendantId());
+        var rentalDTO = RentalDTOBuilder.rentalDTOBuilder(customer.getPersonId(),
+                instrument.getInstrumentId(), attendant.getPersonId());
         when(rentalMapper.convertToEntity(rentalDTO)).thenReturn(rental);
         when(rentalService.update(rental)).thenReturn(rental);
         when(rentalMapper.convertToDTO(rental)).thenReturn(rentalDTO);
@@ -229,8 +229,8 @@ public class RentalAPITest {
         var attendant = AttendantBuilder.attendantBuilder();
         var instrument = InstrumentBuilder.instrumentBuilder();
         var rental = RentalBuilder.rentalBuilder(customer, instrument, attendant);
-        var rentalDTO = RentalDTOBuilder.rentalDTOBuilder(customer.getCustomerId(),
-                instrument.getInstrumentId(), attendant.getAttendantId());
+        var rentalDTO = RentalDTOBuilder.rentalDTOBuilder(customer.getPersonId(),
+                instrument.getInstrumentId(), attendant.getPersonId());
         when(rentalMapper.convertToEntity(rentalDTO)).thenReturn(rental);
         when(rentalService.update(rental))
                 .thenThrow(new RentalNotFoundException("R01", "Rental not found"));
