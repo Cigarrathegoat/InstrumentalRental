@@ -75,7 +75,7 @@ public class RentalServiceTest {
         var attendant = AttendantBuilder.attendantBuilder();
         var rentalBuilderBeforeSave = RentalBuilder.rentalBuilderBeforeSave(customer, instrument, attendant);
         when(customerService.findCustomerById(
-                rentalBuilderBeforeSave.getCustomer().getCustomerId())).thenThrow(
+                rentalBuilderBeforeSave.getCustomer().getPersonId())).thenThrow(
                 new CustomerNotFoundException("C01", "Customer not found"));
         CustomerNotFoundException thrown = Assertions.assertThrows(CustomerNotFoundException.class,
                 () -> {

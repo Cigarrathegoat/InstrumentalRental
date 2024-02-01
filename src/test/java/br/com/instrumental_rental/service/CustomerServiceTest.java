@@ -82,7 +82,7 @@ public class CustomerServiceTest {
     void testUpdateSuccess() throws CustomerNotFoundException {
         var builder = CustomerBuilder.customerBuilder();
         var builderUpdated = CustomerBuilder.customerUpdatedBuilder();
-        when(customerRepository.findById(builder.getCustomerId()))
+        when(customerRepository.findById(builder.getPersonId()))
                 .thenReturn(Optional.of(builder));
         when(customerRepository.save(builderUpdated)).thenReturn(builderUpdated);
         Customer result = customerService.update(builder);
@@ -92,7 +92,7 @@ public class CustomerServiceTest {
     @Test
     void testUpdateCustomerNotFoundException() throws CustomerNotFoundException {
         var builder = CustomerBuilder.customerBuilder();
-        when(customerRepository.findById(builder.getCustomerId()))
+        when(customerRepository.findById(builder.getPersonId()))
                 .thenReturn(Optional.empty());
         CustomerNotFoundException thrown = Assertions.assertThrows(
                 CustomerNotFoundException.class, () -> {
@@ -106,21 +106,21 @@ public class CustomerServiceTest {
     @Test
     void testDeleteSuccess() throws CustomerNotFoundException {
         var builder = CustomerBuilder.customerBuilder();
-        when(customerRepository.findById(builder.getCustomerId()))
+        when(customerRepository.findById(builder.getPersonId()))
                 .thenReturn(Optional.of(builder));
-        customerService.delete(builder.getCustomerId());
-        verify(customerRepository, times(1)).findById(builder.getCustomerId());
+        customerService.delete(builder.getPersonId());
+        verify(customerRepository, times(1)).findById(builder.getPersonId());
         verify(customerRepository, times(1)).delete(builder);
     }
 
     @Test
     void testDeleteCustomerNotFoundException() throws CustomerNotFoundException {
         var builder = CustomerBuilder.customerBuilder();
-        when(customerRepository.findById(builder.getCustomerId()))
+        when(customerRepository.findById(builder.getPersonId()))
                 .thenReturn(Optional.empty());
         CustomerNotFoundException thrown = Assertions.assertThrows(
                 CustomerNotFoundException.class, () -> {
-                    customerService.delete(builder.getCustomerId());
+                    customerService.delete(builder.getPersonId());
                 }
         );
         Assertions.assertEquals("C01", thrown.getCode());
@@ -131,9 +131,9 @@ public class CustomerServiceTest {
     void testAddToBalanceSuccess() throws CustomerNotFoundException {
         var builder = CustomerBuilder.customerBuilder();
         final BigDecimal addition = BigDecimal.valueOf(300);
-        when(customerRepository.findById(builder.getCustomerId()))
+        when(customerRepository.findById(builder.getPersonId()))
                 .thenReturn(Optional.of(builder));
-        BigDecimal newBalance = customerService.addToBalance(builder.getCustomerId(), addition);
+        BigDecimal newBalance = customerService.addToBalance(builder.getPersonId(), addition);
         Assertions.assertEquals(BigDecimal.valueOf(800), newBalance);
     }
 
@@ -141,11 +141,11 @@ public class CustomerServiceTest {
     void testAddToBalanceCustomerNotFoundException() throws CustomerNotFoundException {
         var builder = CustomerBuilder.customerBuilder();
         final BigDecimal addition = BigDecimal.valueOf(300);
-        when(customerRepository.findById(builder.getCustomerId()))
+        when(customerRepository.findById(builder.getPersonId()))
                 .thenReturn(Optional.empty());
         CustomerNotFoundException thrown = Assertions.assertThrows(
                 CustomerNotFoundException.class, () -> {
-                    customerService.addToBalance(builder.getCustomerId(), addition);
+                    customerService.addToBalance(builder.getPersonId(), addition);
                 }
         );
         Assertions.assertEquals("C01", thrown.getCode());
@@ -158,9 +158,9 @@ public class CustomerServiceTest {
         var builder = CustomerBuilder.customerBuilder();
         var builderAfterWithdrawal = CustomerBuilder.builderAfterWithdrawal();
         final BigDecimal withdrawalAmount = BigDecimal.valueOf(500);
-        when(customerRepository.findById(builder.getCustomerId()))
+        when(customerRepository.findById(builder.getPersonId()))
                 .thenReturn(Optional.of(builder));
-        BigDecimal result = customerService.withdraw(builder.getCustomerId(), withdrawalAmount);
+        BigDecimal result = customerService.withdraw(builder.getPersonId(), withdrawalAmount);
         Assertions.assertEquals(builderAfterWithdrawal.getAccountBalance(), result);
     }
 
@@ -168,10 +168,10 @@ public class CustomerServiceTest {
     void testWithdrawalCustomerNotFoundException() throws CustomerNotFoundException {
         var builder = CustomerBuilder.customerBuilder();
         final BigDecimal withdrawalAmount = BigDecimal.valueOf(500);
-        when(customerRepository.findById(builder.getCustomerId())).thenReturn(Optional.empty());
+        when(customerRepository.findById(builder.getPersonId())).thenReturn(Optional.empty());
         CustomerNotFoundException thrown = Assertions.assertThrows(
                 CustomerNotFoundException.class, () -> {
-                    customerService.withdraw(builder.getCustomerId(), withdrawalAmount);
+                    customerService.withdraw(builder.getPersonId(), withdrawalAmount);
                 }
         );
         Assertions.assertEquals("C01", thrown.getCode());
@@ -183,10 +183,10 @@ public class CustomerServiceTest {
             throws WithdrawalGreaterThanBalanceException {
         var builder = CustomerBuilder.customerBuilder();
         final BigDecimal excessiveWithdrawalAmount = BigDecimal.valueOf(501);
-        when(customerRepository.findById(builder.getCustomerId())).thenReturn(Optional.of(builder));
+        when(customerRepository.findById(builder.getPersonId())).thenReturn(Optional.of(builder));
         WithdrawalGreaterThanBalanceException thrown = Assertions.assertThrows(
                 WithdrawalGreaterThanBalanceException.class, () -> {
-                    customerService.withdraw(builder.getCustomerId(), excessiveWithdrawalAmount);
+                    customerService.withdraw(builder.getPersonId(), excessiveWithdrawalAmount);
                 }
         );
         Assertions.assertEquals("W01", thrown.getCode());

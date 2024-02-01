@@ -1,7 +1,7 @@
 package br.com.instrumental_rental.api;
 
 import br.com.instrumental_rental.Mappers.ITheAddressMapper;
-import br.com.instrumental_rental.controller.ITheAddressAPI;
+import br.com.instrumental_rental.controller.api.TheAddressAPI;
 import br.com.instrumental_rental.controller.dto.responses.responses.TheAddressResponseDTO;
 import br.com.instrumental_rental.exceptions.TheAddressNotFoundException;
 import br.com.instrumental_rental.models.TheAddressBuilder;
@@ -25,7 +25,7 @@ public class TheAddressAPITest {
     ITheAddressMapper theAddressMapper;
 
     @InjectMocks
-    ITheAddressAPI theAddressAPI;
+    TheAddressAPI theAddressAPI;
 
     @BeforeEach
     void setUp(){MockitoAnnotations.openMocks(this);}

@@ -69,7 +69,7 @@ public class AttendantServiceTest {
     void updateAttendantSuccess() throws AttendantNotFoundException {
         var builder = AttendantBuilder.attendantBuilder();
         var builderUpdated = AttendantBuilder.attendantBuilder();
-        when(attendantRepository.findById(builder.getAttendantId()))
+        when(attendantRepository.findById(builder.getPersonId()))
                 .thenReturn(Optional.of(builder));
         when(attendantRepository.save(builderUpdated)).thenReturn(builderUpdated);
         Attendant updated = attendantService.update(builder);
@@ -79,7 +79,7 @@ public class AttendantServiceTest {
     @Test
     void updateAttendantNotFoundException() throws AttendantNotFoundException {
         var builder = AttendantBuilder.attendantBuilder();
-        when(attendantRepository.findById(builder.getAttendantId()))
+        when(attendantRepository.findById(builder.getPersonId()))
                 .thenReturn(Optional.empty());
         AttendantNotFoundException thrown = Assertions.assertThrows(
                 AttendantNotFoundException.class, () -> {
@@ -93,21 +93,21 @@ public class AttendantServiceTest {
     @Test
     void testDeleteSuccess() throws AttendantNotFoundException {
         var builder = AttendantBuilder.attendantBuilder();
-        when(attendantRepository.findById(builder.getAttendantId()))
+        when(attendantRepository.findById(builder.getPersonId()))
                 .thenReturn(Optional.of(builder));
-        attendantService.delete(builder.getAttendantId());
-        verify(attendantRepository).findById(builder.getAttendantId());
+        attendantService.delete(builder.getPersonId());
+        verify(attendantRepository).findById(builder.getPersonId());
         verify(attendantRepository).delete(builder);
     }
 
     @Test
     void testDeleteAttendantNotFoundException() throws AttendantNotFoundException {
         var builder = AttendantBuilder.attendantBuilder();
-        when(attendantRepository.findById(builder.getAttendantId()))
+        when(attendantRepository.findById(builder.getPersonId()))
                 .thenReturn(Optional.empty());
         AttendantNotFoundException thrown = Assertions.assertThrows(
                 AttendantNotFoundException.class, () -> {
-                    attendantService.delete(builder.getAttendantId());
+                    attendantService.delete(builder.getPersonId());
                 });
         Assertions.assertEquals("A01", thrown.getCode());
         Assertions.assertEquals("Attendant not found", thrown.getMessage());
