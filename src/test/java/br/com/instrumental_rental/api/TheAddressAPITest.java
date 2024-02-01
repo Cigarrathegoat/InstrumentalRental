@@ -2,8 +2,10 @@ package br.com.instrumental_rental.api;
 
 import br.com.instrumental_rental.Mappers.ITheAddressMapper;
 import br.com.instrumental_rental.controller.ITheAddressAPI;
+import br.com.instrumental_rental.exceptions.TheAddressNotFoundException;
 import br.com.instrumental_rental.service.interfaces.ITheAddressService;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -21,4 +23,9 @@ public class TheAddressAPITest {
 
     @BeforeEach
     void setUp(){MockitoAnnotations.openMocks(this);}
+
+    @Test
+    void testSaveSuccess() throws TheAddressNotFoundException {
+
+    }
 }
