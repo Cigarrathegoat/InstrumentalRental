@@ -65,7 +65,8 @@ public class TheAddressAPI implements ITheAddressAPI {
     @DeleteMapping("/delete/{the_address_Id}")
     public ResponseEntity<DeleteResponseDTO> delete(@PathVariable("the_address_Id") Long theAddressID)
             throws TheAddressNotFoundException {
-        return null;
+        return ResponseEntity.ok(DeleteResponseDTO.builder().deleteSuccessMessage("Address deleted")
+                .build());
     }
 
     /*@DeleteMapping("/delete/{instrumentId}")
