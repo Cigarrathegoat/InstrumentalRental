@@ -15,7 +15,7 @@ public class CustomerBuilder {
 
     public static Customer customerBuilder() {
         return Customer.builder()
-                .customerId(1L).name("Johnny").dateOfBirth(LocalDate.parse("25-08-1985",
+                .personId(1L).name("Johnny").dateOfBirth(LocalDate.parse("25-08-1985",
                         DateTimeFormatter.ofPattern("dd-MM-yyyy")))
                 .socialSecurityNumber("123456789")
                 .driversLicenseNumber("1234567")
@@ -25,7 +25,7 @@ public class CustomerBuilder {
 
     public static Customer customerUpdatedBuilder() {
         return Customer.builder()
-                .customerId(1L).name("Johnny").dateOfBirth(LocalDate.parse("25-08-1985",
+                .personId(1L).name("Johnny").dateOfBirth(LocalDate.parse("25-08-1985",
                         DateTimeFormatter.ofPattern("dd-MM-yyyy")))
                 .socialSecurityNumber("123456780")
                 .driversLicenseNumber("1234560")

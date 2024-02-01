@@ -11,7 +11,7 @@ public class AttendantBuilder {
     /*private Attendant attendantBuilder = AttendantBuilder.attendantBuilder(
             "1", "Mark", BigDecimal.valueOf(0));*/
     public static Attendant attendantBuilder() {
-        return Attendant.builder().attendantId(1L)
+        return Attendant.builder().personId(1L)
                 .name("Mikey")
                 .dateOfBirth(LocalDate.of(1998, 12, 25))
                 .driversLicenseNumber("1234567")
@@ -21,7 +21,7 @@ public class AttendantBuilder {
     }
 
     public static Attendant attendantBuilderNoId() {
-        return Attendant.builder().attendantId(null).name("Mikey")
+        return Attendant.builder().name("Mikey")
                 .dateOfBirth(LocalDate.of(1998, 12, 25))
                 .driversLicenseNumber("1234567")
                 .socialSecurityNumber("123456789")

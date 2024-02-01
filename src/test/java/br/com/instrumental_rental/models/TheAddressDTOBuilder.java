@@ -17,5 +17,16 @@ public class TheAddressDTOBuilder {
                 .build();
     }
 
-
+    public static TheAddressDTO theAddressDTONoIdBuilder() {
+        return TheAddressDTO.builder()
+                .addressId(null)
+                .state("SP")
+                .city("SP")
+                .borough("Jardins")
+                .country("Brazil")
+                .streetName("Rua Rua")
+                .streetNumber("1")
+                .zipCode("12345678")
+                .build();
+    }
 }

@@ -81,7 +81,7 @@ public class CustomerService implements ICustomerService {
 
     @Override
     public Customer update(Customer customer) throws CustomerNotFoundException {
-        var customerToUpdate = findCustomerById(customer.getCustomerId());
+        var customerToUpdate = findCustomerById(customer.getPersonId());
         customerToUpdate.setName(customer.getName());
         customerToUpdate.setAddress(customer.getAddress());
         customerToUpdate.setDateOfBirth(customer.getDateOfBirth());

@@ -91,7 +91,7 @@ public class AttendantAPITest {
         when(attendantMapper.convertToEntity(attendantSoughtDTO)).thenReturn(attendantSought);
         when(attendantService.update(attendantSought)).thenReturn(attendantSought);
         when(attendantMapper.convertToDTO(attendantSought)).thenReturn(attendantSoughtDTO);
-        AttendantResponseDTO result = attendantAPI.update(attendantSought.getAttendantId(), attendantSoughtDTO);
+        AttendantResponseDTO result = attendantAPI.update(attendantSought.getPersonId(), attendantSoughtDTO);
         Assertions.assertEquals(AttendantResponseDTO.builder().data(attendantSoughtDTO).build(), result);
     }
 
@@ -103,7 +103,7 @@ public class AttendantAPITest {
         when(attendantService.update(attendantSought))
                 .thenThrow(new AttendantNotFoundException("A01", "Attendant not found"));
         AttendantNotFoundException thrown = Assertions.assertThrows(AttendantNotFoundException.class, () ->
-        {attendantAPI.update(attendantSought.getAttendantId(), attendantSoughtDTO);}
+        {attendantAPI.update(attendantSought.getPersonId(), attendantSoughtDTO);}
         );
         Assertions.assertEquals("A01", thrown.getCode());
         Assertions.assertEquals("Attendant not found", thrown.getMessage());
@@ -112,17 +112,17 @@ public class AttendantAPITest {
     @Test
     void testDeleteSuccess() throws AttendantNotFoundException {
         var attendantSought = AttendantBuilder.attendantBuilder();
-        doNothing().when(attendantService).delete(attendantSought.getAttendantId());
-        assertDoesNotThrow(() -> attendantAPI.delete(attendantSought.getAttendantId()));
+        doNothing().when(attendantService).delete(attendantSought.getPersonId());
+        assertDoesNotThrow(() -> attendantAPI.delete(attendantSought.getPersonId()));
     }
 
     @Test
     void testDeleteAttendantNotFoundException() throws AttendantNotFoundException {
         var attendantSought = AttendantBuilder.attendantBuilder();
         doThrow(new AttendantNotFoundException("A01", "Attendant not found")).when(attendantService)
-                .delete(attendantSought.getAttendantId());
+                .delete(attendantSought.getPersonId());
         AttendantNotFoundException thrown = Assertions.assertThrows(AttendantNotFoundException.class,
-                () -> {attendantAPI.delete(attendantSought.getAttendantId());});
+                () -> {attendantAPI.delete(attendantSought.getPersonId());});
         Assertions.assertEquals("A01", thrown.getCode());
         Assertions.assertEquals("Attendant not found", thrown.getMessage());
     }

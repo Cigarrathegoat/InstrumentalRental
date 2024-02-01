@@ -53,7 +53,7 @@ public class AttendantService implements IAttendantService {
 
     @Override
     public Attendant update(Attendant attendant) throws AttendantNotFoundException {
-        var attendantToUpdate = findAttendantById(attendant.getAttendantId());
+        var attendantToUpdate = findAttendantById(attendant.getPersonId());
         attendantToUpdate.setName(attendant.getName());
         attendantToUpdate.setContacts(attendant.getContacts());
         attendantToUpdate.setDateOfBirth(attendant.getDateOfBirth());
