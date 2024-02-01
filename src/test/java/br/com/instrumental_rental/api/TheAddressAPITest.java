@@ -84,6 +84,10 @@ public class TheAddressAPITest {
     void testUpdateSuccess() throws TheAddressNotFoundException {
         var builder = TheAddressBuilder.theAddressNoIdBuilder();
         var builderDTO = TheAddressDTOBuilder.theAddressDTOBuilder();
-        when(theAddressService.findById())
+        when(theAddressService.findById(builder.getAddressId())).thenReturn(builder);
+        when(theAddressService.update(builder)).thenReturn(builder);
+        when(theAddressMapper.convertToDto(builder)).thenReturn(builderDTO);
+        TheAddressResponseDTO result = theAddressAPI.update(builder.getAddressId(), builderDTO);
+        Assertions.assertEquals(TheAddressResponseDTO.builder().data(builderDTO).build(), result);
     }
 }

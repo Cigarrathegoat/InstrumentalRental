@@ -58,7 +58,7 @@ public class TheAddressAPI implements ITheAddressAPI {
             throws TheAddressNotFoundException {
         return TheAddressResponseDTO.builder()
                 .data(theAddressMapper.convertToDto(theAddressService.update(
-                        theAddressMapper.convertToEntity(theAddressDTO)
+                        theAddressService.findById(theAddressID)
                 ))).build();
     }
 
