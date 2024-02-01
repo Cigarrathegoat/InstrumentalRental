@@ -56,9 +56,9 @@ public class RentalAPITest {
         var rentalNoId = RentalBuilder.rentalBuilderBeforeSave(customer, instrument, attendant);
         var rental = RentalBuilder.rentalBuilder(customer, instrument, attendant);
         var rentalDTONoId = RentalDTOBuilder.rentalDTOBuilderBeforeSave(
-                customer.getCustomerId(), instrument.getInstrumentId(), attendant.getAttendantId());
-        var rentalDTO = RentalDTOBuilder.rentalDTOBuilder(customer.getCustomerId(),
-                instrument.getInstrumentId(), attendant.getAttendantId());
+                customer.getPersonId(), instrument.getInstrumentId(), attendant.getPersonId());
+        var rentalDTO = RentalDTOBuilder.rentalDTOBuilder(customer.getPersonId(),
+                instrument.getInstrumentId(), attendant.getPersonId());
         when(rentalMapper.convertToEntity(rentalDTONoId)).thenReturn(rentalNoId);
         when(rentalService.save(rentalNoId)).thenReturn(rental);
         when(rentalMapper.convertToDTO(rental)).thenReturn(rentalDTO);
@@ -74,7 +74,7 @@ public class RentalAPITest {
         var instrument = InstrumentBuilder.instrumentBuilder();
         var rentalNoId = RentalBuilder.rentalBuilderBeforeSave(customer, instrument, attendant);
         var rentalDTONoId = RentalDTOBuilder.rentalDTOBuilderBeforeSave(
-                customer.getCustomerId(), instrument.getInstrumentId(), attendant.getAttendantId());
+                customer.getPersonId(), instrument.getInstrumentId(), attendant.getPersonId());
         when(rentalMapper.convertToEntity(rentalDTONoId)).thenReturn(rentalNoId);
         when(rentalService.save(rentalNoId)).thenThrow(new CustomerNotFoundException("C01", "Customer not found"));
         CustomerNotFoundException thrown = Assertions.assertThrows(CustomerNotFoundException.class, () ->
@@ -93,7 +93,7 @@ public class RentalAPITest {
         var instrument = InstrumentBuilder.instrumentBuilder();
         var rentalNoId = RentalBuilder.rentalBuilderBeforeSave(customer, instrument, attendant);
         var rentalDTONoId = RentalDTOBuilder.rentalDTOBuilderBeforeSave(
-                customer.getCustomerId(), instrument.getInstrumentId(), attendant.getAttendantId());
+                customer.getPersonId(), instrument.getInstrumentId(), attendant.getPersonId());
         when(rentalMapper.convertToEntity(rentalDTONoId)).thenReturn(rentalNoId);
         when(rentalService.save(rentalNoId)).thenThrow(new AttendantNotFoundException("A01", "Attendant not found"));
         AttendantNotFoundException thrown = Assertions.assertThrows(AttendantNotFoundException.class, () ->
@@ -112,7 +112,7 @@ public class RentalAPITest {
         var instrument = InstrumentBuilder.instrumentBuilder();
         var rentalNoId = RentalBuilder.rentalBuilderBeforeSave(customer, instrument, attendant);
         var rentalDTONoId = RentalDTOBuilder.rentalDTOBuilderBeforeSave(
-                customer.getCustomerId(), instrument.getInstrumentId(), attendant.getAttendantId());
+                customer.getPersonId(), instrument.getInstrumentId(), attendant.getPersonId());
         when(rentalMapper.convertToEntity(rentalDTONoId)).thenReturn(rentalNoId);
         when(rentalService.save(rentalNoId)).thenThrow(new InstrumentNotFoundException("I01", "Instrument not found"));
         InstrumentNotFoundException thrown = Assertions.assertThrows(InstrumentNotFoundException.class, () ->
@@ -132,7 +132,7 @@ public class RentalAPITest {
         var instrument = InstrumentBuilder.instrumentBuilder();
         var rentalNoId = RentalBuilder.rentalBuilderBeforeSave(customer, instrument, attendant);
         var rentalDTONoId = RentalDTOBuilder.rentalDTOBuilderBeforeSave(
-                customer.getCustomerId(), instrument.getInstrumentId(), attendant.getAttendantId());
+                customer.getPersonId(), instrument.getInstrumentId(), attendant.getPersonId());
         when(rentalMapper.convertToEntity(rentalDTONoId)).thenReturn(rentalNoId);
         when(rentalService.save(rentalNoId))
                 .thenThrow(new WithdrawalGreaterThanBalanceException("R02", "Withdrawal greater than balance"));
@@ -154,7 +154,7 @@ public class RentalAPITest {
         var instrument = InstrumentBuilder.instrumentBuilder();
         var rentalNoId = RentalBuilder.rentalBuilderBeforeSave(customer, instrument, attendant);
         var rentalDTONoId = RentalDTOBuilder.rentalDTOBuilderBeforeSave(
-                customer.getCustomerId(), instrument.getInstrumentId(), attendant.getAttendantId());
+                customer.getPersonId(), instrument.getInstrumentId(), attendant.getPersonId());
         when(rentalMapper.convertToEntity(rentalDTONoId)).thenReturn(rentalNoId);
         when(rentalService.save(rentalNoId))
                 .thenThrow(new EndDateNotAfterStartDateException("R03", "End date before start date"));
