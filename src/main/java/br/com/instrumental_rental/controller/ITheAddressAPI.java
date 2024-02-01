@@ -28,7 +28,7 @@ public interface ITheAddressAPI {
     @ApiOperation(value = "lists all TheAddress objects",
     response = TheAddressListResponseDTO.class)
     @ApiResponses(value = {@ApiResponse(code = 200, message = "success")})
-    TheAddressListResponseDTO listAll() throws TheAddressNotFoundException;
+    TheAddressListResponseDTO listAll();
 
     @ApiOperation(value = "update TheAddress object",
     response = TheAddressResponseDTO.class)

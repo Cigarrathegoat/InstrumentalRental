@@ -47,7 +47,7 @@ public class TheAddressAPI implements ITheAddressAPI {
     }
 
     @PostMapping("/list_all")
-    public TheAddressListResponseDTO listAll() throws TheAddressNotFoundException {
+    public TheAddressListResponseDTO listAll() {
         return TheAddressListResponseDTO.builder()
                 .data(theAddressMapper.convertToListDTO(theAddressService.findAll())).build();
     }
