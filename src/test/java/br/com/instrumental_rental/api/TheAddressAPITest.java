@@ -79,4 +79,11 @@ public class TheAddressAPITest {
         Assertions.assertEquals(
                 TheAddressListResponseDTO.builder().data(List.of(builderDTO)).build(), result);
     }
+
+    @Test
+    void testUpdateSuccess() throws TheAddressNotFoundException {
+        var builder = TheAddressBuilder.theAddressNoIdBuilder();
+        var builderDTO = TheAddressDTOBuilder.theAddressDTOBuilder();
+        when(theAddressService.findById())
+    }
 }
