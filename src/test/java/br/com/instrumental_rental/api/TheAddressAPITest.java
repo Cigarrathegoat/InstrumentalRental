@@ -19,8 +19,7 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.List;
 
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class TheAddressAPITest {
 
@@ -106,7 +105,21 @@ public class TheAddressAPITest {
 
     @Test
     void testDeleteSuccess() throws TheAddressNotFoundException {
-        var builder = TheAddressBuilder.theAddressNoIdBuilder();
+        var builder = TheAddressBuilder.theAddressBuilder();
         doNothing().when(theAddressService).delete(builder.getAddressId());
+        theAddressAPI.delete(builder.getAddressId());
+        verify(theAddressService, times(1)).delete(builder.getAddressId());
     }
+
+    @Test
+    void testDeleteTheAddressNotFoundException() throws TheAddressNotFoundException {
+        var builder = TheAddressBuilder.theAddressBuilder();
+        doThrow(new TheAddressNotFoundException("A01", "Address not found")).when(theAddressService)
+                .delete(builder.getAddressId());
+        TheAddressNotFoundException thrown = Assertions.assertThrows(TheAddressNotFoundException.class, () ->
+        {theAddressAPI.delete(builder.getAddressId());});
+        Assertions.assertEquals("A01", thrown.getCode());
+        Assertions.assertEquals("Address not found", thrown.getMessage());
+    }
+
 }

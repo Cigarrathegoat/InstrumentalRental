@@ -39,17 +39,14 @@ public class Person {
     private String driversLicenseNumber;//7 digits
 
     @Column(name = "DS_ADDRESS")
-    @JoinColumn(name = "ADDRESS_DS")
     @OneToMany(mappedBy = "person")
     private List<TheAddress> address;
 
     @Column(name = "DS_RENTAL")
-    @JoinColumn(name = "RENTAL_DS")
     @OneToMany(mappedBy = "person")
-    private Rental rental;
+    private List<Rental> rental;
 
     @Column(name = "DS_CONTACTS")
-    @JoinColumn(name = "CONTACTS_DS")
     @OneToMany(mappedBy = "person")
     private List<Contact> contacts;
 
