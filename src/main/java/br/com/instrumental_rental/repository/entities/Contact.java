@@ -24,7 +24,7 @@ public class Contact {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_CONTACTS")
     private Long contactId;
 
-    @Column(name = "ID_PERSON")
+    @ManyToOne
     @JoinColumn(name = "PERSON_ID")
     private Person person;
 
