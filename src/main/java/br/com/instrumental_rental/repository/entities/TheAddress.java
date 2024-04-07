@@ -15,6 +15,8 @@ import javax.persistence.*;
 @EqualsAndHashCode
 public class TheAddress {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_ADDRESS")
     @Column(name = "ID_ADDRESS")
     private Long addressId;
 
