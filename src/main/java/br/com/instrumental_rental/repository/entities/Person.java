@@ -42,9 +42,8 @@ public class Person {
     @OneToMany(mappedBy = "person")
     private List<TheAddress> address;
 
-    @Column(name = "DS_RENTAL")
     @OneToMany(mappedBy = "person")
-    private List<Rental> rental;
+    private List<Rental> rentals;
 
     @Column(name = "DS_CONTACTS")
     @OneToMany(mappedBy = "person")
