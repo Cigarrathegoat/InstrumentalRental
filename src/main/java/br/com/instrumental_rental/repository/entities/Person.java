@@ -42,9 +42,6 @@ public class Person {
     @OneToMany(mappedBy = "person")
     private List<TheAddress> address;
 
-    @OneToMany(mappedBy = "person")
-    private List<Rental> rentals;
-
     @Column(name = "DS_CONTACTS")
     @OneToMany(mappedBy = "person")
     private List<Contact> contacts;

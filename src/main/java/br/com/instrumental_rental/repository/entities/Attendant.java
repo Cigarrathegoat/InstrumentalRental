@@ -6,11 +6,9 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @Table(name = "TB_ATTENDANT")
@@ -52,6 +50,10 @@ public class Attendant extends Person {
     private List<Contact> contacts;
 
      */
+
+    @OneToMany(mappedBy = "attendant")
+    private List<Rental> rentals;
+
 
     @Column(name = "DS_TOTAL_COMMISSION")
     private BigDecimal totalCommission;

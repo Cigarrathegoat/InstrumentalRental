@@ -6,11 +6,9 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @Table(name = "TB_CUSTOMER")
@@ -25,6 +23,10 @@ public class Customer extends Person {
 
     @Column(name = "DS_ACCOUNT_BALANCE")
     private BigDecimal accountBalance;
+
+    @OneToMany(mappedBy = "customer")
+    private List<Rental> rentals;
+
 
     //@JoinTable(@JoinColumns "", "")
 }
