@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "TB_CONTACTS")
+@Table(name = "TB_CONTACTS", schema = "instrumental_rental")
 @SequenceGenerator(name = "SEQ_CONTACTS")
 
 @Data

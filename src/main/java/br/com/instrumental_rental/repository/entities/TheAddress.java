@@ -5,7 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "TB_THEADDRESS")
+@Table(name = "TB_THEADDRESS", schema = "instrumental_rental")
 @SequenceGenerator(name = "SEQ_THEADDRESS")
 
 @Data
