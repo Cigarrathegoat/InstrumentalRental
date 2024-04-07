@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
-@Table(name = "TB_CUSTOMER")
+@Table(name = "TB_CUSTOMER", schema = "instrumental_rental")
 @SequenceGenerator(name = "SEQ_CUSTOMER")
 
 @Data

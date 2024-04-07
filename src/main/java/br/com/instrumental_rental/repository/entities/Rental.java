@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "TB_RENTAL")
+@Table(name = "TB_RENTAL", schema = "instrumental_rental")
 @SequenceGenerator(name = "SEQ_RENTAL")
 
 @Data

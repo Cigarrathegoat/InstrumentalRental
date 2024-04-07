@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Entity
-@Table(name = "TB_INSTRUMENT")
+@Table(name = "TB_INSTRUMENT", schema = "instrumental_rental")
 @SequenceGenerator(name = "SEQ_INSTRUMENT")
 
 @Data
