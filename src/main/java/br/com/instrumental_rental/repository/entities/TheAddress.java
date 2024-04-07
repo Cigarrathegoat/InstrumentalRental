@@ -41,7 +41,7 @@ public class TheAddress {
     @Column(name = "DS_ZIPCODE")
     private String zipCode;
 
-    @Column(name = "ID_PERSON")
+    @ManyToOne
     @JoinColumn(name = "PERSON_ID")
     private Person person;
 }
