@@ -12,7 +12,9 @@ import java.util.List;
 
 @Entity
 @Table(name = "TB_PERSON", schema = "instrumental_rental")
-@SequenceGenerator(name = "SEQ_PERSON")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "PERSON_TYPE", discriminatorType = DiscriminatorType.STRING)
+@SequenceGenerator(name = "SEQ_PERSON", sequenceName = "SEQ_PERSON", allocationSize = 1)
 
 @Data
 @SuperBuilder

@@ -11,14 +11,14 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
-@Table(name = "TB_ATTENDANT", schema = "instrumental_rental")
-@SequenceGenerator(name = "SEQ_ATTENDANT")
+@DiscriminatorValue("ATTENDANT")
+@SequenceGenerator(name = "SEQ_ATTENDANT", sequenceName = "SEQ_ATTENDANT", allocationSize = 1)
 
 @Data
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = true)
 public class Attendant extends Person {
 
     /*
