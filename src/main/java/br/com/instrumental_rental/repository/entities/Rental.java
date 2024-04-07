@@ -24,12 +24,11 @@ public class Rental {
     @Column(name = "ID_RENTAL")
     private Long rentalId;
 
-    @Column(name = "ID_CUSTOMER")//the name of the column of course
+    @ManyToOne
     @JoinColumn(name = "CUSTOMER_ID")
-    //the name that will show on the Rental Table referring to the customerId column maybe don't put joincolumn here 'cause if it's somewhere else we're good for obvious reasons, plus it's easier to maintain
     private Customer customer;
 
-    @Column(name = "ID_INSTRUMENT")
+    @ManyToOne
     @JoinColumn(name = "INSTRUMENT_ID")
     private Instrument instrument;
 
