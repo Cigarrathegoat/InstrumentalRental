@@ -41,8 +41,6 @@ public class Instrument {
     @Column(name = "DS_AVAILABLE")
     private boolean available = true;
 
-    @Column(name = "ID_RENTAL")
-    @JoinColumn(name = "RENTAL_DS")
     @OneToMany(mappedBy = "instrument")
     private List<Rental> rental;
 
