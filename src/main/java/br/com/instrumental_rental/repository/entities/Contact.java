@@ -1,6 +1,10 @@
 package br.com.instrumental_rental.repository.entities;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
@@ -15,6 +19,7 @@ import javax.persistence.*;
 @EqualsAndHashCode
 public class Contact {
 
+    @Id
     @Column(name = "ID_CONTACTS")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_CONTACTS")
     private Long contactId;
