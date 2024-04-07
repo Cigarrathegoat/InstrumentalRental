@@ -41,7 +41,7 @@ public class Rental {
     @Column(name = "DS_PRICE")
     private BigDecimal price;
 
-    @Column(name = "ID_ATTENDANT")
+    @ManyToOne
     @JoinColumn(name = "ATTENDANT_ID")
     private Attendant attendant;
 
