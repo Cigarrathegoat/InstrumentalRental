@@ -20,4 +20,6 @@ Attendant findAttendantByNumberProvided(@Param("numberProvided")String numberPro
             "LIMIT 1")
     Attendant findAttendantOfTheMonth(@Param("month") int month);
     //TODO run query to find which attendant has made most sales, per month */
+
+
 }
