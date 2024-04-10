@@ -26,9 +26,9 @@ import java.util.List;
 @RequestMapping("V1/customer")
 public class CustomerAPI implements ICustomerAPI {
 
-    private ICustomerService customerServiceAttribute;
+    private final ICustomerService customerServiceAttribute;
 
-    private ICustomerMapper customerMapperAttribute;
+    private final ICustomerMapper customerMapperAttribute;
 
     @Autowired
     public CustomerAPI(ICustomerService customerServiceParameter,

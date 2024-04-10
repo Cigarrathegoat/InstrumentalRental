@@ -21,19 +21,16 @@ import java.util.List;
 @RequestMapping("v1/attendant")
 public class AttendantAPI implements IAttendantAPI {
 
-    @Autowired
-    private IAttendantService attendantService;
 
-    @Autowired
-    private IAttendantMapper attendantMapper;
+    private final IAttendantService attendantService;
 
-   /* @Autowired
+    private final IAttendantMapper attendantMapper;
+
+   @Autowired
     public AttendantAPI(IAttendantService attendantService, IAttendantMapper attendantMapper) {
         this.attendantMapper = attendantMapper;
         this.attendantService = attendantService;
     }
-
-    */
 
     @PostMapping("/new")
     public AttendantResponseDTO add(@RequestBody AttendantDTO attendantDTO) {
