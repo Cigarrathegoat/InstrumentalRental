@@ -21,7 +21,6 @@ import java.util.List;
 @RequestMapping("v1/attendant")
 public class AttendantAPI implements IAttendantAPI {
 
-
     private final IAttendantService attendantService;
 
     private final IAttendantMapper attendantMapper;

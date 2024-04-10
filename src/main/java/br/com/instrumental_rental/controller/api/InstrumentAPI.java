@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class InstrumentAPI implements IInstrumentAPI {
 
-    private IInstrumentService instrumentService;
+    private final IInstrumentService instrumentService;
 
-    private IInstrumentMapper instrumentMapper;
+    private final IInstrumentMapper instrumentMapper;
 
     @Autowired
     public InstrumentAPI(IInstrumentService instrumentService, IInstrumentMapper instrumentMapper) {

@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("V1/rental")
 public class RentalAPI implements IRentalAPI {
 
-    IRentalService rentalService;
+    private final IRentalService rentalService;
 
-    IRentalMapper rentalMapper;
+    private final IRentalMapper rentalMapper;
 
     @Autowired
     public RentalAPI(IRentalService rentalService, IRentalMapper rentalMapper) {
