@@ -12,7 +12,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "TB_PERSON", schema = "instrumental_rental")
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "PERSON_TYPE", discriminatorType = DiscriminatorType.STRING)
 @SequenceGenerator(name = "SEQ_PERSON", sequenceName = "SEQ_PERSON", allocationSize = 1)
 
@@ -25,7 +25,7 @@ public class Person {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_PERSON")
-    @Column(name = "ID-PERSON")
+    @Column(name = "ID_PERSON")
     private long personId;
 
     @Column(name = "DS_NAME")
@@ -37,7 +37,7 @@ public class Person {
     @Column(name = "DS_SOCIAL_SECURITY")
     private String socialSecurityNumber;//9 digits
 
-    @Column(name = "DS_DRIVERS-LICENSE")
+    @Column(name = "DS_DRIVERS_LICENSE")
     private String driversLicenseNumber;//7 digits
 
     @Column(name = "DS_ADDRESS")

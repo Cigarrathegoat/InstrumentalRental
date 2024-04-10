@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
-@DiscriminatorValue("ATTENDANT")
+@Table(name = "TB_ATTENDANT", schema = "instrumental_rental")
 @SequenceGenerator(name = "SEQ_ATTENDANT", sequenceName = "SEQ_ATTENDANT", allocationSize = 1)
 
 @Data
