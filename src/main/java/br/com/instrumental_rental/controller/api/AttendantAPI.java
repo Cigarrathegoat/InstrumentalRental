@@ -65,7 +65,7 @@ public class AttendantAPI implements IAttendantAPI {
                 ).build();
     }
 
-    @PutMapping("/update/attendant/{attendantId}")
+    @PutMapping("/update/{attendantId}")
     public AttendantResponseDTO update(@PathVariable("attendantId") Long attendantId,
                                        @RequestBody AttendantDTO attendantDTO) throws AttendantNotFoundException {
         return AttendantResponseDTO.builder()
@@ -78,7 +78,7 @@ public class AttendantAPI implements IAttendantAPI {
                 ).build();
     }
 
-    @DeleteMapping("/{attendantId}")
+    @DeleteMapping("/delete/{attendantId}")
     public ResponseEntity<DeleteResponseDTO> delete(@PathVariable("attendantId") Long attendantId)
             throws AttendantNotFoundException {
         attendantService.delete(attendantId);

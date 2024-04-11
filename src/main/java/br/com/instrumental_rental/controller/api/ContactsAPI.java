@@ -10,8 +10,7 @@ import br.com.instrumental_rental.exceptions.ContactNotFoundException;
 import br.com.instrumental_rental.service.interfaces.IContactService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("V1/contacts")
@@ -47,7 +46,7 @@ public class ContactsAPI implements IContactAPI{
         ).build();
     }
 
-    @Override
+    @PutMapping()
     public ContactsResponseDTO update(Long contactsId) throws ContactNotFoundException {
         return ContactsResponseDTO.builder().data(
                 contactsMapper.convertToDTO(
@@ -61,8 +60,25 @@ public class ContactsAPI implements IContactAPI{
         ).build();
     }
 
-    @Override
-    public ResponseEntity<DeleteResponseDTO> delete(Long contactsId) throws ContactNotFoundException {
-        return null;
+    /*
+     @DeleteMapping("/{attendantId}")
+    public ResponseEntity<DeleteResponseDTO> delete(@PathVariable("attendantId") Long attendantId)
+            throws AttendantNotFoundException {
+        attendantService.delete(attendantId);
+        return ResponseEntity.ok(DeleteResponseDTO
+                .builder()
+                .deleteSuccessMessage("Attendant successfully deleted")
+                .build());
+    }
+}
+     */
+
+    @DeleteMapping("/delete/{contactId}")
+    public ResponseEntity<DeleteResponseDTO> delete(@PathVariable("contactId") Long contactsId)
+            throws ContactNotFoundException {
+        contactService.delete(contactsId);
+        return ResponseEntity.ok(DeleteResponseDTO.builder()
+                .deleteSuccessMessage("Contact successfully deleted")
+                .build());
     }
 }
