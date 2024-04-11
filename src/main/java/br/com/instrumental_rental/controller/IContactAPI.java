@@ -10,6 +10,8 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 
 public interface IContactAPI {
 
@@ -29,8 +31,13 @@ public interface IContactAPI {
     response = ContactsResponseDTO.class)
     @ApiResponses(value = {@ApiResponse(code = 200, message = "success"),
     @ApiResponse(code = 404, response = ErrorSpecificationDTO.class, message = "not found")})
-    ContactsResponseDTO update(Long contactsId) throws ContactNotFoundException;
+    ContactsResponseDTO update(Long contactsId, ContactsDTO contactsDTO)
+            throws ContactNotFoundException;
 
+    /*
+    public ContactsResponseDTO update(@PathVariable("contactsId") Long contactsId,
+                                      @RequestBody ContactsDTO contactsDTO) throws ContactNotFoundException
+     */
     @ApiOperation(value = "delete Contacts object",
     response = DeleteResponseDTO.class)
     @ApiResponses(value = {@ApiResponse(code = 200, message = "success"),

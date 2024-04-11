@@ -26,8 +26,8 @@ public class ContactsAPI implements IContactAPI{
         this.contactsMapper = contactsMapper;
     }
 
-    @Override
-    public ContactsResponseDTO add(ContactsDTO contactsDTO) {
+    @PostMapping("/add")
+    public ContactsResponseDTO add(@RequestBody ContactsDTO contactsDTO) {
         return ContactsResponseDTO.builder()
                 .data(
                         contactsMapper.convertToDTO(
@@ -39,15 +39,16 @@ public class ContactsAPI implements IContactAPI{
                 ).build();
     }
 
-    @Override
-    public ContactsListResponseDTO find(String holder) throws ContactNotFoundException {
+    @GetMapping("/find/{holder}")
+    public ContactsListResponseDTO find(@PathVariable("holder")String holder) throws ContactNotFoundException {
         return ContactsListResponseDTO.builder().data(
                 contactsMapper.convertToDTOList(contactService.findContactsByNameProvided(holder))
         ).build();
     }
 
-    @PutMapping()
-    public ContactsResponseDTO update(Long contactsId) throws ContactNotFoundException {
+    @PutMapping("/update/{contactsId}")
+    public ContactsResponseDTO update(@PathVariable("contactsId") Long contactsId,
+                                      @RequestBody ContactsDTO contactsDTO) throws ContactNotFoundException {
         return ContactsResponseDTO.builder().data(
                 contactsMapper.convertToDTO(
                         contactService.update(
