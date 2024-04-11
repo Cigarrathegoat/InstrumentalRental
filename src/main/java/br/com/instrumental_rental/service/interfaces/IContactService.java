@@ -13,9 +13,9 @@ public interface IContactService extends IService<Contact, Exception> {
 
     Contact update (Contact contact) throws ContactNotFoundException;
 
-    void delete (Long id) throws E;
+    void delete (Long id) throws ContactNotFoundException;
 
-    List<Contact> findContactsByNameProvided(String name);
+    List<Contact> findContactsByNameProvided(String name) throws ContactNotFoundException;
 
     Contact findById(Long contactId) throws ContactNotFoundException;
 }

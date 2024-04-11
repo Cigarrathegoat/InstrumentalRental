@@ -53,7 +53,11 @@ public class ContactService implements IContactService {
     }
 
     @Override
-    public List<Contact> findContactsByNameProvided(String name) {
-        return contactRepository.findContactByNameProvided(name);
+    public List<Contact> findContactsByNameProvided(String name) throws ContactNotFoundException {
+        var contactFound = contactRepository.findContactByNameProvided(name);
+        if (contactFound.isEmpty()) {
+            throw new ContactNotFoundException("C01", "contact not found");
+        }
+        return contactFound;
     }
 }

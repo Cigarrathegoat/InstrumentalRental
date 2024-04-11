@@ -51,8 +51,13 @@ public class ContactsAPI implements IContactAPI{
     public ContactsResponseDTO update(Long contactsId) throws ContactNotFoundException {
         return ContactsResponseDTO.builder().data(
                 contactsMapper.convertToDTO(
-                        contactService.update(contactService.update(contactService.findById(
-                                                contactsId))))
+                        contactService.update(
+                                contactService.update
+                                        (contactService.findById(
+                                                contactsId)
+                                        )
+                        )
+                )
         ).build();
     }
 
