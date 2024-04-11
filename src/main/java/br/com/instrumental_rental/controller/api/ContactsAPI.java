@@ -43,14 +43,16 @@ public class ContactsAPI implements IContactAPI{
     @Override
     public ContactsListResponseDTO find(String holder) throws ContactNotFoundException {
         return ContactsListResponseDTO.builder().data(
-                contactsMapper.convertToDTOList(contactService.findContactsByNameprovided(holder))
+                contactsMapper.convertToDTOList(contactService.findContactsByNameProvided(holder))
         ).build();
     }
 
     @Override
     public ContactsResponseDTO update(Long contactsId) throws ContactNotFoundException {
         return ContactsResponseDTO.builder().data(
-                contactsMapper.convertToDTO()
+                contactsMapper.convertToDTO(
+                        contactService.update(contactService.update(contactService.findById(
+                                                contactsId))))
         ).build();
     }
 

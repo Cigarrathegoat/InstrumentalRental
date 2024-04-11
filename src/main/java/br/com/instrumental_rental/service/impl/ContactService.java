@@ -53,7 +53,7 @@ public class ContactService implements IContactService {
     }
 
     @Override
-    public List<Contact> findContactsByNameprovided(String name) {
+    public List<Contact> findContactsByNameProvided(String name) {
         return contactRepository.findContactByNameProvided(name);
     }
 }
