@@ -51,4 +51,9 @@ public class ContactService implements IContactService {
         var contactToDelete = findById(id);
         contactRepository.delete(contactToDelete);
     }
+
+    @Override
+    public List<Contact> findContactsByNameprovided(String name) {
+        return contactRepository.findContactByNameProvided(name);
+    }
 }
