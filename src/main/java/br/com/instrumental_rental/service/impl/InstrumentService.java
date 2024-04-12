@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -18,8 +19,10 @@ public class InstrumentService implements IInstrumentService {
     IInstrumentRepository instrumentRepository;
 
     @Override
-    public Instrument save(Instrument instrument) {
-        return instrumentRepository.save(instrument);
+    public List<Instrument> save(List<Instrument> instrumentList) {
+        List<Instrument> savedInstruments = new ArrayList<>();
+        for (Instrument instrument : instrumentList) instrumentRepository.save(instrument);
+        return savedInstruments;
     }
 
     @Override

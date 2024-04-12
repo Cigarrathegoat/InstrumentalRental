@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import static br.com.instrumental_rental.service.util.ServiceUtil.sufficientBalanceChecker;
@@ -34,8 +35,10 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
-    public Customer save(Customer customer) {
-        return customerRepositoryAttribute.save(customer);
+    public List<Customer> save(List<Customer> customerList) {
+        List<Customer> savedCustomers = new ArrayList<>();
+        for (Customer customer : customerList) customerRepositoryAttribute.save(customer);
+        return savedCustomers;
     }
 
     @Override
