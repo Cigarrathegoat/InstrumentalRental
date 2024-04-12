@@ -7,7 +7,9 @@ import java.util.List;
 
 public interface IAttendantService {
 
-    List<Attendant> save(List<Attendant> attendantList);
+    List<Attendant> saveFirstTime(List<Attendant> attendantList);
+
+    Attendant save(Attendant attendant);
 
     void delete(Long attendantId) throws AttendantNotFoundException;
 

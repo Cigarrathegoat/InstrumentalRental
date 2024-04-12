@@ -7,7 +7,9 @@ import java.util.List;
 
 public interface IInstrumentService {
 
-    public List<Instrument> save(List<Instrument> instrumentList);
+    public List<Instrument> saveFirstTime(List<Instrument> instrumentList);
+
+    Instrument save(Instrument instrument);
 
     public List<Instrument> listAll();
 

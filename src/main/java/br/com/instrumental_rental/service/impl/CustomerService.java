@@ -35,10 +35,15 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
-    public List<Customer> save(List<Customer> customerList) {
+    public List<Customer> saveFirstTime(List<Customer> customerList) {
         List<Customer> savedCustomers = new ArrayList<>();
         for (Customer customer : customerList) customerRepositoryAttribute.save(customer);
         return savedCustomers;
+    }
+
+    @Override
+    public Customer save(Customer customer) {
+        return customerRepositoryAttribute.save(customer);
     }
 
     @Override

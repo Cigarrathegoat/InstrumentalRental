@@ -19,7 +19,7 @@ public class InstrumentService implements IInstrumentService {
     IInstrumentRepository instrumentRepository;
 
     @Override
-    public List<Instrument> save(List<Instrument> instrumentList) {
+    public List<Instrument> saveFirstTime(List<Instrument> instrumentList) {
         List<Instrument> savedInstruments = new ArrayList<>();
         for (Instrument instrument : instrumentList) instrumentRepository.save(instrument);
         return savedInstruments;
