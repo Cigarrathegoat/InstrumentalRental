@@ -38,7 +38,10 @@ public class AttendantService implements IAttendantService {
     @Override
     public List<Attendant> saveFirstTime(List<Attendant> attendantList) {
         List<Attendant> savedAttendants = new ArrayList<>();
-        for (Attendant attendant : attendantList) attendantRepository.save(attendant);
+        for (Attendant attendant : attendantList) {
+            Attendant savedAttendant = attendantRepository.save(attendant);
+            savedAttendants.add(savedAttendant);
+        }
         return savedAttendants;
     }
 

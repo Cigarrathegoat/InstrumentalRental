@@ -9,6 +9,8 @@ public interface IContactService extends IService<Contact, Exception> {
 
     Contact save (Contact contact);
 
+    List<Contact> saveFirstTime(List<Contact> contactList);
+
     List<Contact> findAll();
 
     Contact update (Contact contact) throws ContactNotFoundException;

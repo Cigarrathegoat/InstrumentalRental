@@ -14,7 +14,7 @@ public class RentalBuilder {
 
     /*private LocalDate rentalStartDate = LocalDate.parse("2020-12-01",
             DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-    private LocalDate rentalEndDate = LocalDate.parse("2020-12-03",
+    private LocalDate rentalEndDate = LocalDate.parse("2020-12-20",
             DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     private BigDecimal rentalPrice = BigDecimal.valueOf(120);
     private BigDecimal attendantCommission = BigDecimal.valueOf(12);
@@ -24,7 +24,7 @@ public class RentalBuilder {
                                                  Attendant attendant) {
         return Rental.builder().rentalId(null).customer(customer).instrument(instrument)
                 .attendant(attendant).startDate(LocalDate.parse("2020-12-03",
-                        DateTimeFormatter.ofPattern("yyyy-MM-dd"))).endDate(LocalDate.parse("2020-12-03",
+                        DateTimeFormatter.ofPattern("yyyy-MM-dd"))).endDate(LocalDate.parse("2020-12-15",
                         DateTimeFormatter.ofPattern("yyyy-MM-dd"))).price(null).attendantCommission(null)
                 .build();
     }

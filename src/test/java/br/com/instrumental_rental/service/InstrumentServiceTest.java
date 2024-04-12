@@ -47,6 +47,15 @@ public class InstrumentServiceTest {
     }
 
     @Test
+    void testSaveFirstTimeSuccess() {
+        var builder = InstrumentBuilder.instrumentBuilder();
+        var builderNoId = InstrumentBuilder.instrumentNoIdBuilder();
+        when(instrumentRepository.save(builderNoId)).thenReturn(builder);
+        List<Instrument> savedList = instrumentService.saveFirstTime(List.of(builderNoId));
+        Assertions.assertEquals(List.of(builder), savedList);
+    }
+
+    @Test
     void testFindInstrumentByModelSuccess() throws InstrumentNotFoundException {
         var builder = InstrumentBuilder.instrumentBuilder();
         when(instrumentRepository.findInstrumentByMakeOrModel(builder.getModel()))

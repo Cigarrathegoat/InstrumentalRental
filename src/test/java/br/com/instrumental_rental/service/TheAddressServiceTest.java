@@ -40,6 +40,15 @@ public class TheAddressServiceTest {
     }
 
     @Test
+    void saveFirstTimeSuccess() {
+        var builderNoId = TheAddressBuilder.theAddressNoIdBuilder();
+        var builder = TheAddressBuilder.theAddressBuilder();
+        when(theAddressRepository.save(builderNoId)).thenReturn(builder);
+        List<TheAddress> result = theAddressService.saveFirstTime(List.of(builderNoId));
+        Assertions.assertEquals(List.of(builder), result);
+    }
+
+    @Test
     void findByIdSuccess() throws TheAddressNotFoundException {
         var builder = TheAddressBuilder.theAddressBuilder();
         when(theAddressRepository.findById(builder.getAddressId()))

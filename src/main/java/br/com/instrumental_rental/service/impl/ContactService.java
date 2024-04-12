@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -30,6 +31,16 @@ public class ContactService implements IContactService {
     @Override
     public Contact save(Contact contact) {
         return contactRepository.save(contact);
+    }
+
+    @Override
+    public List<Contact> saveFirstTime(List<Contact> contactList) {
+        List<Contact> savedContacts = new ArrayList<>();
+        for (Contact contact : contactList) {
+            Contact savedContact = contactRepository.save(contact);
+            savedContacts.add(savedContact);
+        }
+        return savedContacts;
     }
 
     @Override

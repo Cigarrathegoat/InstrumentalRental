@@ -43,6 +43,15 @@ public class AttendantServiceTest {
     }
 
     @Test
+    void testSaveFirstTimeSuccess() {
+        var builder = AttendantBuilder.attendantBuilder();
+        var builderNoId = AttendantBuilder.attendantBuilderNoId();
+        when(attendantRepository.save(builderNoId)).thenReturn(builder);
+        List<Attendant> saved = attendantService.saveFirstTime(List.of(builderNoId));
+        Assertions.assertEquals(List.of(builder), saved);
+    }
+
+    @Test
     void findAttendantByNumberProvidedSuccess() throws AttendantNotFoundException {
         var builder = AttendantBuilder.attendantBuilder();
         when(attendantRepository.findAttendantByNumberProvided(builder.getDriversLicenseNumber()))

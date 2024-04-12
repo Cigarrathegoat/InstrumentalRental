@@ -47,6 +47,14 @@ public class CustomerServiceTest {
     }
 
     @Test
+    void saveFirstTimeSuccess() {
+        var builder = CustomerBuilder.customerBuilder();
+        var builderNoId = CustomerBuilder.customerNoIdBuilder();
+        when(customerRepository.save(builderNoId)).thenReturn(builder);
+        List<Customer> savedList = customerService.saveFirstTime(List.of(builderNoId));
+        Assertions.assertEquals(List.of(builder), savedList);
+    }
+    @Test
     void testFindCustomerByNumberProvidedSuccess() throws CustomerNotFoundException {
         var builder = CustomerBuilder.customerBuilder();
         when(customerRepository.findCustomerByNumberProvided(builder.getDriversLicenseNumber()))

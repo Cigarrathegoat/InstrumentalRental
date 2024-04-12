@@ -3,11 +3,17 @@ package br.com.instrumental_rental.service.interfaces;
 import br.com.instrumental_rental.exceptions.TheAddressNotFoundException;
 import br.com.instrumental_rental.repository.entities.TheAddress;
 
+import java.util.List;
+
 public interface ITheAddressService extends IService<TheAddress, Exception> {
 
-    public TheAddress update(TheAddress theAddress) throws TheAddressNotFoundException;
+    TheAddress save(TheAddress theAddress);
 
-    public TheAddress findById(Long addressId) throws TheAddressNotFoundException;
+    List<TheAddress> saveFirstTime(List<TheAddress> theAddressList);
 
-    public void delete(Long id) throws TheAddressNotFoundException;
+    TheAddress update(TheAddress theAddress) throws TheAddressNotFoundException;
+
+    TheAddress findById(Long addressId) throws TheAddressNotFoundException;
+
+    void delete(Long id) throws TheAddressNotFoundException;
 }

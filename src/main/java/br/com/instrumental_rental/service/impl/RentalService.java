@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 
 import static br.com.instrumental_rental.service.util.ServiceUtil.sufficientBalanceChecker;
@@ -99,20 +100,44 @@ public class RentalService implements IRentalService {
         }*/
 /*TODO create a new Rental object, make it ony have ID*/
     @Override
-    public Rental save(Rental rental) throws CustomerNotFoundException, InstrumentNotFoundException,
+    public List<Rental> saveFirstTime(List<Rental> rentalList) throws CustomerNotFoundException, InstrumentNotFoundException,
     AttendantNotFoundException, WithdrawalGreaterThanBalanceException,
             EndDateNotAfterStartDateException {
-        customerServiceAttribute.findCustomerByNumberProvided(rental.getCustomer()
-                .getSocialSecurityNumber());
-        instrumentServiceAttribute.findInstrumentByMakeOrModel(rental.getInstrument().getModel());
-        attendantServiceAttribute.findAttendantByNumberProvided(rental.getAttendant()
-                .getDriversLicenseNumber());
-        nonRentalAttributesUpdater(rental.getInstrument(), rental.getCustomer(),
-                rental.getAttendant(), rental);
-        rentalDatesChecker(rental);
-        sufficientBalanceChecker(rental.getCustomer(), rental.getPrice());
+        List<Rental> savedRentals = new ArrayList<>();
+        for (Rental rental : rentalList) {
+            customerServiceAttribute.findCustomerByNumberProvided(rental.getCustomer()
+                    .getSocialSecurityNumber());
+            instrumentServiceAttribute.findInstrumentByMakeOrModel(rental.getInstrument().getModel());
+            attendantServiceAttribute.findAttendantByNumberProvided(rental.getAttendant()
+                    .getDriversLicenseNumber());
+            nonRentalAttributesUpdater(rental.getInstrument(), rental.getCustomer(),
+                    rental.getAttendant(), rental);
+            rentalDatesChecker(rental);
+            sufficientBalanceChecker(rental.getCustomer(), rental.getPrice());
 
-        return rentalRepositoryAttribute.save(rental);
+            Rental savedRental = rentalRepositoryAttribute.save(rental);
+            savedRentals.add(savedRental);
+        }
+        return savedRentals;
+    }
+
+    @Override
+    public Rental save(Rental rental) throws CustomerNotFoundException, InstrumentNotFoundException,
+            AttendantNotFoundException, WithdrawalGreaterThanBalanceException,
+            EndDateNotAfterStartDateException {
+
+            customerServiceAttribute.findCustomerByNumberProvided(rental.getCustomer()
+                    .getSocialSecurityNumber());
+            instrumentServiceAttribute.findInstrumentByMakeOrModel(rental.getInstrument().getModel());
+            attendantServiceAttribute.findAttendantByNumberProvided(rental.getAttendant()
+                    .getDriversLicenseNumber());
+            nonRentalAttributesUpdater(rental.getInstrument(), rental.getCustomer(),
+                    rental.getAttendant(), rental);
+            rentalDatesChecker(rental);
+            sufficientBalanceChecker(rental.getCustomer(), rental.getPrice());
+
+            rentalRepositoryAttribute.save(rental);
+        return rental;
     }
 
     @Override

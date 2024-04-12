@@ -5,9 +5,11 @@ import br.com.instrumental_rental.repository.entities.TheAddress;
 import br.com.instrumental_rental.repository.interfaces.ITheAddressRepository;
 import br.com.instrumental_rental.service.interfaces.ITheAddressService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.jni.Address;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -23,6 +25,16 @@ public class TheAddressService implements ITheAddressService {
     @Override
     public TheAddress save(TheAddress theAddress) {
         return theAddressRepository.save(theAddress);
+    }
+
+    @Override
+    public List<TheAddress> saveFirstTime(List<TheAddress> theAddressList) {
+        List<TheAddress> savedAddresses = new ArrayList<>();
+        for (TheAddress theAddress : theAddressList) {
+            TheAddress savedAddress = theAddressRepository.save(theAddress);
+            savedAddresses.add(savedAddress);
+        }
+        return savedAddresses;
     }
 
     public TheAddress findById(Long addressId) throws TheAddressNotFoundException {

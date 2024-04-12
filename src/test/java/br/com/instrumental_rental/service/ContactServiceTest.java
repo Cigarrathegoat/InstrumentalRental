@@ -39,6 +39,15 @@ public class ContactServiceTest {
     }
 
     @Test
+    void testSaveFirstTimeSuccess() {
+        var builder = ContactBuilder.contactBuilder();
+        var builderNoId = ContactBuilder.contactNoIdBuilder();
+        when(contactRepository.save(builderNoId)).thenReturn(builder);
+        List<Contact> savedList = contactService.saveFirstTime(List.of(builderNoId));
+        Assertions.assertEquals(List.of(builder), savedList);
+    }
+
+    @Test
     void testFindSuccess() throws ContactNotFoundException {
         var builder = ContactBuilder.contactBuilder();
         when(contactRepository.findById(builder.getContactId())).thenReturn(Optional.of(builder));

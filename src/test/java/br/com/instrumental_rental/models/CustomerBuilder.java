@@ -19,7 +19,7 @@ public class CustomerBuilder {
                         DateTimeFormatter.ofPattern("dd-MM-yyyy")))
                 .socialSecurityNumber("123456789")
                 .driversLicenseNumber("1234567")
-                .accountBalance(BigDecimal.valueOf(500))
+                .accountBalance(BigDecimal.valueOf(5000))
                 .build();
     }
 
