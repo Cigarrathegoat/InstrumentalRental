@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface ICustomerService {
 
-    public Customer save(Customer customer);
+    List<Customer> save(Customer customer);
 
     List<Customer> findAll();
 

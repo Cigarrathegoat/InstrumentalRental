@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -35,8 +36,12 @@ public class AttendantService implements IAttendantService {
     }
 
     @Override
-    public Attendant save(Attendant attendant) {
-        return attendantRepository.save(attendant);
+    public List<Attendant> save(List<Attendant> attendantList) {
+        List<Attendant> savedAttendants = new ArrayList<>();
+        for (Attendant attendant : attendantList) {
+            attendantRepository.save(attendant);
+        }
+        return savedAttendants;
     }
 
     @Override
