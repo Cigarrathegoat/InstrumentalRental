@@ -3,12 +3,15 @@ package br.com.instrumental_rental.api;
 import br.com.instrumental_rental.Mappers.IContactsMapper;
 import br.com.instrumental_rental.controller.api.ContactsAPI;
 import br.com.instrumental_rental.models.ContactBuilder;
+import br.com.instrumental_rental.models.ContactDTOBuilder;
 import br.com.instrumental_rental.service.interfaces.IContactService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+
+import static org.mockito.Mockito.when;
 
 public class ContactsAPITest {
     @Mock
@@ -41,6 +44,10 @@ public class ContactsAPITest {
     @Test
     void testAddSuccess() {
         var contactNoId = ContactBuilder.contactNoIdBuilder();
-        var contact
+        var contactBuilder = ContactBuilder.contactBuilder();
+        var contactDTONoIdBuilder = ContactDTOBuilder.contactNoIdBuilder();
+        var contactDTOBuilder = ContactDTOBuilder.contactBuilder();
+
+        when(contactMapper.convertToEntity(contactDTONoIdBuilder)).thenReturn(contactNoId);
     }
 }
