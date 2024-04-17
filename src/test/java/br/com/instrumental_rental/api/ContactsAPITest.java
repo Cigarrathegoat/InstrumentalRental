@@ -2,6 +2,7 @@ package br.com.instrumental_rental.api;
 
 import br.com.instrumental_rental.Mappers.IContactsMapper;
 import br.com.instrumental_rental.controller.api.ContactsAPI;
+import br.com.instrumental_rental.controller.dto.responses.responses.ContactsListResponseDTO;
 import br.com.instrumental_rental.controller.dto.responses.responses.ContactsResponseDTO;
 import br.com.instrumental_rental.exceptions.ContactNotFoundException;
 import br.com.instrumental_rental.models.ContactBuilder;
@@ -13,6 +14,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+
+import java.util.List;
 
 import static org.mockito.Mockito.when;
 
@@ -61,6 +64,13 @@ public class ContactsAPITest {
     @Test
     void testFindSuccess() throws ContactNotFoundException {
         var contactBuilder = ContactBuilder.contactBuilder();
-        when(contactService.findContactsByNameProvided(contactBuilder.()))
+        var contactDTOBuilder = ContactDTOBuilder.contactBuilder();
+        when(contactService.findContactsByNameProvided(contactBuilder.getContactName()))
+                .thenReturn(List.of(contactBuilder));
+        when(contactMapper.convertToDTOList(List.of(contactBuilder)))
+                .thenReturn(List.of(contactDTOBuilder));
+        ContactsListResponseDTO result = contactsAPI.find(contactBuilder.getContactName());
+        Assertions.assertEquals(ContactsListResponseDTO.builder()
+                .data(List.of(contactDTOBuilder)).build(), result);
     }
 }
