@@ -74,9 +74,32 @@ public class ContactsAPITest {
                 .data(List.of(contactDTOBuilder)).build(), result);
     }
 
+    /*@Test
+    void testFindAttendantNotFoundExceptionError() throws AttendantNotFoundException {
+        var attendantSought = AttendantBuilder.attendantBuilder();
+        when(attendantService.findAttendantByNumberProvided(attendantSought.getSocialSecurityNumber()))
+                .thenThrow(new AttendantNotFoundException("A01", "Attendant not found"));
+        AttendantNotFoundException thrown = Assertions.assertThrows(
+                AttendantNotFoundException.class, () -> {
+                    attendantAPI.find(attendantSought.getSocialSecurityNumber());
+                }
+        );
+        Assertions.assertEquals("A01", thrown.getCode());
+        Assertions.assertEquals("Attendant not found", thrown.getMessage());
+    }
+
+     */
     @Test
     void testFindContactNotFoundException() throws ContactNotFoundException {
         var contactBuilder = ContactBuilder.contactBuilder();
         when(contactService.findContactsByNameProvided(contactBuilder.getContactName()))
+                .thenThrow(new ContactNotFoundException("C01", "Contact not found"));
+        ContactNotFoundException thrown = Assertions.assertThrows(
+                ContactNotFoundException.class, () -> {
+                    contactsAPI.find(contactBuilder.getContactName());
+                }
+        );
+        Assertions.assertEquals("C01", thrown.getCode());
+        Assertions.assertEquals("Contact not found", thrown.getMessage());
     }
 }

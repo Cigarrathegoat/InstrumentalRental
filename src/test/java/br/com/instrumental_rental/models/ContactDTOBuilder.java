@@ -7,7 +7,7 @@ public class ContactDTOBuilder {
 
     public static ContactsDTO contactBuilder() {
         return ContactsDTO.builder()
-
+                .contactName("Jackie")
                 .contactsId(1L)
                 .contactType("email")
                 .contactContent("contact@gmail.com").build();
@@ -15,6 +15,7 @@ public class ContactDTOBuilder {
 
     public static ContactsDTO contactNoIdBuilder() {
         return ContactsDTO.builder()
+                .contactName("Jackie")
                 .contactsId(null)
                 .contactType("email")
                 .contactContent("contact@gmail.com").build();

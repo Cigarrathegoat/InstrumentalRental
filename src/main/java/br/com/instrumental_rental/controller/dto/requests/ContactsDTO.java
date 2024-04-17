@@ -18,6 +18,7 @@ public class ContactsDTO {
 
     @NotBlank(message = "field must not be empt")
     @Pattern(regexp = "^[a-zA-Z]+$", message = "field must be filled with letters only")
+    private String contactName;
 
     @NotBlank(message = "field must not be empty")
     @Pattern(regexp = "^[a-zA-Z]+$", message = "field must be filled with letters only")
