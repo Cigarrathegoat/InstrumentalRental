@@ -28,6 +28,9 @@ public class Contact {
     @JoinColumn(name = "PERSON_ID")
     private Person person;
 
+    @Column(name = "DS_NAME")
+    private String contactName;
+
     @Column(name = "DS_TYPE")
     private String contactType;
 

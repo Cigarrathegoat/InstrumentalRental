@@ -3,6 +3,7 @@ package br.com.instrumental_rental.api;
 import br.com.instrumental_rental.Mappers.IContactsMapper;
 import br.com.instrumental_rental.controller.api.ContactsAPI;
 import br.com.instrumental_rental.controller.dto.responses.responses.ContactsResponseDTO;
+import br.com.instrumental_rental.exceptions.ContactNotFoundException;
 import br.com.instrumental_rental.models.ContactBuilder;
 import br.com.instrumental_rental.models.ContactDTOBuilder;
 import br.com.instrumental_rental.service.interfaces.IContactService;
@@ -55,5 +56,11 @@ public class ContactsAPITest {
         when(contactMapper.convertToDTO(contactBuilder)).thenReturn(contactDTOBuilder);
         ContactsResponseDTO result = contactsAPI.add(contactDTONoIdBuilder);
         Assertions.assertEquals(ContactsResponseDTO.builder().data(contactDTOBuilder).build(), result);
+    }
+
+    @Test
+    void testFindSuccess() throws ContactNotFoundException {
+        var contactBuilder = ContactBuilder.contactBuilder();
+        when(contactService.findContactsByNameProvided(contactBuilder.()))
     }
 }
