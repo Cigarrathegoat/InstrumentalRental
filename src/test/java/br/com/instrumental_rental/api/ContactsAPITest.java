@@ -2,6 +2,7 @@ package br.com.instrumental_rental.api;
 
 import br.com.instrumental_rental.Mappers.IContactsMapper;
 import br.com.instrumental_rental.controller.api.ContactsAPI;
+import br.com.instrumental_rental.controller.dto.requests.ContactsDTO;
 import br.com.instrumental_rental.controller.dto.responses.responses.ContactsListResponseDTO;
 import br.com.instrumental_rental.controller.dto.responses.responses.ContactsResponseDTO;
 import br.com.instrumental_rental.exceptions.ContactNotFoundException;
@@ -34,19 +35,7 @@ public class ContactsAPITest {
         MockitoAnnotations.openMocks(this);
     }
 
-    /*@Test
-    void testAddSuccess() {
-        var attendantNoId = AttendantBuilder.attendantBuilderNoId();
-        var attendantBuilder = AttendantBuilder.attendantBuilder();
-        var attendantDTONoIdBuilder = AttendantDTOBuilder.attendantDTONoIdSuccessBuilder();
-        var attendantDTOBuilder = AttendantDTOBuilder.attendantDTOSuccessBuilder();
-        when(attendantMapper.convertToEntity(attendantDTONoIdBuilder)).thenReturn(attendantNoId);
-        when(attendantService.save(attendantNoId)).thenReturn(attendantBuilder);
-        when(attendantMapper.convertToDTO(attendantBuilder)).thenReturn(attendantDTOBuilder);
-        AttendantResponseDTO result = attendantAPI.add(attendantDTONoIdBuilder);
-        Assertions.assertEquals(AttendantResponseDTO.builder().data(attendantDTOBuilder).build(), result);
-    }
-     */
+
     @Test
     void testAddSuccess() {
         var contactNoId = ContactBuilder.contactNoIdBuilder();
@@ -74,21 +63,6 @@ public class ContactsAPITest {
                 .data(List.of(contactDTOBuilder)).build(), result);
     }
 
-    /*@Test
-    void testFindAttendantNotFoundExceptionError() throws AttendantNotFoundException {
-        var attendantSought = AttendantBuilder.attendantBuilder();
-        when(attendantService.findAttendantByNumberProvided(attendantSought.getSocialSecurityNumber()))
-                .thenThrow(new AttendantNotFoundException("A01", "Attendant not found"));
-        AttendantNotFoundException thrown = Assertions.assertThrows(
-                AttendantNotFoundException.class, () -> {
-                    attendantAPI.find(attendantSought.getSocialSecurityNumber());
-                }
-        );
-        Assertions.assertEquals("A01", thrown.getCode());
-        Assertions.assertEquals("Attendant not found", thrown.getMessage());
-    }
-
-     */
     @Test
     void testFindContactNotFoundException() throws ContactNotFoundException {
         var contactBuilder = ContactBuilder.contactBuilder();
@@ -101,5 +75,16 @@ public class ContactsAPITest {
         );
         Assertions.assertEquals("C01", thrown.getCode());
         Assertions.assertEquals("Contact not found", thrown.getMessage());
+    }
+
+    @Test
+    void testUpdateSuccess() throws ContactNotFoundException {
+        var contactBuilder = ContactBuilder.contactBuilder();
+        var contactDTOBuilder = ContactDTOBuilder.contactBuilder();
+        when(contactService.findById(contactBuilder.getContactId())).thenReturn(contactBuilder);
+        when(contactService.update(contactBuilder)).thenReturn(contactBuilder);
+        when(contactMapper.convertToDTO(contactBuilder)).thenReturn(contactDTOBuilder);
+        ContactsResponseDTO result = contactsAPI.update(contactBuilder.getContactId(), contactDTOBuilder);
+        Assertions.assertEquals(ContactsResponseDTO.builder().data(contactDTOBuilder).build(), result);
     }
 }

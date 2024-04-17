@@ -52,7 +52,6 @@ public class ContactsAPI implements IContactAPI{
         return ContactsResponseDTO.builder().data(
                 contactsMapper.convertToDTO(
                         contactService.update(
-                                contactService.update
                                         (contactService.findById(
                                                 contactsId)
                                         )
