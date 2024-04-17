@@ -6,6 +6,7 @@ public class ContactBuilder {
 
     public static Contact contactBuilder() {
         return Contact.builder()
+                .contactName("Jackie")
                 .contactId(1L)
                 .contactType("email")
                 .contactContent("contact@gmail.com").build();
@@ -13,6 +14,7 @@ public class ContactBuilder {
 
     public static Contact contactNoIdBuilder() {
         return Contact.builder()
+                .contactName("Jackie")
                 .contactId(null)
                 .contactType("email")
                 .contactContent("contact@gmail.com").build();

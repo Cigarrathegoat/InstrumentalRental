@@ -73,4 +73,10 @@ public class ContactsAPITest {
         Assertions.assertEquals(ContactsListResponseDTO.builder()
                 .data(List.of(contactDTOBuilder)).build(), result);
     }
+
+    @Test
+    void testFindContactNotFoundException() throws ContactNotFoundException {
+        var contactBuilder = ContactBuilder.contactBuilder();
+        when(contactService.findContactsByNameProvided(contactBuilder.getContactName()))
+    }
 }
