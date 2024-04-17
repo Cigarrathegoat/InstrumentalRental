@@ -2,9 +2,11 @@ package br.com.instrumental_rental.api;
 
 import br.com.instrumental_rental.Mappers.IContactsMapper;
 import br.com.instrumental_rental.controller.api.ContactsAPI;
+import br.com.instrumental_rental.controller.dto.responses.responses.ContactsResponseDTO;
 import br.com.instrumental_rental.models.ContactBuilder;
 import br.com.instrumental_rental.models.ContactDTOBuilder;
 import br.com.instrumental_rental.service.interfaces.IContactService;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -49,5 +51,9 @@ public class ContactsAPITest {
         var contactDTOBuilder = ContactDTOBuilder.contactBuilder();
 
         when(contactMapper.convertToEntity(contactDTONoIdBuilder)).thenReturn(contactNoId);
+        when(contactService.save(contactNoId)).thenReturn(contactBuilder);
+        when(contactMapper.convertToDTO(contactBuilder)).thenReturn(contactDTOBuilder);
+        ContactsResponseDTO result = contactsAPI.add(contactDTONoIdBuilder);
+        Assertions.assertEquals(ContactsResponseDTO.builder().data(contactDTOBuilder).build(), result);
     }
 }
