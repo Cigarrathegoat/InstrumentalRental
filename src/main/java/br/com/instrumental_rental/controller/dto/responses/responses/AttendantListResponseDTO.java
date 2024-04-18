@@ -12,4 +12,6 @@ import java.util.List;
 public class AttendantListResponseDTO {
 
     public List<AttendantDTO> data;
+
+    private String addListSuccessMessage;
 }

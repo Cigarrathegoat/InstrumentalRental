@@ -13,6 +13,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 
 public interface IAttendantAPI {
 
@@ -21,6 +22,11 @@ public interface IAttendantAPI {
     @ApiResponses(value = {@ApiResponse(code = 200, message = "success"),
     @ApiResponse(code = 404, response = ErrorSpecificationDTO.class, message = "not found")})
     AttendantResponseDTO add(AttendantDTO attendantDTO);
+
+    @ApiOperation(value = "Add list of Attendant objects",
+    response = AttendantListResponseDTO.class)
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "success")})
+    public ResponseEntity<AttendantListResponseDTO> addList(@RequestBody ????);
 
     @ApiOperation(value = "find Attendant object",
     response = AttendantResponseDTO.class)

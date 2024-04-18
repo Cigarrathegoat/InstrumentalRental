@@ -44,6 +44,18 @@ public class AttendantAPI implements IAttendantAPI {
                 ).build();
     }
 
+    @PostMapping("/new_list")
+    public ResponseEntity<AttendantListResponseDTO> addList(@RequestBody ????) {
+       attendantService.saveFirstTime(????);
+       return ResponseEntity.ok(
+               AttendantListResponseDTO.builder()
+                       .addListSuccessMessage(
+                               "List successfully added"
+                       )
+                       .build()
+       );
+    }
+
     @GetMapping("/find/{attendant}")
     public AttendantResponseDTO find(@PathVariable("attendant") String attendantNumber)
             throws AttendantNotFoundException {
