@@ -18,7 +18,7 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.List;
 
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class ContactsAPITest {
     @Mock
@@ -100,5 +100,23 @@ public class ContactsAPITest {
         );
         Assertions.assertEquals("C01", thrown.getCode());
         Assertions.assertEquals("Contact not found", thrown.getMessage());
+    }
+
+    /*@Test
+    void deleteSuccess() throws InstrumentNotFoundException {
+        var instrument = InstrumentBuilder.instrumentBuilder();
+        doNothing().when(instrumentService).delete(instrument.getInstrumentId());
+        instrumentAPI.delete(instrument.getInstrumentId());
+        verify(instrumentService, times(1)).delete(instrument.getInstrumentId());
+    }
+
+     */
+    @Test
+    void testDeleteSuccess() throws ContactNotFoundException {
+        var contactDTOBuilder = ContactDTOBuilder.contactBuilder();
+        var contactBuilder = ContactBuilder.contactBuilder();
+        doNothing().when(contactService).delete(contactBuilder.getContactId());
+        contactsAPI.delete(contactBuilder.getContactId());
+        verify(contactService, times(1)).delete(contactBuilder.getContactId());
     }
 }
