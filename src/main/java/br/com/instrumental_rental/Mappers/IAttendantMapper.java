@@ -17,4 +17,6 @@ public interface IAttendantMapper {
     Attendant convertToEntity(AttendantDTO attendantDTO);
 
     List<AttendantDTO> convertToListDto(List<Attendant> attendantList);
+
+    List<Attendant> convertToEntityList(List<AttendantDTO> attendantDTOList);
 }

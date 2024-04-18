@@ -45,8 +45,10 @@ public class AttendantAPI implements IAttendantAPI {
     }
 
     @PostMapping("/new_list")
-    public ResponseEntity<AttendantListResponseDTO> addList(@RequestBody ????) {
-       attendantService.saveFirstTime(????);
+    public ResponseEntity<AttendantListResponseDTO> addList(
+            @RequestBody List<AttendantDTO> attendantDTOList
+    ) {
+       attendantService.saveFirstTime(attendantMapper.convertToEntityList(attendantDTOList));
        return ResponseEntity.ok(
                AttendantListResponseDTO.builder()
                        .addListSuccessMessage(
