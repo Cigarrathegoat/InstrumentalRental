@@ -87,4 +87,18 @@ public class ContactsAPITest {
         ContactsResponseDTO result = contactsAPI.update(contactBuilder.getContactId(), contactDTOBuilder);
         Assertions.assertEquals(ContactsResponseDTO.builder().data(contactDTOBuilder).build(), result);
     }
+
+    @Test
+    void testUpdateContactNotFoundException() throws ContactNotFoundException {
+        var contactDTOBuilder = ContactDTOBuilder.contactBuilder();
+        when(contactService.findById(contactDTOBuilder.getContactsId())).thenThrow(
+                new ContactNotFoundException("C01", "Contact not found")
+        );
+        ContactNotFoundException thrown = Assertions.assertThrows(ContactNotFoundException.class,
+                () -> {contactsAPI.update(contactDTOBuilder.getContactsId(), contactDTOBuilder);
+        }
+        );
+        Assertions.assertEquals("C01", thrown.getCode());
+        Assertions.assertEquals("Contact not found", thrown.getMessage());
+    }
 }
