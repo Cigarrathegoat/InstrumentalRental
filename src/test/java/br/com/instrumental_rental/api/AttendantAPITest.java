@@ -2,11 +2,13 @@ package br.com.instrumental_rental.api;
 
 import br.com.instrumental_rental.Mappers.IAttendantMapper;
 import br.com.instrumental_rental.controller.api.AttendantAPI;
+import br.com.instrumental_rental.controller.dto.requests.AttendantDTO;
 import br.com.instrumental_rental.controller.dto.responses.responses.AttendantListResponseDTO;
 import br.com.instrumental_rental.controller.dto.responses.responses.AttendantResponseDTO;
 import br.com.instrumental_rental.exceptions.AttendantNotFoundException;
 import br.com.instrumental_rental.models.AttendantBuilder;
 import br.com.instrumental_rental.models.AttendantDTOBuilder;
+import br.com.instrumental_rental.repository.entities.Attendant;
 import br.com.instrumental_rental.service.interfaces.IAttendantService;
 import br.com.instrumental_rental.service.interfaces.ICustomerService;
 import org.junit.jupiter.api.Assertions;
@@ -16,6 +18,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -47,6 +50,26 @@ public class AttendantAPITest {
         when(attendantMapper.convertToDTO(attendantBuilder)).thenReturn(attendantDTOBuilder);
         AttendantResponseDTO result = attendantAPI.add(attendantDTONoIdBuilder);
         Assertions.assertEquals(AttendantResponseDTO.builder().data(attendantDTOBuilder).build(), result);
+    }
+
+    @Test
+    void testAddListSuccess() {
+        var attendantNoId = AttendantBuilder.attendantBuilderNoId();
+        var attendantNoIdDTO = AttendantDTOBuilder.attendantDTONoIdSuccessBuilder();
+        var attendantBuilder = AttendantBuilder.attendantBuilder();
+         /*List<AttendantDTO> attendantNoIdDTO =
+                Collections.singletonList(AttendantDTOBuilder.attendantDTONoIdSuccessBuilder());
+         List<Attendant> attendantNoId =
+                 Collections.singletonList(AttendantBuilder.attendantBuilderNoId());
+         List<Attendant> attendantBuilder =
+                 Collections.singletonList(AttendantBuilder.attendantBuilder());
+                 */
+        when(attendantMapper.convertToEntityList(List.of(attendantNoIdDTO)))
+                .thenReturn(List.of(attendantNoId));
+        when(attendantService.saveFirstTime(List.of(attendantNoId)))
+                .thenReturn(List.of(attendantBuilder));
+        verify(attendantService, times(1))
+                .saveFirstTime(List.of(attendantNoId));
     }
 
     @Test

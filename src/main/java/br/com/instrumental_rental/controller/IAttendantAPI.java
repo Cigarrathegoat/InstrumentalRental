@@ -15,6 +15,8 @@ import io.swagger.annotations.ApiResponses;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.List;
+
 public interface IAttendantAPI {
 
     @ApiOperation(value = "add Attendant object",
@@ -26,7 +28,8 @@ public interface IAttendantAPI {
     @ApiOperation(value = "Add list of Attendant objects",
     response = AttendantListResponseDTO.class)
     @ApiResponses(value = {@ApiResponse(code = 200, message = "success")})
-    public ResponseEntity<AttendantListResponseDTO> addList(@RequestBody ????);
+    public ResponseEntity<AttendantListResponseDTO>
+    addList(@RequestBody List<AttendantDTO> attendantDTOList);
 
     @ApiOperation(value = "find Attendant object",
     response = AttendantResponseDTO.class)

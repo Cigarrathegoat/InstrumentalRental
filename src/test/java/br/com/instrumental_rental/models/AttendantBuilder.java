@@ -25,6 +25,7 @@ public class AttendantBuilder {
                 .dateOfBirth(LocalDate.of(1998, 12, 25))
                 .driversLicenseNumber("1234567")
                 .socialSecurityNumber("123456789")
-                .totalCommission(BigDecimal.valueOf(0)).build();
+                .totalCommission(BigDecimal.valueOf(0))
+                .build();
     }
 }
