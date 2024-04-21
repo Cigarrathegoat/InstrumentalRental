@@ -13,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.List;
+
 public interface IContactAPI {
 
     @ApiOperation(value = "add Contacts object",
@@ -20,6 +22,20 @@ public interface IContactAPI {
     @ApiResponses(value = {@ApiResponse(code = 200, message = "success"),
     @ApiResponse(code = 404, response = ErrorSpecificationDTO.class, message = "not found")})
     ContactsResponseDTO add(ContactsDTO contactsDTO);
+
+    /*
+    @ApiOperation(value = "Add list of Attendant objects",
+            response = AttendantListResponseDTO.class)
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "success")})
+    public ResponseEntity<AttendantListResponseDTO>
+    addList(@RequestBody List<AttendantDTO> attendantDTOList);
+     */
+
+    @ApiOperation(value = "add a list of Contact objects",
+    response = ContactsListResponseDTO.class)
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "success")})
+    public ResponseEntity<ContactsListResponseDTO>
+    addList(@RequestBody List<ContactsDTO> contactsDTOList);
 
     @ApiOperation(value = "find API object",
     response = ContactsListResponseDTO.class)

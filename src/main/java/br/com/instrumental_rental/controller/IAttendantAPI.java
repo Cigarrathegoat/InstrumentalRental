@@ -20,39 +20,39 @@ import java.util.List;
 public interface IAttendantAPI {
 
     @ApiOperation(value = "add Attendant object",
-    response = AttendantDTO.class)
+            response = AttendantDTO.class)
     @ApiResponses(value = {@ApiResponse(code = 200, message = "success"),
-    @ApiResponse(code = 404, response = ErrorSpecificationDTO.class, message = "not found")})
+            @ApiResponse(code = 404, response = ErrorSpecificationDTO.class, message = "not found")})
     AttendantResponseDTO add(AttendantDTO attendantDTO);
 
     @ApiOperation(value = "Add list of Attendant objects",
-    response = AttendantListResponseDTO.class)
+            response = AttendantListResponseDTO.class)
     @ApiResponses(value = {@ApiResponse(code = 200, message = "success")})
     public ResponseEntity<AttendantListResponseDTO>
     addList(@RequestBody List<AttendantDTO> attendantDTOList);
 
     @ApiOperation(value = "find Attendant object",
-    response = AttendantResponseDTO.class)
+            response = AttendantResponseDTO.class)
     @ApiResponses(value = {@ApiResponse(code = 200, message = "success"),
-    @ApiResponse(code = 404, response = ErrorSpecificationDTO.class, message = "not found")})
+            @ApiResponse(code = 404, response = ErrorSpecificationDTO.class, message = "not found")})
     public AttendantResponseDTO find(String attendantNumber)
-        throws AttendantNotFoundException;
+            throws AttendantNotFoundException;
 
     @ApiOperation(value = "list all Attendant objects",
-    response = AttendantListResponseDTO.class)
+            response = AttendantListResponseDTO.class)
     @ApiResponses(value = {@ApiResponse(code = 200, message = "success")})
     public AttendantListResponseDTO listAll();
 
     @ApiOperation(value = "update Attendant object",
-    response = AttendantListResponseDTO.class)
+            response = AttendantListResponseDTO.class)
     @ApiResponses(value = {@ApiResponse(code = 200, message = "success")})
     public AttendantResponseDTO update(Long attendantId, AttendantDTO attendantDTO)
-        throws AttendantNotFoundException;
+            throws AttendantNotFoundException;
 
     @ApiOperation(value = "delete Attendant object",
             response = DeleteResponseDTO.class)
     @ApiResponses(value = {@ApiResponse(code = 200, message = "success"),
-    @ApiResponse(code = 404, response = ErrorSpecificationDTO.class, message = "not found")})
+            @ApiResponse(code = 404, response = ErrorSpecificationDTO.class, message = "not found")})
     public ResponseEntity<DeleteResponseDTO> delete(Long attendantId)
-        throws AttendantNotFoundException;
+            throws AttendantNotFoundException;
 }
