@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("V1/contacts")
 public class ContactsAPI implements IContactAPI{
@@ -39,7 +41,35 @@ public class ContactsAPI implements IContactAPI{
                 ).build();
     }
 
+/* @PostMapping("/new_list")
+    public ResponseEntity<AttendantListResponseDTO> addList(
+            @RequestBody List<AttendantDTO> attendantDTOList
+    ) {
+       attendantService.saveFirstTime(attendantMapper.convertToEntityList(attendantDTOList));
+       return ResponseEntity.ok(
+               AttendantListResponseDTO.builder()
+                       .addListSuccessMessage(
+                               "List successfully added"
+                       )
+                       .build()
+       );
+    }
 
+ */
+
+    @PostMapping("/new_list")
+    public ResponseEntity<ContactsListResponseDTO> addList(
+            @RequestBody List<ContactsDTO> contactsDTOList
+            ) {
+        contactService.saveFirstTime(contactsMapper.convertToEntityList(contactsDTOList));
+        return ResponseEntity.ok(
+                ContactsListResponseDTO.builder()
+                        .addListSuccessMessage(
+                                "List successfully added"
+                        )
+                        .build()
+        );
+    }
 
     @GetMapping("/find/{holder}")
     public ContactsListResponseDTO find(@PathVariable("holder")String holder) throws ContactNotFoundException {
