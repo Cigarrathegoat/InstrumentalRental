@@ -15,6 +15,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -48,6 +50,44 @@ public class ContactsAPITest {
         when(contactMapper.convertToDTO(contactBuilder)).thenReturn(contactDTOBuilder);
         ContactsResponseDTO result = contactsAPI.add(contactDTONoIdBuilder);
         Assertions.assertEquals(ContactsResponseDTO.builder().data(contactDTOBuilder).build(), result);
+    }
+
+    /*
+    @Test
+    void testAddListSuccess() {
+        var attendantNoId = AttendantBuilder.attendantBuilderNoId();
+        var attendantNoIdDTO = AttendantDTOBuilder.attendantDTONoIdSuccessBuilder();
+        var attendantBuilder = AttendantBuilder.attendantBuilder();
+        var resultExpected = AttendantListResponseDTO.builder().addListSuccessMessage(
+                "List successfully added").build();
+
+        when(attendantMapper.convertToEntityList(List.of(attendantNoIdDTO)))
+                .thenReturn(List.of(attendantNoId));
+        when(attendantService.saveFirstTime(List.of(attendantNoId)))
+                .thenReturn(List.of(attendantBuilder));
+        ResponseEntity<AttendantListResponseDTO> result = attendantAPI.addList(List.of(attendantNoIdDTO));
+        verify(attendantService, times(1))
+                .saveFirstTime(List.of(attendantNoId));
+        Assertions.assertEquals(resultExpected, result.getBody());
+        Assertions.assertEquals(HttpStatus.OK, result.getStatusCode());
+    }
+     */
+
+    @Test
+    void testAddListSuccess() {
+        var contactNoId = ContactBuilder.contactNoIdBuilder();
+        var contactNoIdDTO = ContactDTOBuilder.contactNoIdBuilder();
+        var contactBuilder = ContactBuilder.contactBuilder();
+        var resultExpected = ContactsListResponseDTO.builder().addListSuccessMessage(
+                "List successfully added").build();
+
+        when(contactMapper.convertToEntityList(List.of(contactNoIdDTO)))
+                .thenReturn(List.of(contactNoId));
+        when(contactService.saveFirstTime(List.of(contactNoId))).thenReturn(List.of(contactBuilder));
+        ResponseEntity<ContactsListResponseDTO> result = contactsAPI.addList(List.of(contactNoIdDTO));
+        verify(contactService, times(1)).saveFirstTime(List.of(contactNoId));
+        Assertions.assertEquals(resultExpected, result.getBody());
+        Assertions.assertEquals(HttpStatus.OK, result.getStatusCode());
     }
 
     @Test
@@ -102,15 +142,6 @@ public class ContactsAPITest {
         Assertions.assertEquals("Contact not found", thrown.getMessage());
     }
 
-    /*@Test
-    void deleteSuccess() throws InstrumentNotFoundException {
-        var instrument = InstrumentBuilder.instrumentBuilder();
-        doNothing().when(instrumentService).delete(instrument.getInstrumentId());
-        instrumentAPI.delete(instrument.getInstrumentId());
-        verify(instrumentService, times(1)).delete(instrument.getInstrumentId());
-    }
-
-     */
     @Test
     void testDeleteSuccess() throws ContactNotFoundException {
         var contactDTOBuilder = ContactDTOBuilder.contactBuilder();

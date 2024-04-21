@@ -23,14 +23,6 @@ public interface IContactAPI {
     @ApiResponse(code = 404, response = ErrorSpecificationDTO.class, message = "not found")})
     ContactsResponseDTO add(ContactsDTO contactsDTO);
 
-    /*
-    @ApiOperation(value = "Add list of Attendant objects",
-            response = AttendantListResponseDTO.class)
-    @ApiResponses(value = {@ApiResponse(code = 200, message = "success")})
-    public ResponseEntity<AttendantListResponseDTO>
-    addList(@RequestBody List<AttendantDTO> attendantDTOList);
-     */
-
     @ApiOperation(value = "add a list of Contact objects",
     response = ContactsListResponseDTO.class)
     @ApiResponses(value = {@ApiResponse(code = 200, message = "success")})
@@ -50,10 +42,7 @@ public interface IContactAPI {
     ContactsResponseDTO update(Long contactsId, ContactsDTO contactsDTO)
             throws ContactNotFoundException;
 
-    /*
-    public ContactsResponseDTO update(@PathVariable("contactsId") Long contactsId,
-                                      @RequestBody ContactsDTO contactsDTO) throws ContactNotFoundException
-     */
+
     @ApiOperation(value = "delete Contacts object",
     response = DeleteResponseDTO.class)
     @ApiResponses(value = {@ApiResponse(code = 200, message = "success"),
