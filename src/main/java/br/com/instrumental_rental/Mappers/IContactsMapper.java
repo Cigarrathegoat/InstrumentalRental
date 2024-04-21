@@ -18,7 +18,6 @@ public interface IContactsMapper {
 
     List<ContactsDTO> convertToDTOList(List<Contact> contactList);
 
-    List<Contact> convertToEntityList(List<ContactsDTO> contactDTOList);
-
+    List<Contact> convertToEntityList(List<ContactsDTO> contactsDTOList);
 
 }

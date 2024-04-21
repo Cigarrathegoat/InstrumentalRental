@@ -11,4 +11,6 @@ import java.util.List;
 public class ContactsListResponseDTO {
 
     public List<ContactsDTO> data;
+
+    public String addListSuccessMessage;
 }
