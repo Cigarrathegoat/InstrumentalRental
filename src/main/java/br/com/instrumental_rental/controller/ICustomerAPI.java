@@ -15,6 +15,7 @@ import io.swagger.annotations.ApiResponses;
 import org.springframework.http.ResponseEntity;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public interface ICustomerAPI {
 
@@ -23,6 +24,10 @@ public interface ICustomerAPI {
     @ApiResponses(value = {@ApiResponse(code = 200, message = "success"),
     @ApiResponse(code =404, response = ErrorSpecificationDTO.class, message = "not found")})
     CustomerResponseDTO add(CustomerDTO customerDTO);
+
+    @ApiOperation(value = "add list of Customer objects", response = CustomerListResponseDTO.class)
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "success")})
+    ResponseEntity<CustomerListResponseDTO> addList(List<CustomerDTO> customerDTOList);
 
     @ApiOperation(value = "find Customer object",
     response = CustomerResponseDTO.class)

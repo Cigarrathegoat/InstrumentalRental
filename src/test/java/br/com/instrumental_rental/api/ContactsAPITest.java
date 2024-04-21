@@ -2,7 +2,6 @@ package br.com.instrumental_rental.api;
 
 import br.com.instrumental_rental.Mappers.IContactsMapper;
 import br.com.instrumental_rental.controller.api.ContactsAPI;
-import br.com.instrumental_rental.controller.dto.requests.ContactsDTO;
 import br.com.instrumental_rental.controller.dto.responses.responses.ContactsListResponseDTO;
 import br.com.instrumental_rental.controller.dto.responses.responses.ContactsResponseDTO;
 import br.com.instrumental_rental.exceptions.ContactNotFoundException;
@@ -144,7 +143,6 @@ public class ContactsAPITest {
 
     @Test
     void testDeleteSuccess() throws ContactNotFoundException {
-        var contactDTOBuilder = ContactDTOBuilder.contactBuilder();
         var contactBuilder = ContactBuilder.contactBuilder();
         doNothing().when(contactService).delete(contactBuilder.getContactId());
         contactsAPI.delete(contactBuilder.getContactId());

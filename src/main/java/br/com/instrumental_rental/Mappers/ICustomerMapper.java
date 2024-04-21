@@ -21,4 +21,6 @@ public interface ICustomerMapper {
     Customer convertToEntity(CustomerDTO customerDTO);
 
     List<CustomerDTO> convertoToListDto(List<Customer>customerList);
+
+    List<Customer> convertToEntityList(List<CustomerDTO>customerDTOList);
 }
