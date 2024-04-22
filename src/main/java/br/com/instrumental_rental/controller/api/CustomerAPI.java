@@ -50,6 +50,17 @@ public class CustomerAPI implements ICustomerAPI {
                 ).build();
     }
 
+    @Override
+    public ResponseEntity<CustomerListResponseDTO> addList(List<CustomerDTO> customerDTOList) {
+        customerServiceAttribute.saveFirstTime(
+                customerMapperAttribute.convertToEntityList(
+                        customerDTOList)
+        );
+
+        return ResponseEntity.ok(CustomerListResponseDTO.builder()
+                .addListSuccessMessage("List added successfully").build());
+    }
+
     //TODO ask Segundo what exactly happens in this method
     @GetMapping("/find/{numberProvided}")
     public CustomerResponseDTO find(@PathVariable("numberProvided") String numberProvided)
