@@ -16,6 +16,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -51,6 +53,29 @@ public class CustomerAPITest {
         CustomerResponseDTO result = customerAPI.add(customerDTONoId);
         Assertions.assertEquals(CustomerResponseDTO.builder()
                 .data(customerDTO).build(), result);
+    }
+
+    @Test
+    void saveListSuccess() {
+        var customerNoIdBuilder = CustomerBuilder.customerNoIdBuilder();
+        var customerDTONoIdBuilder = CustomerDTOBuilder.customerDTONoIdBuilder();
+        var customerBuilder = CustomerBuilder.customerBuilder();
+        var successMessage = CustomerListResponseDTO.builder()
+                .addListSuccessMessage("List added successfully").build();
+
+        when(customerMapper.convertToEntityList(List.of(customerDTONoIdBuilder)))
+                .thenReturn(List.of(customerNoIdBuilder));
+        when(customerService.saveFirstTime(List.of(customerNoIdBuilder)))
+                .thenReturn(List.of(customerBuilder));
+        ResponseEntity<CustomerListResponseDTO> result =
+                customerAPI.addList(List.of(customerDTONoIdBuilder));
+        verify(customerMapper, times(1))
+                .convertToEntityList(List.of(customerDTONoIdBuilder));
+        verify(customerService, times(1))
+                .saveFirstTime(List.of(customerNoIdBuilder));
+        Assertions.assertEquals(successMessage, result.getBody());
+        Assertions.assertEquals(HttpStatus.OK, result.getStatusCode());
+
     }
 
     @Test
