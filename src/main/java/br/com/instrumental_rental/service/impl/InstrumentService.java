@@ -50,8 +50,8 @@ public class InstrumentService implements IInstrumentService {
     }
 
     @Override
-    public Instrument findById(Instrument instrument) throws InstrumentNotFoundException {
-        return instrumentRepository.findById(instrument.getInstrumentId())
+    public Instrument findById(Long instrumentId) throws InstrumentNotFoundException {
+        return instrumentRepository.findById(instrumentId)
                 .orElseThrow(() -> new InstrumentNotFoundException(
                         "I01", "Instrument not found"
                 ));
@@ -59,7 +59,7 @@ public class InstrumentService implements IInstrumentService {
 
     @Override
     public Instrument update(Instrument instrument) throws InstrumentNotFoundException {
-        var instrumentToUpdate = findById(instrument);
+        var instrumentToUpdate = findById(instrument.getInstrumentId());
         instrumentToUpdate.setType(instrument.getType());
         instrumentToUpdate.setMake(instrument.getMake());
         instrumentToUpdate.setModel(instrument.getModel());

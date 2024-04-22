@@ -126,9 +126,9 @@ public class RentalService implements IRentalService {
             AttendantNotFoundException, WithdrawalGreaterThanBalanceException,
             EndDateNotAfterStartDateException {
 
-            customerServiceAttribute.findCustomerByNumberProvided(rental.getCustomer()
-                    .getSocialSecurityNumber());
-            instrumentServiceAttribute.findInstrumentByMakeOrModel(rental.getInstrument().getModel());
+            customerServiceAttribute.findCustomerById(rental.getCustomer()
+                    .getPersonId());
+            instrumentServiceAttribute.findById(rental.getInstrument().getInstrumentId());
             attendantServiceAttribute.findAttendantByNumberProvided(rental.getAttendant()
                     .getDriversLicenseNumber());
             nonRentalAttributesUpdater(rental.getInstrument(), rental.getCustomer(),

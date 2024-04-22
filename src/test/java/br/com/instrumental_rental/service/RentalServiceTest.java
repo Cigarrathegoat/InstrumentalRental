@@ -18,6 +18,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.util.Assert;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -57,31 +58,16 @@ public class RentalServiceTest {
     void testSaveSuccess() throws CustomerNotFoundException, InstrumentNotFoundException,
             AttendantNotFoundException, WithdrawalGreaterThanBalanceException,
             EndDateNotAfterStartDateException {
-        var customer = CustomerBuilder.customerBuilder();
-        var instrument = InstrumentBuilder.instrumentBuilder();
-        var attendant = AttendantBuilder.attendantBuilder();
-        var rentalBuilderBeforeSave = RentalBuilder.rentalBuilderBeforeSave(customer, instrument, attendant);
-        var rentalBuilderAfterSave = RentalBuilder.rentalBuilder(customer, instrument, attendant);
+       var customer = CustomerBuilder.customerBuilder();
+       var instrument = InstrumentBuilder.instrumentBuilder();
+       var attendant = AttendantBuilder.attendantBuilder();
+       var rentalBuilderBeforeSave = RentalBuilder.rentalBuilderBeforeSave(customer, instrument, attendant);
+       var rentalBuilderAfterSave = RentalBuilder.rentalBuilder(customer, instrument, attendant);
 
-        when(rentalRepository.save(rentalBuilderBeforeSave)).thenReturn(rentalBuilderAfterSave);
-        Rental result = rentalService.save(rentalBuilderBeforeSave);
-        Assertions.assertEquals(rentalBuilderAfterSave, result);
-    }
-
-    @Test
-    void testSaveFirstTimeSuccess() throws CustomerNotFoundException, InstrumentNotFoundException,
-            AttendantNotFoundException, WithdrawalGreaterThanBalanceException,
-            EndDateNotAfterStartDateException {
-        var customer = CustomerBuilder.customerBuilder();
-        var instrument = InstrumentBuilder.instrumentBuilder();
-        var attendant = AttendantBuilder.attendantBuilder();
-        var rentalBuilderBeforeSave = RentalBuilder.rentalBuilderBeforeSave(customer, instrument, attendant);
-        var rentalBuilderAfterSave = RentalBuilder.rentalBuilder(customer, instrument, attendant);
-
-        when(rentalRepository.save(rentalBuilderBeforeSave)).thenReturn(rentalBuilderAfterSave);
-        List<Rental> result = rentalService.saveFirstTime(List.of(rentalBuilderBeforeSave));
-        Assertions.assertEquals(List.of(rentalBuilderAfterSave), result);
-    }
+       when(rentalRepository.save(rentalBuilderBeforeSave)).thenReturn(rentalBuilderAfterSave);
+       Rental result = rentalService.save(rentalBuilderBeforeSave);
+       Assertions.assertEquals(rentalBuilderAfterSave, result);
+   }
 
     @Test
     void testSaveCustomerNotFoundException() throws CustomerNotFoundException {
@@ -165,6 +151,38 @@ public class RentalServiceTest {
         Assertions.assertEquals("E01", thrown.getCode());
         Assertions.assertEquals("the end date must be at least one day after the start date",
                 thrown.getMessage());
+    }
+
+    @Test
+    void testSaveFirstTimeSuccess() throws CustomerNotFoundException, InstrumentNotFoundException,
+            AttendantNotFoundException, WithdrawalGreaterThanBalanceException,
+            EndDateNotAfterStartDateException {
+        var customer = CustomerBuilder.customerBuilder();
+        var instrument = InstrumentBuilder.instrumentBuilder();
+        var attendant = AttendantBuilder.attendantBuilder();
+        var rentalBuilderBeforeSave = RentalBuilder.rentalBuilderBeforeSave(customer, instrument, attendant);
+        var rentalBuilderAfterSave = RentalBuilder.rentalBuilder(customer, instrument, attendant);
+
+        when(rentalRepository.save(rentalBuilderBeforeSave)).thenReturn(rentalBuilderAfterSave);
+        List<Rental> result = rentalService.saveFirstTime(List.of(rentalBuilderBeforeSave));
+        verify(rentalRepository, times(1)).save(rentalBuilderBeforeSave);
+        Assertions.assertEquals(List.of(rentalBuilderAfterSave), result);
+    }
+
+    @Test
+    void testSaveFirstTimeCustomerNotFoundException() throws CustomerNotFoundException, InstrumentNotFoundException,
+            AttendantNotFoundException, WithdrawalGreaterThanBalanceException,
+            EndDateNotAfterStartDateException {
+        var customer = CustomerBuilder.customerBuilder();
+        var instrument = InstrumentBuilder.instrumentBuilder();
+        var attendant = AttendantBuilder.attendantBuilder();
+        var rentalBuilderBeforeSave = RentalBuilder.rentalBuilderBeforeSave(customer, instrument, attendant);
+        when(customerService.findCustomerById(rentalBuilderBeforeSave.getCustomer().getPersonId()))
+                .thenThrow(new CustomerNotFoundException("C01", "Customer not found"));
+        CustomerNotFoundException thrown = Assertions.assertThrows(CustomerNotFoundException.class, () ->
+        {rentalService.save(rentalBuilderBeforeSave);});
+        Assertions.assertEquals("C01", thrown.getCode());
+        Assertions.assertEquals("Customer not found", thrown.getMessage());
     }
 
     /*TODO ask him why the assertions commented didn't work*/

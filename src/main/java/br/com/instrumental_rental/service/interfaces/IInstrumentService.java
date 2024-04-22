@@ -13,7 +13,7 @@ public interface IInstrumentService {
 
     public List<Instrument> listAll();
 
-    Instrument findById(Instrument instrument) throws InstrumentNotFoundException;
+    Instrument findById(Long instrumentId) throws InstrumentNotFoundException;
 
     public Instrument update(Instrument instrument) throws InstrumentNotFoundException;
 
