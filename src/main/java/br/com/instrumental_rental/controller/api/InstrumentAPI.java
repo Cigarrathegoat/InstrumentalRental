@@ -43,7 +43,7 @@ public class InstrumentAPI implements IInstrumentAPI {
         instrumentService.saveFirstTime(instrumentMapper.convertToEntityList(instrumentDTOList));
 
         return ResponseEntity.ok(InstrumentListResponseDTO.builder()
-                .listAddedSuccessfully("Instrument added successfully").build());
+                .listAddedSuccessfully("List added successfully").build());
     }
     @GetMapping("/find/{instrumentName}")
     public InstrumentListResponseDTO find(@PathVariable("instrumentName") String instrumentName)

@@ -68,7 +68,7 @@ public class InstrumentAPITest {
         when(instrumentService.saveFirstTime(List.of(instrumentNoId)))
                 .thenReturn(List.of(instrument));
         ResponseEntity<InstrumentListResponseDTO> result =
-                instrumentAPI.saveList(List.of(instrumentDTONoId));
+                instrumentAPI.addList(List.of(instrumentDTONoId));
         verify(instrumentMapper, times(1))
                 .convertToEntityList(List.of(instrumentDTONoId));
         verify(instrumentService, times(1))
