@@ -11,4 +11,6 @@ import java.util.List;
 public class RentalListResponseDTO {
 
     public List<RentalDTO> data;
+
+    public String addListMessage;
 }
