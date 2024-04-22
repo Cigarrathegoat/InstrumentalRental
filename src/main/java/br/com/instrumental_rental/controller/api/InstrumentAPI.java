@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RequestMapping("V1/instrument")
 @RestController
 public class InstrumentAPI implements IInstrumentAPI {
@@ -27,7 +29,7 @@ public class InstrumentAPI implements IInstrumentAPI {
     }
 
     @PostMapping("/add")
-    public InstrumentResponseDTO add(InstrumentDTO instrumentDTO) {
+    public InstrumentResponseDTO add(@RequestBody InstrumentDTO instrumentDTO) {
         return InstrumentResponseDTO.builder()
                 .data(
                         instrumentMapper.convertToDTO(instrumentService.save(
@@ -35,6 +37,14 @@ public class InstrumentAPI implements IInstrumentAPI {
                 ).build();
     }
 
+    @PostMapping("/add_list")
+    public ResponseEntity<InstrumentListResponseDTO> addList(
+            @RequestBody List<InstrumentDTO> instrumentDTOList) {
+        instrumentService.saveFirstTime(instrumentMapper.convertToEntityList(instrumentDTOList));
+
+        return ResponseEntity.ok(InstrumentListResponseDTO.builder()
+                .listAddedSuccessfully("Instrument added successfully").build());
+    }
     @GetMapping("/find/{instrumentName}")
     public InstrumentListResponseDTO find(@PathVariable("instrumentName") String instrumentName)
             throws InstrumentNotFoundException {

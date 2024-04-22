@@ -38,7 +38,7 @@ public class CustomerAPI implements ICustomerAPI {
     }
 
     @PostMapping("/add")
-    public CustomerResponseDTO add(CustomerDTO customerDTO) {
+    public CustomerResponseDTO add(@RequestBody CustomerDTO customerDTO) {
 
         return CustomerResponseDTO.builder()
                 .data(
@@ -50,8 +50,9 @@ public class CustomerAPI implements ICustomerAPI {
                 ).build();
     }
 
-    @Override
-    public ResponseEntity<CustomerListResponseDTO> addList(List<CustomerDTO> customerDTOList) {
+    @PostMapping("/addList")
+    public ResponseEntity<CustomerListResponseDTO> addList(
+            @RequestBody List<CustomerDTO> customerDTOList) {
         customerServiceAttribute.saveFirstTime(
                 customerMapperAttribute.convertToEntityList(
                         customerDTOList)
