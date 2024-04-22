@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("V1/rental")
 public class RentalAPI implements IRentalAPI {
@@ -36,6 +38,16 @@ public class RentalAPI implements IRentalAPI {
                         )
                 )
         ).build();
+    }
+
+    @PostMapping("/add_list")
+    public ResponseEntity<RentalListResponseDTO> addList(@RequestBody List<RentalDTO> rentalListDTO)
+            throws CustomerNotFoundException, InstrumentNotFoundException,
+            AttendantNotFoundException, WithdrawalGreaterThanBalanceException,
+            EndDateNotAfterStartDateException{
+        rentalService.saveFirstTime(rentalMapper.convertToEntityList(rentalListDTO));
+        return ResponseEntity.ok(RentalListResponseDTO.builder()
+                .addListMessage("List successfully added").build());
     }
 
     @GetMapping("/find/{keyword}")
