@@ -2,6 +2,7 @@ package br.com.instrumental_rental.Mappers;
 
 import br.com.instrumental_rental.controller.dto.requests.InstrumentDTO;
 import br.com.instrumental_rental.repository.entities.Instrument;
+import org.aspectj.weaver.patterns.HasThisTypePatternTriedToSneakInSomeGenericOrParameterizedTypePatternMatchingStuffAnywhereVisitor;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
@@ -16,5 +17,7 @@ public interface IInstrumentMapper {
 
     Instrument convertToEntity(InstrumentDTO instrumentDTO);
 
-    List<InstrumentDTO> convertToListDTO(List<Instrument> instrumentList);
+    List<InstrumentDTO> convertToListDTO(List<Instrument> instrument);
+
+    List<Instrument> convertToEntityList(List<InstrumentDTO> instrumentDTOList);
 }

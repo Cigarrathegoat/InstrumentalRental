@@ -54,6 +54,15 @@ public class InstrumentAPITest {
     }
 
     @Test
+    void testAddListSuccess() {
+        var instrumentDTONoId = InstrumentDTOBuilder.instrumentDTONoIdBuilder();
+        var instrumentNoId = InstrumentBuilder.instrumentNoIdBuilder();
+        var instrument = InstrumentBuilder.instrumentBuilder();
+
+        when(instrumentMapper.)
+    }
+
+    @Test
     void testFindSuccess() throws InstrumentNotFoundException {
         var instrument = InstrumentBuilder.instrumentBuilder();
         var instrumentDTO = InstrumentDTOBuilder.instrumentDTOBuilder();
