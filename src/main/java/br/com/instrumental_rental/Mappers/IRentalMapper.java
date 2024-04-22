@@ -17,4 +17,6 @@ public interface IRentalMapper {
 
     List<RentalDTO> convertToListDto(List<Rental> rentalList);
 
+    List<Rental> convertToEntityList(List<RentalDTO> rentalDTOList);
+
 }
