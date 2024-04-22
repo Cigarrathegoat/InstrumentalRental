@@ -20,4 +20,20 @@ public interface IInstrumentMapper {
     List<InstrumentDTO> convertToListDTO(List<Instrument> instrument);
 
     List<Instrument> convertToEntityList(List<InstrumentDTO> instrumentDTOList);
+
+    /*
+    @Override
+    public List<Instrument> convertToEntityList(List<InstrumentDTO> instrumentDTOList) {
+        if (instrumentDTOList == null) {
+            return null;
+        }
+
+        List<Instrument> list = new ArrayList<>( instrumentDTOList.size());
+
+        for (InstrumentDTO instrumentDTO : instrumentDTOList) {
+            list.add( convertToEntity( instrumentDTO ));
+        }
+        return list;
+    }
+     */
 }

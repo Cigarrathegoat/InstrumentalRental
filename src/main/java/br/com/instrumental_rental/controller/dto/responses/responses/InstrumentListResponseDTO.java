@@ -11,4 +11,6 @@ import java.util.List;
 public class InstrumentListResponseDTO {
 
     public List<InstrumentDTO> data;
+
+    public String listAddedSuccessfully;
 }

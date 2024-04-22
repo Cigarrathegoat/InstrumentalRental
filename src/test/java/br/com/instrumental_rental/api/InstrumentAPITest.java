@@ -15,6 +15,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -58,8 +60,22 @@ public class InstrumentAPITest {
         var instrumentDTONoId = InstrumentDTOBuilder.instrumentDTONoIdBuilder();
         var instrumentNoId = InstrumentBuilder.instrumentNoIdBuilder();
         var instrument = InstrumentBuilder.instrumentBuilder();
+        var response = InstrumentListResponseDTO.builder()
+                .listAddedSuccessfully("List added successfully").build();
 
-        when(instrumentMapper.)
+        when(instrumentMapper.convertToEntityList(List.of(instrumentDTONoId)))
+                .thenReturn(List.of(instrumentNoId));
+        when(instrumentService.saveFirstTime(List.of(instrumentNoId)))
+                .thenReturn(List.of(instrument));
+        ResponseEntity<InstrumentListResponseDTO> result =
+                instrumentAPI.saveList(List.of(instrumentDTONoId));
+        verify(instrumentMapper, times(1))
+                .convertToEntityList(List.of(instrumentDTONoId));
+        verify(instrumentService, times(1))
+                .saveFirstTime(List.of(instrumentNoId));
+        Assertions.assertEquals(response, result.getBody());
+        Assertions.assertEquals(HttpStatus.OK, result.getStatusCode());
+
     }
 
     @Test
