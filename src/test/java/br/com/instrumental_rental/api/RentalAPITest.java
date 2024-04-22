@@ -6,6 +6,7 @@ import br.com.instrumental_rental.controller.dto.responses.responses.RentalListR
 import br.com.instrumental_rental.controller.dto.responses.responses.RentalResponseDTO;
 import br.com.instrumental_rental.exceptions.*;
 import br.com.instrumental_rental.models.*;
+import br.com.instrumental_rental.repository.entities.Attendant;
 import br.com.instrumental_rental.service.interfaces.IAttendantService;
 import br.com.instrumental_rental.service.interfaces.ICustomerService;
 import br.com.instrumental_rental.service.interfaces.IInstrumentService;
@@ -16,6 +17,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -64,6 +67,27 @@ public class RentalAPITest {
         when(rentalMapper.convertToDTO(rental)).thenReturn(rentalDTO);
         RentalResponseDTO result = rentalAPI.add(rentalDTONoId);
         Assertions.assertEquals(RentalResponseDTO.builder().data(rentalDTO).build(), result);
+    }
+
+    @Test
+    void saveListSuccess() throws CustomerNotFoundException, AttendantNotFoundException, InstrumentNotFoundException,
+            EndDateNotAfterStartDateException, WithdrawalGreaterThanBalanceException {
+        var customer = CustomerBuilder.customerBuilder();
+        var attendant = AttendantBuilder.attendantBuilder();
+        var instrument = InstrumentBuilder.instrumentBuilder();
+        var rentalNoIdList = List.of(RentalBuilder.rentalBuilderBeforeSave(customer, instrument, attendant));
+        var rentalDTONoIdList = List.of(RentalDTOBuilder.rentalDTOBuilderBeforeSave(
+                customer.getPersonId(), instrument.getInstrumentId(), attendant.getPersonId()));
+        var rentalList = List.of(RentalBuilder.rentalBuilder(customer, instrument, attendant));
+        var response = RentalListResponseDTO.builder().addListMessage("List successfully added").build();
+        when(rentalMapper.convertToEntityList(rentalDTONoIdList)).thenReturn(rentalNoIdList);
+        when(rentalService.saveFirstTime(rentalNoIdList)).thenReturn(rentalList);
+        ResponseEntity<RentalListResponseDTO>result = rentalAPI.saveList(rentalDTONoIdList);
+        verify(rentalMapper,times(1)).convertToEntityList(rentalDTONoIdList);
+        verify(rentalService, times(1)).saveFirstTime(rentalNoIdList);
+        Assertions.assertEquals(response, result.getBody());
+        Assertions.assertEquals(HttpStatus.OK, result.getStatusCode());
+
     }
 
     @Test
