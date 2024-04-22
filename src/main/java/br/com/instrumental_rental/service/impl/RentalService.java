@@ -129,8 +129,7 @@ public class RentalService implements IRentalService {
             customerServiceAttribute.findCustomerById(rental.getCustomer()
                     .getPersonId());
             instrumentServiceAttribute.findById(rental.getInstrument().getInstrumentId());
-            attendantServiceAttribute.findAttendantByNumberProvided(rental.getAttendant()
-                    .getDriversLicenseNumber());
+            attendantServiceAttribute.findAttendantById(rental.getAttendant().getPersonId());
             nonRentalAttributesUpdater(rental.getInstrument(), rental.getCustomer(),
                     rental.getAttendant(), rental);
             rentalDatesChecker(rental);
