@@ -82,7 +82,7 @@ public class RentalAPITest {
         var response = RentalListResponseDTO.builder().addListMessage("List successfully added").build();
         when(rentalMapper.convertToEntityList(rentalDTONoIdList)).thenReturn(rentalNoIdList);
         when(rentalService.saveFirstTime(rentalNoIdList)).thenReturn(rentalList);
-        ResponseEntity<RentalListResponseDTO>result = rentalAPI.saveList(rentalDTONoIdList);
+        ResponseEntity<RentalListResponseDTO>result = rentalAPI.addList(rentalDTONoIdList);
         verify(rentalMapper,times(1)).convertToEntityList(rentalDTONoIdList);
         verify(rentalService, times(1)).saveFirstTime(rentalNoIdList);
         Assertions.assertEquals(response, result.getBody());
