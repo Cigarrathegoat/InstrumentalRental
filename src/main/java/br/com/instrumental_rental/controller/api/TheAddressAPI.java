@@ -11,6 +11,8 @@ import br.com.instrumental_rental.service.interfaces.ITheAddressService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("V1/TheAddress")
 public class TheAddressAPI implements ITheAddressAPI {
@@ -34,6 +36,13 @@ public class TheAddressAPI implements ITheAddressAPI {
                                 )
                         )
                 ).build();
+    }
+
+    @PostMapping("/addList")
+    public ResponseEntity<TheAddressListResponseDTO> addList(@RequestBody List<TheAddressDTO> theAddressDTO) {
+        theAddressService.saveFirstTime(theAddressMapper.convertToEntityList(theAddressDTO));
+        return ResponseEntity.ok(TheAddressListResponseDTO.builder().addressListAdded("List added successfully")
+                .build());
     }
 
     @GetMapping("/find/{address_id}")
