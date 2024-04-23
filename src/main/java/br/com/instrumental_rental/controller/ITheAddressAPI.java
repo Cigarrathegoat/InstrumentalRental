@@ -19,6 +19,10 @@ public interface ITheAddressAPI {
     @ApiResponse(code = 404, response = ErrorSpecificationDTO.class, message = "not found")})
     TheAddressResponseDTO add(TheAddressDTO theAddressDTO);
 
+    @ApiOperation(value = "add TheAddress list")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "success")})
+    ResponseEntity<TheAddressListResponseDTO> addList(TheAddressDTO theAddressDTO);
+
     @ApiOperation(value = "finds TheAddress object",
     response = TheAddressResponseDTO.class)
     @ApiResponses(value = {@ApiResponse(code = 200, message = "success"),

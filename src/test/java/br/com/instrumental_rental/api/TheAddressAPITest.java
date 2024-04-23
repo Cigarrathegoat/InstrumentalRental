@@ -10,12 +10,15 @@ import br.com.instrumental_rental.models.TheAddressBuilder;
 import br.com.instrumental_rental.models.TheAddressDTOBuilder;
 import br.com.instrumental_rental.repository.entities.TheAddress;
 import br.com.instrumental_rental.service.interfaces.ITheAddressService;
+import org.apache.catalina.filters.ExpiresFilter;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -55,7 +58,13 @@ public class TheAddressAPITest {
         var builderDTONoIdList = List.of(TheAddressDTOBuilder.theAddressDTONoIdBuilder());
         var response = TheAddressListResponseDTO.builder().addressListAdded("List added successfully").build();
 
-        when()
+        when(theAddressMapper.convertToEntityList(builderDTONoIdList)).thenReturn(builderNoIdList);
+        when(theAddressService.saveFirstTime(builderNoIdList)).thenReturn(builderList);
+        ResponseEntity<TheAddressListResponseDTO> result = theAddressAPI.addList(builderDTONoIdList);
+        verify(theAddressMapper, times(1)).convertToEntityList(builderDTONoIdList);
+        verify(theAddressService, times(1)).saveFirstTime(builderNoIdList);
+        Assertions.assertEquals(response, result.getBody());
+        Assertions.assertEquals(HttpStatus.OK, result.getStatusCode());
     }
 
     @Test
