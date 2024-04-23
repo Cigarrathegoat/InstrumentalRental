@@ -49,6 +49,16 @@ public class TheAddressAPITest {
     }
 
     @Test
+    void testAddListSuccess() {
+        var builderNoIdList = List.of(TheAddressBuilder.theAddressNoIdBuilder());
+        var builderList = List.of(TheAddressBuilder.theAddressBuilder());
+        var builderDTONoIdList = List.of(TheAddressDTOBuilder.theAddressDTONoIdBuilder());
+        var response = TheAddressListResponseDTO.builder().addressListAdded("List added successfully").build();
+
+        when()
+    }
+
+    @Test
     void testFindSuccess() throws TheAddressNotFoundException {
         var builder = TheAddressBuilder.theAddressBuilder();
         var builderDTO = TheAddressDTOBuilder.theAddressDTOBuilder();

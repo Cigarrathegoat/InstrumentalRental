@@ -11,4 +11,6 @@ import java.util.List;
 public class TheAddressListResponseDTO {
 
     public List<TheAddressDTO> data;
+
+    public String addressListAdded;
 }
