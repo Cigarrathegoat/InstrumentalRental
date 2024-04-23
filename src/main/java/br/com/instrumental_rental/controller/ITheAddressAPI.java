@@ -11,6 +11,8 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.http.ResponseEntity;
 
+import java.util.List;
+
 public interface ITheAddressAPI {
 
     @ApiOperation(value = "add TheAddress object",
@@ -21,7 +23,7 @@ public interface ITheAddressAPI {
 
     @ApiOperation(value = "add TheAddress list")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "success")})
-    ResponseEntity<TheAddressListResponseDTO> addList(TheAddressDTO theAddressDTO);
+    ResponseEntity<TheAddressListResponseDTO> addList(List<TheAddressDTO> theAddressDTO);
 
     @ApiOperation(value = "finds TheAddress object",
     response = TheAddressResponseDTO.class)
