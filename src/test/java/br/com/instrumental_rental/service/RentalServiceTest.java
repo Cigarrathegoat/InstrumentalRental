@@ -168,8 +168,6 @@ public class RentalServiceTest {
         verify(rentalRepository, times(1)).save(rentalBuilderBeforeSave);
         Assertions.assertEquals(List.of(rentalBuilderAfterSave), result);
     }
-
-    /*
     @Test
     void testSaveFirstTimeCustomerNotFoundException() throws CustomerNotFoundException, InstrumentNotFoundException,
             AttendantNotFoundException, WithdrawalGreaterThanBalanceException,
@@ -185,7 +183,6 @@ public class RentalServiceTest {
         Assertions.assertEquals("C01", thrown.getCode());
         Assertions.assertEquals("Customer not found", thrown.getMessage());
     }
-     */
 
     /*TODO ask him why the assertions commented didn't work*/
     @Test

@@ -17,4 +17,6 @@ public interface ITheAddressMapper {
     TheAddress convertToEntity(TheAddressDTO theAddressDTO);
 
     List<TheAddressDTO> convertToListDTO(List<TheAddress> theAddressList);
+
+    List<TheAddress> convertToEntityList(List<TheAddressDTO> theAddressDTOList);
 }
