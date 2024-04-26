@@ -43,7 +43,7 @@ public class CustomerServiceTest {
         var builderNoId = CustomerBuilder.customerNoIdBuilder();
         when(customerRepository.save(builderNoId)).thenReturn(builder);
         Customer saved = customerService.save(builderNoId);
-        Assertions.assertNotNull(saved);
+        Assertions.assertEquals(builder, saved);
     }
 
     @Test
