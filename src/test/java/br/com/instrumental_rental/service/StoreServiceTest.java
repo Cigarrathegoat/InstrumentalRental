@@ -12,6 +12,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.List;
+
 import static org.mockito.Mockito.*;
 
 public class StoreServiceTest {
@@ -34,5 +36,16 @@ public class StoreServiceTest {
         Store result = storeService.save(storeNoId);
         verify(storeRepository, times(1)).save(storeNoId);
         Assertions.assertEquals(store, result);
+    }
+
+    @Test
+    void testSaveFirstTimeSuccess() throws StoreNotFoundException {
+        var storeNoId = StoreBuilder.storeNoIdBuilder();
+        var store = StoreBuilder.storeBuilder();
+
+        when(storeRepository.save(store)).thenReturn(store);
+        List<Store> result = storeService.saveFirstTime(List.of(store));
+        //verify(storeRepository, times(1)).save(storeNoId);
+        Assertions.assertEquals(List.of(store), result);
     }
 }

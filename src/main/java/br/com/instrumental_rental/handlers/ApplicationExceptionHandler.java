@@ -39,6 +39,19 @@ public class ApplicationExceptionHandler {
                         ).build());
     }
 
+    @ExceptionHandler(StoreNotFoundException.class)
+    public ResponseEntity<ErrorResponseDTO> storeNotFoundExceptionHandler(
+            StoreNotFoundException exception
+    ) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(ErrorResponseDTO.builder()
+                        .data(ErrorSpecificationDTO.builder()
+                                .errorCode("400")
+                                .errorMessage(exception.getMessage()
+                        ).build()
+                ).build());
+    }
+
     @ExceptionHandler(TheAddressNotFoundException.class)
     public ResponseEntity<ErrorResponseDTO> TheAddressNotFoundExceptionHandler(
             TheAddressNotFoundException exception
