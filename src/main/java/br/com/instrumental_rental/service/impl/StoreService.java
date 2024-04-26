@@ -1,5 +1,6 @@
 package br.com.instrumental_rental.service.impl;
 
+import br.com.instrumental_rental.exceptions.StoreNotFoundException;
 import br.com.instrumental_rental.repository.entities.Store;
 import br.com.instrumental_rental.repository.interfaces.IStoreRepository;
 import br.com.instrumental_rental.service.interfaces.IStoreService;
@@ -21,7 +22,7 @@ public class StoreService implements IStoreService {
     }
     @Override
     public List<Store> saveFirstTime(List<Store> storeList) throws StoreNotFoundException {
-        if(storeList.isEmpty()) throw StoreNotFoundException("S01", "Store not found");
+        if(storeList.isEmpty()) throw new StoreNotFoundException("S01", "Store not found");
         else {
             List<Store> savedStoreList = new ArrayList<>();
             for (Store store : storeList) {
@@ -34,7 +35,8 @@ public class StoreService implements IStoreService {
     }
 
     @Override
-    public Store save(Store store) {
+    public Store save(Store store) throws StoreNotFoundException{
+        if(store == null) throw new StoreNotFoundException("S01", "Store not found");
         return storeRepository.save(store);
     }
 }

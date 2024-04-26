@@ -29,23 +29,10 @@ import java.util.List;
 @EqualsAndHashCode
 public class Store {
 
-    /*
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_ADDRESS")
-    @Column(name = "ID_ADDRESS")
-    private Long addressId;
-     */
-
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_STORE")
     @Column(name = "ID_STORE")
     private Long storeId;
-
-    /*
-    @Column(name = "DS_ADDRESS")
-    @OneToMany(mappedBy = "person")
-    private List<TheAddress> address;
-     */
 
     @Column(name = "DS_CUSTOMER")
     @OneToMany(mappedBy = "store")
