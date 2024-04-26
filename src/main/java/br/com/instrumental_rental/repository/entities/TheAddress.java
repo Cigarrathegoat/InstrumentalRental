@@ -44,4 +44,8 @@ public class TheAddress {
     @ManyToOne
     @JoinColumn(name = "PERSON_ID")
     private Person person;
+
+    @OneToOne
+    @JoinColumn(name = "STORE_ID", referencedColumnName = "id")
+    private Store store;
 }

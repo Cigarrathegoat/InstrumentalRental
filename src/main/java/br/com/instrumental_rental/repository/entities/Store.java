@@ -59,5 +59,9 @@ public class Store {
     @OneToMany(mappedBy = "store")
     private List<Instrument> instruments;
 
+    @OneToOne
+    @JoinColumn(name = "ADDRESS_ID", referencedColumnName = "id")
+    private TheAddress theAddress;
+
 
 }
