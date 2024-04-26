@@ -51,5 +51,9 @@ public class Store {
     @OneToMany(mappedBy = "store")
     private List<Customer> customer;
 
+    @Column(name = "DS_ATTENDANT")
+    @OneToMany(mappedBy = "store")
+    private List<Attendant> attendant;
+
 
 }

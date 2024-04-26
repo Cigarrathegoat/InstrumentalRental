@@ -26,4 +26,8 @@ public class Customer extends Person {
 
     @OneToMany(mappedBy = "customer")
     private List<Rental> rentals;
+
+    @ManyToOne
+    @JoinColumn(name = "STORE_ID")
+    private Store store;
 }
