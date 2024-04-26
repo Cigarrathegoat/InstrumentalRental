@@ -91,6 +91,12 @@ public class RentalAPITest {
     }
 
     @Test
+    void testSaveListCustomerNotFoundException() throws CustomerNotFoundException, AttendantNotFoundException,
+            InstrumentNotFoundException, EndDateNotAfterStartDateException, WithdrawalGreaterThanBalanceException {
+
+    }
+
+    @Test
     void saveCustomerNotFoundException() throws CustomerNotFoundException, AttendantNotFoundException, InstrumentNotFoundException,
             EndDateNotAfterStartDateException, WithdrawalGreaterThanBalanceException {
         var customer = CustomerBuilder.customerBuilder();
