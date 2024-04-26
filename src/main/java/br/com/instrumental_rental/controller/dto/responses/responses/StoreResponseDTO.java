@@ -9,4 +9,6 @@ import lombok.Data;
 public class StoreResponseDTO {
 
     public StoreDTO data;
+
+    public String saveSuccessMessage;
 }
