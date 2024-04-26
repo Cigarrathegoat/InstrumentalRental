@@ -82,8 +82,8 @@ public class RentalAPITest {
         var response = RentalListResponseDTO.builder().addListMessage("List successfully added").build();
         when(rentalMapper.convertToEntityList(rentalDTONoIdList)).thenReturn(rentalNoIdList);
         when(rentalService.saveFirstTime(rentalNoIdList)).thenReturn(rentalList);
-        ResponseEntity<RentalListResponseDTO>result = rentalAPI.addList(rentalDTONoIdList);
-        verify(rentalMapper,times(1)).convertToEntityList(rentalDTONoIdList);
+        ResponseEntity<RentalListResponseDTO> result = rentalAPI.addList(rentalDTONoIdList);
+        verify(rentalMapper, times(1)).convertToEntityList(rentalDTONoIdList);
         verify(rentalService, times(1)).saveFirstTime(rentalNoIdList);
         Assertions.assertEquals(response, result.getBody());
         Assertions.assertEquals(HttpStatus.OK, result.getStatusCode());
@@ -102,8 +102,10 @@ public class RentalAPITest {
         when(rentalMapper.convertToEntityList(rentalDTONoId)).thenReturn(rentalNoId);
         when(rentalService.saveFirstTime(rentalNoId))
                 .thenThrow(new CustomerNotFoundException("C01", "Customer not found"));
-        CustomerNotFoundException thrown = Assertions.assertThrows(CustomerNotFoundException.class, ()->
-                {rentalAPI.addList(rentalDTONoId);}
+        CustomerNotFoundException thrown = Assertions.assertThrows(CustomerNotFoundException.class, () ->
+                {
+                    rentalAPI.addList(rentalDTONoId);
+                }
         );
         verify(rentalMapper, times(1)).convertToEntityList(rentalDTONoId);
         Assertions.assertEquals("C01", thrown.getCode());
@@ -119,7 +121,17 @@ public class RentalAPITest {
         var rentalNoId = List.of(RentalBuilder.rentalBuilderBeforeSave(customer, instrument, attendant));
         var rentalDTONoId = List.of(RentalDTOBuilder.rentalDTOBuilderBeforeSave(
                 customer.getPersonId(), instrument.getInstrumentId(), attendant.getPersonId()));
-        when(rentalMapper.convertToEntityList())
+        when(rentalMapper.convertToEntityList(rentalDTONoId)).thenReturn(rentalNoId);
+        when(rentalService.saveFirstTime(rentalNoId))
+                .thenThrow(new AttendantNotFoundException("A01", "Attendant not found"));
+        AttendantNotFoundException thrown = Assertions.assertThrows(AttendantNotFoundException.class, () ->
+                {
+                    rentalAPI.addList(rentalDTONoId);
+                }
+        );
+        verify(rentalMapper, times(1)).convertToEntityList(rentalDTONoId);
+        Assertions.assertEquals("A01", thrown.getCode());
+        Assertions.assertEquals("Attendant not found", thrown.getMessage());
     }
 
     @Test
@@ -291,7 +303,9 @@ public class RentalAPITest {
         when(rentalService.update(rental))
                 .thenThrow(new RentalNotFoundException("R01", "Rental not found"));
         RentalNotFoundException thrown = Assertions.assertThrows(RentalNotFoundException.class, () ->
-        {rentalAPI.update(rental.getRentalId(), rentalDTO);});
+        {
+            rentalAPI.update(rental.getRentalId(), rentalDTO);
+        });
         Assertions.assertEquals("R01", thrown.getCode());
         Assertions.assertEquals("Rental not found", thrown.getMessage());
     }
@@ -315,7 +329,9 @@ public class RentalAPITest {
         var rental = RentalBuilder.rentalBuilder(customer, instrument, attendant);
         doThrow(new RentalNotFoundException("R01", "Rental not found")).when(rentalService).delete(rental.getRentalId());
         RentalNotFoundException thrown = Assertions.assertThrows(RentalNotFoundException.class, () ->
-        {rentalAPI.delete(rental.getRentalId());});
+        {
+            rentalAPI.delete(rental.getRentalId());
+        });
         Assertions.assertEquals("R01", thrown.getCode());
         Assertions.assertEquals("Rental not found", thrown.getMessage());
     }
