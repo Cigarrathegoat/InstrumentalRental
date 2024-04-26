@@ -11,6 +11,6 @@ public interface IContactRepository extends JpaRepository<Contact, Long> {
 
     @Query(value = "SELECT co from Customer cu JOIN Contact co ON cu.personId = co.person " +
             " JOIN Attendant at on co.person = at.personId WHERE lower(cu.name) = lower(:nameProvided) " +
-            " OR lower(a.name) = lower(:nameProvided)")
+            " OR lower(at.name) = lower(:nameProvided)")
     List<Contact> findContactByNameProvided(@Param("nameProvided")String nameProvided);
 }

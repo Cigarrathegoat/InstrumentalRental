@@ -26,7 +26,4 @@ public class Customer extends Person {
 
     @OneToMany(mappedBy = "customer")
     private List<Rental> rentals;
-
-
-    //@JoinTable(@JoinColumns "", "")
 }
