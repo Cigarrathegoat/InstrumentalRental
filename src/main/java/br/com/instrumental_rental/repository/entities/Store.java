@@ -49,11 +49,15 @@ public class Store {
 
     @Column(name = "DS_CUSTOMER")
     @OneToMany(mappedBy = "store")
-    private List<Customer> customer;
+    private List<Customer> customers;
 
     @Column(name = "DS_ATTENDANT")
     @OneToMany(mappedBy = "store")
-    private List<Attendant> attendant;
+    private List<Attendant> attendants;
+
+    @Column(name = "DS_INSTRUMENT")
+    @OneToMany(mappedBy = "store")
+    private List<Instrument> instruments;
 
 
 }

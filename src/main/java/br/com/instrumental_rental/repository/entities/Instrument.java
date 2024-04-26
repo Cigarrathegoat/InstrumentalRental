@@ -44,4 +44,8 @@ public class Instrument {
     @OneToMany(mappedBy = "instrument")
     private List<Rental> rental;
 
+    @ManyToOne
+    @JoinColumn(name = "STORE_ID")
+    private Store store;
+
 }
