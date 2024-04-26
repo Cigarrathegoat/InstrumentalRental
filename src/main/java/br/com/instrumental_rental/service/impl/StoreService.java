@@ -35,6 +35,6 @@ public class StoreService implements IStoreService {
 
     @Override
     public Store save(Store store) {
-        return null;
+        return storeRepository.save(store);
     }
 }
