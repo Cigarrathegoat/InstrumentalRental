@@ -1,10 +1,14 @@
 package br.com.instrumental_rental.service.impl;
 
 import br.com.instrumental_rental.exceptions.CustomerNotFoundException;
+import br.com.instrumental_rental.exceptions.RentalNotFoundException;
 import br.com.instrumental_rental.exceptions.WithdrawalGreaterThanBalanceException;
 import br.com.instrumental_rental.repository.entities.Customer;
+import br.com.instrumental_rental.repository.entities.Rental;
 import br.com.instrumental_rental.repository.interfaces.ICustomerRepository;
+import br.com.instrumental_rental.repository.interfaces.IRentalRepository;
 import br.com.instrumental_rental.service.interfaces.ICustomerService;
+import br.com.instrumental_rental.service.interfaces.IRentalService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,9 +25,13 @@ public class CustomerService implements ICustomerService {
 
     private final ICustomerRepository customerRepositoryAttribute;
 
+    private final IRentalService rentalService;
+
     @Autowired
-    private CustomerService(ICustomerRepository customerRepositoryParameter) {
+    private CustomerService(ICustomerRepository customerRepositoryParameter,
+                            IRentalService rentalService) {
         this.customerRepositoryAttribute = customerRepositoryParameter;
+        this.rentalService = rentalService;
     }
 
     public Customer findCustomerById(Long customerId) throws CustomerNotFoundException {
@@ -33,6 +41,15 @@ public class CustomerService implements ICustomerService {
                         )
                 );
     }
+
+    @Override
+    public List<Rental> addToRentals(Long customerId, Long rentalId)
+            throws CustomerNotFoundException, RentalNotFoundException {
+        findCustomerById(customerId);
+
+        return null;
+    }
+
 
     @Override
     public List<Customer> saveFirstTime(List<Customer> customerList) {

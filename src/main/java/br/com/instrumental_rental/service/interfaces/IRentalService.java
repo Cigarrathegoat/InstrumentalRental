@@ -23,5 +23,7 @@ public interface IRentalService {
 
     public List<Rental> findRentalListByWord(String word) throws RentalNotFoundException;
 
+    public Rental findById(Long rentalId) throws RentalNotFoundException;
+
 
 }

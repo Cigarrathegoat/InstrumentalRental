@@ -31,7 +31,7 @@ public interface ICustomerService {
 
     Customer findCustomerById(Long customerId) throws CustomerNotFoundException;
 
-    List<Rental> addToRentals (Customer customer, Rental rental) throws CustomerNotFoundException,
+    List<Rental> addToRentals (Long customerId, Long rentalId) throws CustomerNotFoundException,
             RentalNotFoundException;
 
 }
