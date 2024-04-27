@@ -1,8 +1,10 @@
 package br.com.instrumental_rental.service.interfaces;
 
 import br.com.instrumental_rental.exceptions.CustomerNotFoundException;
+import br.com.instrumental_rental.exceptions.RentalNotFoundException;
 import br.com.instrumental_rental.exceptions.WithdrawalGreaterThanBalanceException;
 import br.com.instrumental_rental.repository.entities.Customer;
+import br.com.instrumental_rental.repository.entities.Rental;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -28,5 +30,8 @@ public interface ICustomerService {
         throws CustomerNotFoundException, WithdrawalGreaterThanBalanceException;
 
     Customer findCustomerById(Long customerId) throws CustomerNotFoundException;
+
+    List<Rental> addToRentals (Customer customer, Rental rental) throws CustomerNotFoundException,
+            RentalNotFoundException;
 
 }
