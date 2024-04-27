@@ -43,11 +43,9 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
-    public List<Rental> addToRentals(Long customerId, Long rentalId)
+    public void addToRentals(Long customerId, Long rentalId)
             throws CustomerNotFoundException, RentalNotFoundException {
-        findCustomerById(customerId);
-
-        return null;
+        findCustomerById(customerId).getRentals().add(rentalService.findById(rentalId));
     }
 
 

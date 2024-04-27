@@ -21,4 +21,6 @@ public interface IInstrumentService {
 
 
     List<Instrument> findInstrumentByMakeOrModel(String makeOrModel) throws InstrumentNotFoundException;
+
+    void addToRentals
 }
