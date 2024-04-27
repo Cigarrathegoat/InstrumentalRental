@@ -10,7 +10,8 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "TB_CONTACTS", schema = "instrumental_rental")
-@SequenceGenerator(name = "SEQ_CONTACTS")
+@SequenceGenerator(schema = "instrumental_rental", name = "SEQ_CONTACTS",
+        sequenceName = "SEQ_CONTACTS", allocationSize = 1)
 
 @Data
 @Builder

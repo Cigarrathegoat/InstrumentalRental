@@ -9,7 +9,8 @@ import java.util.List;
 
 @Entity
 @Table(name = "TB_INSTRUMENT", schema = "instrumental_rental")
-@SequenceGenerator(name = "SEQ_INSTRUMENT")
+@SequenceGenerator(schema = "instrumental_rental", name = "SEQ_INSTRUMENT",
+        sequenceName = "SEQ_INSTRUMENT",allocationSize = 1)
 
 @Data
 @Builder

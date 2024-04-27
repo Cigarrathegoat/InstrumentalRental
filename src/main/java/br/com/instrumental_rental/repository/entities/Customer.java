@@ -12,7 +12,6 @@ import java.util.List;
 
 @Entity
 @Table(name = "TB_CUSTOMER", schema = "instrumental_rental")
-@SequenceGenerator(name = "SEQ_CUSTOMER", sequenceName = "SEQ_CUSTOMER", allocationSize = 1)
 
 @Data
 @SuperBuilder

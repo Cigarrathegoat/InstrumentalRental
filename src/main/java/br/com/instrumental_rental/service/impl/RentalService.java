@@ -105,11 +105,10 @@ public class RentalService implements IRentalService {
             EndDateNotAfterStartDateException {
         List<Rental> savedRentals = new ArrayList<>();
         for (Rental rental : rentalList) {
-            customerServiceAttribute.findCustomerByNumberProvided(rental.getCustomer()
-                    .getSocialSecurityNumber());
-            instrumentServiceAttribute.findInstrumentByMakeOrModel(rental.getInstrument().getModel());
-            attendantServiceAttribute.findAttendantByNumberProvided(rental.getAttendant()
-                    .getDriversLicenseNumber());
+            rental.setCustomer(customerServiceAttribute.findCustomerById(rental.getCustomer()
+                    .getPersonId()));
+            rental.setInstrument(instrumentServiceAttribute.findById(rental.getInstrument().getInstrumentId()));
+            rental.setAttendant(attendantServiceAttribute.findAttendantById(rental.getAttendant().getPersonId()));
             nonRentalAttributesUpdater(rental.getInstrument(), rental.getCustomer(),
                     rental.getAttendant(), rental);
             rentalDatesChecker(rental);
@@ -126,14 +125,15 @@ public class RentalService implements IRentalService {
             AttendantNotFoundException, WithdrawalGreaterThanBalanceException,
             EndDateNotAfterStartDateException {
 
-            customerServiceAttribute.findCustomerById(rental.getCustomer()
-                    .getPersonId());
-            instrumentServiceAttribute.findById(rental.getInstrument().getInstrumentId());
-            attendantServiceAttribute.findAttendantById(rental.getAttendant().getPersonId());
+        rental.setCustomer(customerServiceAttribute.findCustomerById(rental.getCustomer()
+                .getPersonId()));
+        rental.setInstrument(instrumentServiceAttribute.findById(rental.getInstrument().getInstrumentId()));
+        rental.setAttendant(attendantServiceAttribute.findAttendantById(rental.getAttendant().getPersonId()));
             nonRentalAttributesUpdater(rental.getInstrument(), rental.getCustomer(),
                     rental.getAttendant(), rental);
             rentalDatesChecker(rental);
             sufficientBalanceChecker(rental.getCustomer(), rental.getPrice());
+
 
             rentalRepositoryAttribute.save(rental);
         return rental;

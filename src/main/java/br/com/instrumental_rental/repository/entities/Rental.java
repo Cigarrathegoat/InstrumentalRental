@@ -11,7 +11,8 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "TB_RENTAL", schema = "instrumental_rental")
-@SequenceGenerator(name = "SEQ_RENTAL")
+@SequenceGenerator(schema = "instrumental_rental", name =  "SEQ_RENTAL",
+        sequenceName = "SEQ_RENTAL", allocationSize = 1)
 
 @Data
 @Builder

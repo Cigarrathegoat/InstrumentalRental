@@ -20,7 +20,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "TB_STORE", schema = "instrumental_rental")
-@SequenceGenerator(name = "SEQ_STORE")
+@SequenceGenerator(schema = "instrumental_rental", name = "SEQ_STORE", sequenceName = "SEQ_STORE", allocationSize = 1)
 
 @Data
 @Builder
@@ -47,7 +47,7 @@ public class Store {
     private List<Instrument> instruments;
 
     @OneToOne
-    @JoinColumn(name = "ADDRESS_ID", referencedColumnName = "id")
+    @JoinColumn(name = "ADDRESS_ID")
     private TheAddress theAddress;
 
 

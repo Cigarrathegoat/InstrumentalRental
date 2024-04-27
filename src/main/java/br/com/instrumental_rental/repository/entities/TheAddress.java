@@ -6,7 +6,8 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "TB_THEADDRESS", schema = "instrumental_rental")
-@SequenceGenerator(name = "SEQ_THEADDRESS")
+@SequenceGenerator(schema = "instrumental_rental", name = "SEQ_THEADDRESS",
+        sequenceName = "SEQ_THEADDRESS", allocationSize = 1)
 
 @Data
 @Builder
@@ -16,7 +17,7 @@ import javax.persistence.*;
 public class TheAddress {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_ADDRESS")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_THEADDRESS")
     @Column(name = "ID_ADDRESS")
     private Long addressId;
 
@@ -46,6 +47,6 @@ public class TheAddress {
     private Person person;
 
     @OneToOne
-    @JoinColumn(name = "STORE_ID", referencedColumnName = "id")
+    @JoinColumn(name = "STORE_ID")
     private Store store;
 }

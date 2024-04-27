@@ -14,7 +14,8 @@ import java.util.List;
 @Table(name = "TB_PERSON", schema = "instrumental_rental")
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "PERSON_TYPE", discriminatorType = DiscriminatorType.STRING)
-@SequenceGenerator(name = "SEQ_PERSON", sequenceName = "SEQ_PERSON", allocationSize = 1)
+@SequenceGenerator(schema ="instrumentalRental", name = "SEQ_PERSON",
+        sequenceName = "SEQ_PERSON", allocationSize = 1)
 
 @Data
 @SuperBuilder
