@@ -1,9 +1,11 @@
 package br.com.instrumental_rental.service.impl;
 
 import br.com.instrumental_rental.exceptions.InstrumentNotFoundException;
+import br.com.instrumental_rental.exceptions.RentalNotFoundException;
 import br.com.instrumental_rental.repository.entities.Instrument;
 import br.com.instrumental_rental.repository.interfaces.IInstrumentRepository;
 import br.com.instrumental_rental.service.interfaces.IInstrumentService;
+import br.com.instrumental_rental.service.interfaces.IRentalService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,9 @@ public class InstrumentService implements IInstrumentService {
 
     @Autowired
     IInstrumentRepository instrumentRepository;
+
+    @Autowired
+    IRentalService rentalService;
 
     @Override
     public List<Instrument> saveFirstTime(List<Instrument> instrumentList) {
@@ -42,6 +47,12 @@ public class InstrumentService implements IInstrumentService {
         } else {
             return instrumentSought;
         }
+    }
+
+    @Override
+    public void addToRentals(Long instrumentId, Long rentalId)
+            throws InstrumentNotFoundException, RentalNotFoundException {
+        findById(instrumentId).getRental().add(rentalService.findById(rentalId));
     }
 
     @Override
