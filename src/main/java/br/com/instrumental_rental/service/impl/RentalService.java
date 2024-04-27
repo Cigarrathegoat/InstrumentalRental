@@ -100,15 +100,19 @@ public class RentalService implements IRentalService {
         }*/
 /*TODO create a new Rental object, make it ony have ID*/
     @Override
-    public List<Rental> saveFirstTime(List<Rental> rentalList) throws CustomerNotFoundException, InstrumentNotFoundException,
+    public List<Rental> saveFirstTime(List<Rental> rentalList) throws CustomerNotFoundException,
+            InstrumentNotFoundException, RentalNotFoundException,
     AttendantNotFoundException, WithdrawalGreaterThanBalanceException,
             EndDateNotAfterStartDateException {
         List<Rental> savedRentals = new ArrayList<>();
         for (Rental rental : rentalList) {
             rental.setCustomer(customerServiceAttribute.findCustomerById(rental.getCustomer()
                     .getPersonId()));
+            customerServiceAttribute.addToRentals(rental.getCustomer().getPersonId(), rental.getRentalId());
             rental.setInstrument(instrumentServiceAttribute.findById(rental.getInstrument().getInstrumentId()));
+            instrumentServiceAttribute.addToRentals(rental.getInstrument().getInstrumentId(), rental.getRentalId());
             rental.setAttendant(attendantServiceAttribute.findAttendantById(rental.getAttendant().getPersonId()));
+            attendantServiceAttribute.addToRentals(rental.getAttendant().getPersonId(), rental.getRentalId());
             nonRentalAttributesUpdater(rental.getInstrument(), rental.getCustomer(),
                     rental.getAttendant(), rental);
             rentalDatesChecker(rental);
@@ -122,13 +126,16 @@ public class RentalService implements IRentalService {
 
     @Override
     public Rental save(Rental rental) throws CustomerNotFoundException, InstrumentNotFoundException,
-            AttendantNotFoundException, WithdrawalGreaterThanBalanceException,
+            AttendantNotFoundException, RentalNotFoundException, WithdrawalGreaterThanBalanceException,
             EndDateNotAfterStartDateException {
 
         rental.setCustomer(customerServiceAttribute.findCustomerById(rental.getCustomer()
                 .getPersonId()));
+        customerServiceAttribute.addToRentals(rental.getCustomer().getPersonId(), rental.getRentalId());
         rental.setInstrument(instrumentServiceAttribute.findById(rental.getInstrument().getInstrumentId()));
+        instrumentServiceAttribute.addToRentals(rental.getInstrument().getInstrumentId(), rental.getRentalId());
         rental.setAttendant(attendantServiceAttribute.findAttendantById(rental.getAttendant().getPersonId()));
+        attendantServiceAttribute.addToRentals(rental.getAttendant().getPersonId(), rental.getRentalId());
             nonRentalAttributesUpdater(rental.getInstrument(), rental.getCustomer(),
                     rental.getAttendant(), rental);
             rentalDatesChecker(rental);

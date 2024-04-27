@@ -9,11 +9,11 @@ public interface IRentalService {
 
     List<Rental> saveFirstTime(List<Rental> rentalList) throws WithdrawalGreaterThanBalanceException,
             EndDateNotAfterStartDateException, CustomerNotFoundException, InstrumentNotFoundException,
-            AttendantNotFoundException;
+            AttendantNotFoundException, RentalNotFoundException;
 
     Rental save(Rental rental) throws WithdrawalGreaterThanBalanceException,
             EndDateNotAfterStartDateException, CustomerNotFoundException, InstrumentNotFoundException,
-            AttendantNotFoundException;
+            AttendantNotFoundException, RentalNotFoundException;
 
     public void delete(Long rentalId) throws RentalNotFoundException;
 
