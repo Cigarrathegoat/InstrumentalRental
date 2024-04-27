@@ -1,7 +1,9 @@
 package br.com.instrumental_rental.service.impl;
 
 import br.com.instrumental_rental.exceptions.StoreNotFoundException;
+import br.com.instrumental_rental.repository.entities.Attendant;
 import br.com.instrumental_rental.repository.entities.Customer;
+import br.com.instrumental_rental.repository.entities.Instrument;
 import br.com.instrumental_rental.repository.entities.Store;
 import br.com.instrumental_rental.repository.interfaces.IStoreRepository;
 import br.com.instrumental_rental.service.interfaces.IAttendantService;
@@ -52,8 +54,9 @@ public class StoreService implements IStoreService {
     @Override
     public Store save(Store store) throws StoreNotFoundException {
         if (store == null) throw new StoreNotFoundException("S01", "Store not found");
-        for (Customer customer : store.getCustomers())
-            customer.setStore(store);
+        for (Customer customer : store.getCustomers()) customer.setStore(store);
+        for (Attendant attendant : store.getAttendants()) attendant.setStore(store);
+        for (Instrument instrument : store.getInstruments()) instrument.setStore(store);
 
         return storeRepository.save(store);
     }
