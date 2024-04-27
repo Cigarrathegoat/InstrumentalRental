@@ -1,9 +1,11 @@
 package br.com.instrumental_rental.service.impl;
 
 import br.com.instrumental_rental.exceptions.AttendantNotFoundException;
+import br.com.instrumental_rental.exceptions.RentalNotFoundException;
 import br.com.instrumental_rental.repository.entities.Attendant;
 import br.com.instrumental_rental.repository.interfaces.IAttendantRepository;
 import br.com.instrumental_rental.service.interfaces.IAttendantService;
+import br.com.instrumental_rental.service.interfaces.IRentalService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,9 @@ public class AttendantService implements IAttendantService {
 
     @Autowired
     private IAttendantRepository attendantRepository;
+
+    @Autowired
+    private IRentalService rentalService;
 
 
 
@@ -33,6 +38,12 @@ public class AttendantService implements IAttendantService {
     public Attendant findAttendantById(Long id) throws AttendantNotFoundException {
         return attendantRepository.findById(id).orElseThrow(
                 () -> new AttendantNotFoundException("A01", "Attendant not found"));
+    }
+
+    @Override
+    public void addToRentals(Long attendantId, Long rentalId) throws AttendantNotFoundException,
+            RentalNotFoundException {
+        findAttendantById(attendantId).getRentals().add(rentalService.findById(rentalId));
     }
 
     @Override
