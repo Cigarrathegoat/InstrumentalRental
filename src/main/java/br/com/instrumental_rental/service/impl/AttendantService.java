@@ -2,6 +2,7 @@ package br.com.instrumental_rental.service.impl;
 
 import br.com.instrumental_rental.exceptions.AttendantNotFoundException;
 import br.com.instrumental_rental.exceptions.RentalNotFoundException;
+import br.com.instrumental_rental.exceptions.StoreNotFoundException;
 import br.com.instrumental_rental.repository.entities.Attendant;
 import br.com.instrumental_rental.repository.interfaces.IAttendantRepository;
 import br.com.instrumental_rental.service.interfaces.IAttendantService;
@@ -45,6 +46,12 @@ public class AttendantService implements IAttendantService {
             RentalNotFoundException {
         findAttendantById(attendantId).getRentals().add(rentalService.findById(rentalId));
     }
+
+    @Override
+    public void addToStore(Long attendantId, Long storeId) throws AttendantNotFoundException, StoreNotFoundException {
+        findAttendantById(attendantId).setStore();
+    }
+
 
     @Override
     public List<Attendant> saveFirstTime(List<Attendant> attendantList) {

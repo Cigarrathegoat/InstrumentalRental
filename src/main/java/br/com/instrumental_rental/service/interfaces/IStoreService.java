@@ -10,4 +10,6 @@ public interface IStoreService {
     List<Store> saveFirstTime(List<Store> storeList) throws StoreNotFoundException;
 
     Store save(Store store) throws StoreNotFoundException;
+
+    Store findById(Long storeId) throws StoreNotFoundException;
 }
