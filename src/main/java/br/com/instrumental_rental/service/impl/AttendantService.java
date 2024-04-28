@@ -72,7 +72,8 @@ public class AttendantService implements IAttendantService {
     }
 
     @Override
-    public Attendant save(Attendant attendant) {
+    public Attendant save(Attendant attendant) throws StoreNotFoundException, AttendantNotFoundException {
+        addToStore(attendant.getPersonId(), attendant.getStore().getStoreId());
         return attendantRepository.save(attendant);
     }
 
