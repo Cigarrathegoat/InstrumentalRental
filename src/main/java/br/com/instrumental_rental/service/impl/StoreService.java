@@ -60,4 +60,12 @@ public class StoreService implements IStoreService {
 
         return storeRepository.save(store);
     }
+
+    @Override
+    public Store findById(Long storeId) throws StoreNotFoundException {
+        Store storeFound =  storeRepository.findById(storeId).orElseThrow(()->
+                new StoreNotFoundException( "S01", "Store not found")
+        );
+        return storeFound;
+    }
 }

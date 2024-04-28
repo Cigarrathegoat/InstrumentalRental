@@ -5,8 +5,10 @@ import br.com.instrumental_rental.exceptions.RentalNotFoundException;
 import br.com.instrumental_rental.exceptions.StoreNotFoundException;
 import br.com.instrumental_rental.repository.entities.Attendant;
 import br.com.instrumental_rental.repository.interfaces.IAttendantRepository;
+import br.com.instrumental_rental.repository.interfaces.IStoreRepository;
 import br.com.instrumental_rental.service.interfaces.IAttendantService;
 import br.com.instrumental_rental.service.interfaces.IRentalService;
+import br.com.instrumental_rental.service.interfaces.IStoreService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,9 @@ public class AttendantService implements IAttendantService {
 
     @Autowired
     private IRentalService rentalService;
+
+    @Autowired
+    private IStoreService storeService;
 
 
 
@@ -48,16 +53,19 @@ public class AttendantService implements IAttendantService {
     }
 
     @Override
-    public void addToStore(Long attendantId, Long storeId) throws AttendantNotFoundException, StoreNotFoundException {
-        findAttendantById(attendantId).setStore();
+    public void addToStore(Long attendantId, Long storeId)
+            throws AttendantNotFoundException, StoreNotFoundException {
+        storeService.findById(storeId).getAttendants().add(findAttendantById(attendantId));
     }
 
 
     @Override
-    public List<Attendant> saveFirstTime(List<Attendant> attendantList) {
+    public List<Attendant> saveFirstTime(List<Attendant> attendantList)
+            throws StoreNotFoundException, AttendantNotFoundException {
         List<Attendant> savedAttendants = new ArrayList<>();
         for (Attendant attendant : attendantList) {
             Attendant savedAttendant = attendantRepository.save(attendant);
+            addToStore(attendant.getPersonId(), attendant.getStore().getStoreId());
             savedAttendants.add(savedAttendant);
         }
         return savedAttendants;

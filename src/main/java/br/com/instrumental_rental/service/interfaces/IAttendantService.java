@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface IAttendantService {
 
-    List<Attendant> saveFirstTime (List<Attendant> attendantList);
+    List<Attendant> saveFirstTime (List<Attendant> attendantList) throws StoreNotFoundException, AttendantNotFoundException;
 
     Attendant save(Attendant attendant);
 
