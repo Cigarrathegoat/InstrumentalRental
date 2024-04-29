@@ -61,17 +61,20 @@ public class CustomerService implements ICustomerService {
 
 
     @Override
-    public List<Customer> saveFirstTime(List<Customer> customerList) {
+    public List<Customer> saveFirstTime(List<Customer> customerList)
+            throws StoreNotFoundException, CustomerNotFoundException {
         List<Customer> savedCustomers = new ArrayList<>();
         for (Customer customer : customerList) {
             Customer savedCustomer = customerRepositoryAttribute.save(customer);
+            addToStore(customer.getPersonId(), customer.getStore().getStoreId());
             savedCustomers.add(savedCustomer);
         }
         return savedCustomers;
     }
 
     @Override
-    public Customer save(Customer customer) {
+    public Customer save(Customer customer) throws StoreNotFoundException, CustomerNotFoundException {
+        addToStore(customer.getPersonId(),customer.getStore().getStoreId());
         return customerRepositoryAttribute.save(customer);
     }
 
@@ -84,7 +87,6 @@ public class CustomerService implements ICustomerService {
             return customerSought;
         }
     }
-
 
 
     @Override
@@ -100,9 +102,9 @@ public class CustomerService implements ICustomerService {
             throws CustomerNotFoundException, WithdrawalGreaterThanBalanceException {
         var withdrawer = findCustomerById(customerId);
         sufficientBalanceChecker(withdrawer, withdrawal);
-            withdrawer.setAccountBalance(
-                    withdrawer.getAccountBalance().subtract(withdrawal));
-            customerRepositoryAttribute.save(withdrawer);
+        withdrawer.setAccountBalance(
+                withdrawer.getAccountBalance().subtract(withdrawal));
+        customerRepositoryAttribute.save(withdrawer);
 
         return withdrawer.getAccountBalance();
     }

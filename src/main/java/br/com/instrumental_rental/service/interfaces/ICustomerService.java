@@ -12,9 +12,9 @@ import java.util.List;
 
 public interface ICustomerService {
 
-    List<Customer> saveFirstTime(List<Customer> customerList);
+    List<Customer> saveFirstTime(List<Customer> customerList) throws StoreNotFoundException, CustomerNotFoundException;
 
-    Customer save(Customer customer);
+    Customer save(Customer customer) throws StoreNotFoundException, CustomerNotFoundException;
 
     List<Customer> findAll();
 
