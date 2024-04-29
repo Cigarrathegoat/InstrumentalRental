@@ -43,6 +43,9 @@ public class StoreService implements IStoreService {
         else {
             List<Store> savedStoreList = new ArrayList<>();
             for (Store store : storeList) {
+                for (Customer customer : store.getCustomers()) customer.setStore(store);
+                for (Attendant attendant : store.getAttendants()) attendant.setStore(store);
+                for (Instrument instrument : store.getInstruments()) instrument.setStore(store);
                 storeRepository.save(store);
                 savedStoreList.add(store);
             }
