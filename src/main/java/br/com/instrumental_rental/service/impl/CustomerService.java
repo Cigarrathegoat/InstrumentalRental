@@ -2,6 +2,7 @@ package br.com.instrumental_rental.service.impl;
 
 import br.com.instrumental_rental.exceptions.CustomerNotFoundException;
 import br.com.instrumental_rental.exceptions.RentalNotFoundException;
+import br.com.instrumental_rental.exceptions.StoreNotFoundException;
 import br.com.instrumental_rental.exceptions.WithdrawalGreaterThanBalanceException;
 import br.com.instrumental_rental.repository.entities.Customer;
 import br.com.instrumental_rental.repository.entities.Rental;
@@ -9,6 +10,7 @@ import br.com.instrumental_rental.repository.interfaces.ICustomerRepository;
 import br.com.instrumental_rental.repository.interfaces.IRentalRepository;
 import br.com.instrumental_rental.service.interfaces.ICustomerService;
 import br.com.instrumental_rental.service.interfaces.IRentalService;
+import br.com.instrumental_rental.service.interfaces.IStoreService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,11 +29,14 @@ public class CustomerService implements ICustomerService {
 
     private final IRentalService rentalService;
 
+    private final IStoreService storeService;
+
     @Autowired
     private CustomerService(ICustomerRepository customerRepositoryParameter,
-                            IRentalService rentalService) {
+                            IRentalService rentalService, IStoreService storeService) {
         this.customerRepositoryAttribute = customerRepositoryParameter;
         this.rentalService = rentalService;
+        this.storeService = storeService;
     }
 
     public Customer findCustomerById(Long customerId) throws CustomerNotFoundException {
@@ -46,6 +51,12 @@ public class CustomerService implements ICustomerService {
     public void addToRentals(Long customerId, Long rentalId)
             throws CustomerNotFoundException, RentalNotFoundException {
         findCustomerById(customerId).getRentals().add(rentalService.findById(rentalId));
+    }
+
+    @Override
+    public void addToStore(Long customerId, Long storeId)
+            throws CustomerNotFoundException, StoreNotFoundException {
+        storeService.findById(storeId).getCustomers().add(findCustomerById(customerId));
     }
 
 

@@ -2,6 +2,7 @@ package br.com.instrumental_rental.service.interfaces;
 
 import br.com.instrumental_rental.exceptions.CustomerNotFoundException;
 import br.com.instrumental_rental.exceptions.RentalNotFoundException;
+import br.com.instrumental_rental.exceptions.StoreNotFoundException;
 import br.com.instrumental_rental.exceptions.WithdrawalGreaterThanBalanceException;
 import br.com.instrumental_rental.repository.entities.Customer;
 import br.com.instrumental_rental.repository.entities.Rental;
@@ -33,5 +34,8 @@ public interface ICustomerService {
 
     void addToRentals (Long customerId, Long rentalId) throws CustomerNotFoundException,
             RentalNotFoundException;
+
+    void addToStore(Long customerId, Long storeId) throws CustomerNotFoundException,
+            StoreNotFoundException;
 
 }
