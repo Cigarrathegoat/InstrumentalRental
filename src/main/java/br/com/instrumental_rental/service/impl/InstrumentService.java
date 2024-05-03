@@ -81,7 +81,8 @@ public class InstrumentService implements IInstrumentService {
     }
 
     @Override
-    public Instrument update(Instrument instrument) throws InstrumentNotFoundException {
+    public Instrument update(Instrument instrument) throws InstrumentNotFoundException,
+            StoreNotFoundException {
         var instrumentToUpdate = findById(instrument.getInstrumentId());
         instrumentToUpdate.setType(instrument.getType());
         instrumentToUpdate.setMake(instrument.getMake());

@@ -1,6 +1,7 @@
 package br.com.instrumental_rental.service;
 
 import br.com.instrumental_rental.exceptions.InstrumentNotFoundException;
+import br.com.instrumental_rental.exceptions.StoreNotFoundException;
 import br.com.instrumental_rental.models.InstrumentBuilder;
 import br.com.instrumental_rental.repository.entities.Instrument;
 import br.com.instrumental_rental.repository.interfaces.IInstrumentRepository;
@@ -36,7 +37,7 @@ public class InstrumentServiceTest {
     }
 
     @Test
-    void testSaveSuccess() {
+    void testSaveSuccess() throws InstrumentNotFoundException, StoreNotFoundException{
         var builder = InstrumentBuilder.instrumentBuilder();
         var builderNoId = InstrumentBuilder.instrumentNoIdBuilder();
         when(instrumentRepository.save(builderNoId)).thenReturn(builder);
@@ -87,8 +88,10 @@ public class InstrumentServiceTest {
         Assertions.assertIterableEquals(List.of(builder), listed);
     }
 
+    @
+
     @Test
-    void testUpdateSuccess() throws InstrumentNotFoundException {
+    void testUpdateSuccess() throws InstrumentNotFoundException, StoreNotFoundException {
         var builder = InstrumentBuilder.instrumentBuilder();
         var builderUpdated = InstrumentBuilder.instrumentBuilder();
         when(instrumentRepository.findById(builder.getInstrumentId()))

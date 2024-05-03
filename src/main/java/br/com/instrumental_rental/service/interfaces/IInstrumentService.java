@@ -17,7 +17,7 @@ public interface IInstrumentService {
 
     Instrument findById(Long instrumentId) throws InstrumentNotFoundException;
 
-    public Instrument update(Instrument instrument) throws InstrumentNotFoundException;
+    public Instrument update(Instrument instrument) throws InstrumentNotFoundException, StoreNotFoundException;
 
     public void delete(Long instrumentId) throws InstrumentNotFoundException;
 
