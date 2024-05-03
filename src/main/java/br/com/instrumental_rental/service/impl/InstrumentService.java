@@ -29,11 +29,12 @@ public class InstrumentService implements IInstrumentService {
     IStoreService storeService;
 
     @Override
-    public List<Instrument> saveFirstTime(List<Instrument> instrumentList) {
+    public List<Instrument> saveFirstTime(List<Instrument> instrumentList)
+            throws StoreNotFoundException, InstrumentNotFoundException {
         List<Instrument> savedInstruments = new ArrayList<>();
         for (Instrument instrument : instrumentList) {
-            Instrument savedInstrument = instrumentRepository.save(instrument);
-            savedInstruments.add(savedInstrument);
+            addToStore(instrument.getInstrumentId(), instrument.getStore().getStoreId());
+            savedInstruments.add(instrumentRepository.save(instrument));
         }
         return savedInstruments;
     }

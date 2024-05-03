@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface IInstrumentService {
 
-    public List<Instrument> saveFirstTime(List<Instrument> instrumentList);
+    public List<Instrument> saveFirstTime(List<Instrument> instrumentList) throws StoreNotFoundException, InstrumentNotFoundException;
 
     Instrument save(Instrument instrument) throws StoreNotFoundException, InstrumentNotFoundException;
 

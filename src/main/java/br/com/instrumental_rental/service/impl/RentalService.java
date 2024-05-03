@@ -80,7 +80,9 @@ public class RentalService implements IRentalService {
     }
 
     private void nonRentalAttributesUpdater(Instrument instrument, Customer customer,
-                                            Attendant attendant, Rental rental) {
+                                            Attendant attendant, Rental rental)
+            throws StoreNotFoundException, InstrumentNotFoundException,
+            CustomerNotFoundException, AttendantNotFoundException {
         instrument.setAvailable(!instrument.isAvailable());
         customer.setAccountBalance(customer.getAccountBalance().subtract(
                         rentalPriceSetter(instrument, rental)));
@@ -102,8 +104,8 @@ public class RentalService implements IRentalService {
     @Override
     public List<Rental> saveFirstTime(List<Rental> rentalList) throws CustomerNotFoundException,
             InstrumentNotFoundException, RentalNotFoundException,
-    AttendantNotFoundException, WithdrawalGreaterThanBalanceException,
-            EndDateNotAfterStartDateException {
+            AttendantNotFoundException, WithdrawalGreaterThanBalanceException,
+            EndDateNotAfterStartDateException, StoreNotFoundException {
         List<Rental> savedRentals = new ArrayList<>();
         for (Rental rental : rentalList) {
             rental.setCustomer(customerServiceAttribute.findCustomerById(rental.getCustomer()
@@ -127,7 +129,7 @@ public class RentalService implements IRentalService {
     @Override
     public Rental save(Rental rental) throws CustomerNotFoundException, InstrumentNotFoundException,
             AttendantNotFoundException, RentalNotFoundException, WithdrawalGreaterThanBalanceException,
-            EndDateNotAfterStartDateException {
+            EndDateNotAfterStartDateException, StoreNotFoundException {
 
         rental.setCustomer(customerServiceAttribute.findCustomerById(rental.getCustomer()
                 .getPersonId()));

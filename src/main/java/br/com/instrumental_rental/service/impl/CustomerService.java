@@ -65,9 +65,8 @@ public class CustomerService implements ICustomerService {
             throws StoreNotFoundException, CustomerNotFoundException {
         List<Customer> savedCustomers = new ArrayList<>();
         for (Customer customer : customerList) {
-            Customer savedCustomer = customerRepositoryAttribute.save(customer);
             addToStore(customer.getPersonId(), customer.getStore().getStoreId());
-            savedCustomers.add(savedCustomer);
+            savedCustomers.add(customerRepositoryAttribute.save(customer));
         }
         return savedCustomers;
     }

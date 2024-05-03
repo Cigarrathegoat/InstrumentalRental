@@ -5,6 +5,7 @@ import br.com.instrumental_rental.controller.api.InstrumentAPI;
 import br.com.instrumental_rental.controller.dto.responses.responses.InstrumentListResponseDTO;
 import br.com.instrumental_rental.controller.dto.responses.responses.InstrumentResponseDTO;
 import br.com.instrumental_rental.exceptions.InstrumentNotFoundException;
+import br.com.instrumental_rental.exceptions.StoreNotFoundException;
 import br.com.instrumental_rental.models.InstrumentBuilder;
 import br.com.instrumental_rental.models.InstrumentDTOBuilder;
 import br.com.instrumental_rental.repository.interfaces.IInstrumentRepository;
@@ -43,7 +44,7 @@ public class InstrumentAPITest {
     }
 
     @Test
-    void testSaveSuccess() {
+    void testSaveSuccess() throws StoreNotFoundException, InstrumentNotFoundException {
         var instrument = InstrumentBuilder.instrumentBuilder();
         var instrumentNoId = InstrumentBuilder.instrumentNoIdBuilder();
         var instrumentDTO = InstrumentDTOBuilder.instrumentDTOBuilder();
@@ -113,7 +114,7 @@ public class InstrumentAPITest {
     }
 
     @Test
-    void updateSuccess() throws InstrumentNotFoundException {
+    void updateSuccess() throws InstrumentNotFoundException, StoreNotFoundException {
         var instrument = InstrumentBuilder.instrumentBuilder();
         var instrumentDTO = InstrumentDTOBuilder.instrumentDTOBuilder();
         when(instrumentMapper.convertToEntity(instrumentDTO)).thenReturn(instrument);
@@ -124,7 +125,7 @@ public class InstrumentAPITest {
     }
 
     @Test
-    void updateInstrumentNotFoundException() throws InstrumentNotFoundException {
+    void updateInstrumentNotFoundException() throws InstrumentNotFoundException, StoreNotFoundException {
         var instrument = InstrumentBuilder.instrumentBuilder();
         var instrumentDTO = InstrumentDTOBuilder.instrumentDTOBuilder();
         when(instrumentMapper.convertToEntity(instrumentDTO)).thenReturn(instrument);

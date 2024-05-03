@@ -64,9 +64,8 @@ public class AttendantService implements IAttendantService {
             throws StoreNotFoundException, AttendantNotFoundException {
         List<Attendant> savedAttendants = new ArrayList<>();
         for (Attendant attendant : attendantList) {
-            Attendant savedAttendant = attendantRepository.save(attendant);
             addToStore(attendant.getPersonId(), attendant.getStore().getStoreId());
-            savedAttendants.add(savedAttendant);
+            savedAttendants.add(attendantRepository.save(attendant));
         }
         return savedAttendants;
     }
