@@ -17,9 +17,8 @@ public class CustomerBuilder {
         return Customer.builder()
                 .personId(1L).name("Johnny").dateOfBirth(LocalDate.parse("25-08-1985",
                         DateTimeFormatter.ofPattern("dd-MM-yyyy")))
-                .socialSecurityNumber("123456789")
-                .driversLicenseNumber("1234567")
-                .accountBalance(BigDecimal.valueOf(5000))
+                .socialSecurityNumber("123456789").driversLicenseNumber("1234567")
+                .accountBalance(BigDecimal.valueOf(5000)).store(StoreBuilder.storeBuilder())
                 .build();
     }
 

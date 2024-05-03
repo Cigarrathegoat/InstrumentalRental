@@ -12,20 +12,16 @@ public class AttendantBuilder {
             "1", "Mark", BigDecimal.valueOf(0));*/
     public static Attendant attendantBuilder() {
         return Attendant.builder().personId(1L)
-                .name("Mikey")
-                .dateOfBirth(LocalDate.of(1998, 12, 25))
-                .driversLicenseNumber("1234567")
-                .socialSecurityNumber("123456789")
-                .totalCommission(BigDecimal.valueOf(0))
+                .name("Mikey").dateOfBirth(LocalDate.of(1998, 12, 25))
+                .driversLicenseNumber("1234567").socialSecurityNumber("123456789")
+                .totalCommission(BigDecimal.valueOf(0)).store(StoreBuilder.storeBuilder())
                 .build();
     }
 
     public static Attendant attendantBuilderNoId() {
-        return Attendant.builder().name("Mikey")
-                .dateOfBirth(LocalDate.of(1998, 12, 25))
-                .driversLicenseNumber("1234567")
-                .socialSecurityNumber("123456789")
-                .totalCommission(BigDecimal.valueOf(0))
+        return Attendant.builder().name("Mikey").dateOfBirth(LocalDate.of(1998, 12, 25))
+                .driversLicenseNumber("1234567").socialSecurityNumber("123456789")
+                .totalCommission(BigDecimal.valueOf(0)).store(StoreBuilder.storeBuilder())
                 .build();
     }
 }
