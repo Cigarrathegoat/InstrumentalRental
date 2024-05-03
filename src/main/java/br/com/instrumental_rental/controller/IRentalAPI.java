@@ -20,7 +20,7 @@ public interface IRentalAPI {
     public RentalResponseDTO add(RentalDTO rentalDTO)
             throws CustomerNotFoundException, InstrumentNotFoundException,
             AttendantNotFoundException, WithdrawalGreaterThanBalanceException,
-            EndDateNotAfterStartDateException;
+            EndDateNotAfterStartDateException, StoreNotFoundException, RentalNotFoundException;
 
     @ApiOperation(value = "find Rental object",
     response = RentalResponseDTO.class)

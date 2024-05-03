@@ -1,9 +1,12 @@
 package br.com.instrumental_rental.service.impl;
 
 import br.com.instrumental_rental.exceptions.ContactNotFoundException;
+import br.com.instrumental_rental.exceptions.RentalNotFoundException;
 import br.com.instrumental_rental.repository.entities.Contact;
 import br.com.instrumental_rental.repository.interfaces.IContactRepository;
 import br.com.instrumental_rental.service.interfaces.IContactService;
+import br.com.instrumental_rental.service.interfaces.IRentalService;
+import br.com.instrumental_rental.service.interfaces.IStoreService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

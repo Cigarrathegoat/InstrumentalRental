@@ -39,12 +39,16 @@ public class AttendantServiceTest {
         var builder = AttendantBuilder.attendantBuilder();
         var builderNoId = AttendantBuilder.attendantBuilderNoId();
         when(attendantRepository.save(builderNoId)).thenReturn(builder);
+        doNothing().when(attendantService).addToStore(builder.getPersonId(), builder.getStore().getStoreId());
         Attendant saved = attendantService.save(builderNoId);
-        Assertions.assertNotNull(saved);
+        verify(attendantRepository, times(1)).save(builderNoId);
+        verify(attendantService, times(1))
+                .addToStore(builder.getPersonId(), builder.getStore().getStoreId());
+        Assertions.assertEquals(builder, saved);
     }
 
     @Test
-    void testSaveFirstTimeSuccess() {
+    void testSaveFirstTimeSuccess() throws StoreNotFoundException, AttendantNotFoundException {
         var builder = AttendantBuilder.attendantBuilder();
         var builderNoId = AttendantBuilder.attendantBuilderNoId();
         when(attendantRepository.save(builderNoId)).thenReturn(builder);

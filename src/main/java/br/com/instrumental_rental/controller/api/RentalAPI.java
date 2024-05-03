@@ -32,7 +32,7 @@ public class RentalAPI implements IRentalAPI {
     public RentalResponseDTO add(@RequestBody RentalDTO rentalDTO)
             throws CustomerNotFoundException, InstrumentNotFoundException,
             AttendantNotFoundException, WithdrawalGreaterThanBalanceException,
-            EndDateNotAfterStartDateException {
+            EndDateNotAfterStartDateException, StoreNotFoundException, RentalNotFoundException {
         return RentalResponseDTO.builder().data(
                 rentalMapper.convertToDTO(rentalService.save(rentalMapper.convertToEntity(rentalDTO)
                         )
@@ -44,7 +44,7 @@ public class RentalAPI implements IRentalAPI {
     public ResponseEntity<RentalListResponseDTO> addList(@RequestBody List<RentalDTO> rentalListDTO)
             throws CustomerNotFoundException, InstrumentNotFoundException,
             AttendantNotFoundException, WithdrawalGreaterThanBalanceException,
-            EndDateNotAfterStartDateException{
+            EndDateNotAfterStartDateException, StoreNotFoundException, RentalNotFoundException {
         rentalService.saveFirstTime(rentalMapper.convertToEntityList(rentalListDTO));
         return ResponseEntity.ok(RentalListResponseDTO.builder()
                 .addListMessage("List successfully added").build());
