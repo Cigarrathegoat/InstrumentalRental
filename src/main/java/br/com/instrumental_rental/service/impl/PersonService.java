@@ -1,14 +1,14 @@
 package br.com.instrumental_rental.service.impl;
 
 import br.com.instrumental_rental.exceptions.PersonNotFoundException;
+import br.com.instrumental_rental.exceptions.StoreNotFoundException;
 import br.com.instrumental_rental.repository.entities.Person;
 import br.com.instrumental_rental.repository.interfaces.IPersonRepository;
 import br.com.instrumental_rental.service.interfaces.IPersonService;
+import br.com.instrumental_rental.service.interfaces.IStoreService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import static java.nio.file.Paths.get;
 
 @Service
 @Slf4j
@@ -16,21 +16,19 @@ public class PersonService implements IPersonService {
 
     IPersonRepository personRepository;
 
+    IStoreService storeService;
+
     @Autowired
-    public PersonService(IPersonRepository personRepository) {
+    public PersonService(IPersonRepository personRepository, IStoreService storeRepository) {
         this.personRepository = personRepository;
+        this.storeService = storeRepository;
     }
 
 
     @Override
-    public Person findById(Long personId) throws PersonNotFoundException {
-        return personRepository.findById(personId).orElseThrow(() ->
-                new PersonNotFoundException("P01", "Person not found")
-        );
+    public Person findById(Long Id) throws PersonNotFoundException, StoreNotFoundException {
+        return personRepository.findById(Id).orElseThrow(() ->
+                new PersonNotFoundException("P01", "Person Not Found"));
     }
 
-    @Override
-    public Person findByIdWithoutExceptionThrown(Long personId) {
-        return get(personRepository.findById(personId));
-    }
 }

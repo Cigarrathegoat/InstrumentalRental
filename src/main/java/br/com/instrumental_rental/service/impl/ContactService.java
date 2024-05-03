@@ -46,13 +46,12 @@ public class ContactService implements IContactService {
     @Override
     public void addToPersonOrStore(Long contactId, Long personOrStoreId)
             throws ContactNotFoundException, StoreNotFoundException, PersonNotFoundException {
-        Contact contact = findById(contactId);
-        Store inCaseItIsAStore = storeService.findById(personOrStoreId);
-        if (inCaseItIsAStore != null) {
-            inCaseItIsAStore.getContacts().add(contact);
-        } else {
-            Person inCaseitisAPerson = personService.findById(personOrStoreId);
-            inCaseItIsAStore.getContacts().add(contact);
+        try {
+            var person = personService.findById(personOrStoreId);
+            person.getContacts().add(findById(contactId));
+        } catch (PersonNotFoundException e) {
+            var store = storeService.findById(personOrStoreId);
+            store.getContacts().add(findById(contactId));
         }
     }
 
