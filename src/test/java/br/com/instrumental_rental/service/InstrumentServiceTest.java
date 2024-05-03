@@ -88,7 +88,10 @@ public class InstrumentServiceTest {
         Assertions.assertIterableEquals(List.of(builder), listed);
     }
 
-    @
+    @Test
+    void testAddToStore() {
+        var builder = InstrumentBuilder.instrumentBuilder();
+    }
 
     @Test
     void testUpdateSuccess() throws InstrumentNotFoundException, StoreNotFoundException {
