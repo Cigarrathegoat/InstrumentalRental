@@ -1,6 +1,7 @@
 package br.com.instrumental_rental.service;
 
 import br.com.instrumental_rental.exceptions.AttendantNotFoundException;
+import br.com.instrumental_rental.exceptions.StoreNotFoundException;
 import br.com.instrumental_rental.models.AttendantBuilder;
 import br.com.instrumental_rental.repository.entities.Attendant;
 import br.com.instrumental_rental.repository.interfaces.IAttendantRepository;
@@ -34,7 +35,7 @@ public class AttendantServiceTest {
 
 
     @Test
-    void testSaveSuccess() {
+    void testSaveSuccess() throws StoreNotFoundException, AttendantNotFoundException {
         var builder = AttendantBuilder.attendantBuilder();
         var builderNoId = AttendantBuilder.attendantBuilderNoId();
         when(attendantRepository.save(builderNoId)).thenReturn(builder);
