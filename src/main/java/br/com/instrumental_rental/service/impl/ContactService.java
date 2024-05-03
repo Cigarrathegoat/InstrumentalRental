@@ -4,6 +4,8 @@ import br.com.instrumental_rental.exceptions.ContactNotFoundException;
 import br.com.instrumental_rental.exceptions.RentalNotFoundException;
 import br.com.instrumental_rental.exceptions.StoreNotFoundException;
 import br.com.instrumental_rental.repository.entities.Contact;
+import br.com.instrumental_rental.repository.entities.Person;
+import br.com.instrumental_rental.repository.entities.Store;
 import br.com.instrumental_rental.repository.interfaces.IContactRepository;
 import br.com.instrumental_rental.service.interfaces.IContactService;
 import br.com.instrumental_rental.service.interfaces.IRentalService;
@@ -23,8 +25,11 @@ public class ContactService implements IContactService {
 
     IStoreService storeService;
 
+    IPersonService personService;
+
     @Autowired
-    public ContactService(IContactRepository contactRepository, IStoreService storeService) {
+    public ContactService(IContactRepository contactRepository, IStoreService storeService,
+                          IPersonService personService) {
         this.contactRepository = contactRepository;
         this.storeService = storeService;
     }
@@ -36,8 +41,16 @@ public class ContactService implements IContactService {
     }
 
     @Override
-    public void addToStore(Long contactId, Long storeId) throws ContactNotFoundException, StoreNotFoundException {
-        storeService.findById(storeId).getContacts().add(findById(contactId));
+    public void addToPersonOrStore(Long contactId, Long personOrStoreId)
+            throws ContactNotFoundException, StoreNotFoundException {
+        Contact contact = findById(contactId);
+        Store inCaseItIsAStore = storeService.findById(personOrStoreId);
+        if (inCaseItIsAStore != null) {
+            inCaseItIsAStore.getContacts().add(contact);
+        } else {
+            Person inCaseitisAPerson = findById(personOrStoreId);
+            inCaseItIsAStore.getContacts().add(personOrStoreId);
+        }
     }
 
     @Override

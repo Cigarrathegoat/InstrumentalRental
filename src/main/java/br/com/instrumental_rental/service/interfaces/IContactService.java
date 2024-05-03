@@ -22,5 +22,6 @@ public interface IContactService extends IService<Contact, Exception> {
 
     Contact findById(Long contactId) throws ContactNotFoundException;
 
-    void addToStore(Long contactId, Long storeId) throws ContactNotFoundException, StoreNotFoundException;
+    void addToPersonOrStore(Long contactId, Long personOrStoreId)
+            throws ContactNotFoundException, StoreNotFoundException;
 }
