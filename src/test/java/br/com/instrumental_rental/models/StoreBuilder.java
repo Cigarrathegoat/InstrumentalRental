@@ -12,13 +12,15 @@ public class StoreBuilder {
         return Store.builder().attendants(List.of(AttendantBuilder.attendantBuilder()))
                 .customers(List.of(CustomerBuilder.customerBuilder()))
                 .instruments(List.of(InstrumentBuilder.instrumentBuilder()))
-                .theAddress(TheAddressBuilder.theAddressBuilder()).build();
+                .theAddress(TheAddressBuilder.theAddressBuilder())
+                .contacts(List.of(ContactBuilder.contactBuilder())).build();
     }
 
     public static Store storeBuilder() {
         return Store.builder().storeId(1L).attendants(List.of(AttendantBuilder.attendantBuilder()))
                 .customers(List.of(CustomerBuilder.customerBuilder()))
                 .instruments(List.of(InstrumentBuilder.instrumentBuilder()))
-                .theAddress(TheAddressBuilder.theAddressBuilder()).build();
+                .theAddress(TheAddressBuilder.theAddressBuilder())
+                .contacts(List.of(ContactBuilder.contactBuilder())).build();
     }
 }

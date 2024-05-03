@@ -29,6 +29,10 @@ public class Contact {
     @JoinColumn(name = "PERSON_ID")
     private Person person;
 
+    @ManyToOne
+    @JoinColumn(name = "STORE_ID")
+    private Store store;
+
     @Column(name = "DS_NAME")
     private String contactName;
 

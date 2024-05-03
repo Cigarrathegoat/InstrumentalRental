@@ -50,5 +50,9 @@ public class Store {
     @JoinColumn(name = "ADDRESS_ID")
     private TheAddress theAddress;
 
+    @Column(name = "DS_CONTACTS")
+    @OneToMany(mappedBy = "store")
+    private List<Contact> contacts;
+
 
 }
