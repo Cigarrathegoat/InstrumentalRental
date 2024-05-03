@@ -1,6 +1,7 @@
 package br.com.instrumental_rental.service.interfaces;
 
 import br.com.instrumental_rental.exceptions.ContactNotFoundException;
+import br.com.instrumental_rental.exceptions.PersonNotFoundException;
 import br.com.instrumental_rental.exceptions.StoreNotFoundException;
 import br.com.instrumental_rental.repository.entities.Contact;
 
@@ -23,5 +24,5 @@ public interface IContactService extends IService<Contact, Exception> {
     Contact findById(Long contactId) throws ContactNotFoundException;
 
     void addToPersonOrStore(Long contactId, Long personOrStoreId)
-            throws ContactNotFoundException, StoreNotFoundException;
+            throws ContactNotFoundException, StoreNotFoundException, PersonNotFoundException;
 }

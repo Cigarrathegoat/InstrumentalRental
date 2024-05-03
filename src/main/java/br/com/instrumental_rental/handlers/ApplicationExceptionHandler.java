@@ -30,7 +30,7 @@ public class ApplicationExceptionHandler {
     public ResponseEntity<ErrorResponseDTO> personNotFoundExceptionHandler(
             PersonNotFoundException exception) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(ErrorResponseeDTO.builder()
+                .body(ErrorResponseDTO.builder()
                         .data(ErrorSpecificationDTO.builder()
                                 .errorCode("400")
                                 .errorMessage(exception.getMessage()

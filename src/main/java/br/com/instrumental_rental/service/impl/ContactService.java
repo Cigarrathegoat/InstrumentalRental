@@ -1,6 +1,7 @@
 package br.com.instrumental_rental.service.impl;
 
 import br.com.instrumental_rental.exceptions.ContactNotFoundException;
+import br.com.instrumental_rental.exceptions.PersonNotFoundException;
 import br.com.instrumental_rental.exceptions.RentalNotFoundException;
 import br.com.instrumental_rental.exceptions.StoreNotFoundException;
 import br.com.instrumental_rental.repository.entities.Contact;
@@ -44,14 +45,14 @@ public class ContactService implements IContactService {
 
     @Override
     public void addToPersonOrStore(Long contactId, Long personOrStoreId)
-            throws ContactNotFoundException, StoreNotFoundException {
+            throws ContactNotFoundException, StoreNotFoundException, PersonNotFoundException {
         Contact contact = findById(contactId);
         Store inCaseItIsAStore = storeService.findById(personOrStoreId);
         if (inCaseItIsAStore != null) {
             inCaseItIsAStore.getContacts().add(contact);
         } else {
-            Person inCaseitisAPerson = findById(personOrStoreId);
-            inCaseItIsAStore.getContacts().add(personOrStoreId);
+            Person inCaseitisAPerson = personService.findById(personOrStoreId);
+            inCaseItIsAStore.getContacts().add(contact);
         }
     }
 

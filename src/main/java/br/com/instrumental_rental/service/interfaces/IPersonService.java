@@ -6,4 +6,6 @@ import br.com.instrumental_rental.repository.entities.Person;
 public interface IPersonService {
 
     Person findById(Long personId) throws PersonNotFoundException;
+
+    Person findByIdWithoutExceptionThrown(Long personId);
 }
