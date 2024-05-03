@@ -6,6 +6,7 @@ import br.com.instrumental_rental.controller.dto.responses.responses.DeleteRespo
 import br.com.instrumental_rental.controller.dto.responses.responses.InstrumentListResponseDTO;
 import br.com.instrumental_rental.controller.dto.responses.responses.InstrumentResponseDTO;
 import br.com.instrumental_rental.exceptions.InstrumentNotFoundException;
+import br.com.instrumental_rental.exceptions.StoreNotFoundException;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -17,7 +18,7 @@ public interface IInstrumentAPI {
     response = InstrumentResponseDTO.class)
     @ApiResponses(value = {@ApiResponse(code = 200, message = "success"),
     @ApiResponse(code = 404, response = ErrorSpecificationDTO.class, message = "not found")})
-    public InstrumentResponseDTO add(InstrumentDTO instrumentDTO);
+    public InstrumentResponseDTO add(InstrumentDTO instrumentDTO) throws StoreNotFoundException, InstrumentNotFoundException;
 
     @ApiOperation(value = "find Instrument object",
     response = InstrumentResponseDTO.class)
@@ -36,7 +37,7 @@ public interface IInstrumentAPI {
     @ApiResponses(value = {@ApiResponse(code = 200, message = "success"),
     @ApiResponse(code = 404, response = ErrorSpecificationDTO.class, message = "not found")})
     public InstrumentResponseDTO update(Long instrumentID, InstrumentDTO instrumentDTO)
-        throws InstrumentNotFoundException;
+            throws InstrumentNotFoundException, StoreNotFoundException;
 
     @ApiOperation(value = "delete Instrument object",
     response = DeleteResponseDTO.class)

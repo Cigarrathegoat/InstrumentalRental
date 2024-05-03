@@ -7,6 +7,7 @@ import br.com.instrumental_rental.controller.dto.responses.responses.DeleteRespo
 import br.com.instrumental_rental.controller.dto.responses.responses.InstrumentListResponseDTO;
 import br.com.instrumental_rental.controller.dto.responses.responses.InstrumentResponseDTO;
 import br.com.instrumental_rental.exceptions.InstrumentNotFoundException;
+import br.com.instrumental_rental.exceptions.StoreNotFoundException;
 import br.com.instrumental_rental.service.interfaces.IInstrumentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +30,8 @@ public class InstrumentAPI implements IInstrumentAPI {
     }
 
     @PostMapping("/add")
-    public InstrumentResponseDTO add(@RequestBody InstrumentDTO instrumentDTO) {
+    public InstrumentResponseDTO add(@RequestBody InstrumentDTO instrumentDTO)
+            throws StoreNotFoundException, InstrumentNotFoundException {
         return InstrumentResponseDTO.builder()
                 .data(
                         instrumentMapper.convertToDTO(instrumentService.save(
@@ -39,7 +41,8 @@ public class InstrumentAPI implements IInstrumentAPI {
 
     @PostMapping("/add_list")
     public ResponseEntity<InstrumentListResponseDTO> addList(
-            @RequestBody List<InstrumentDTO> instrumentDTOList) {
+            @RequestBody List<InstrumentDTO> instrumentDTOList)
+            throws StoreNotFoundException, InstrumentNotFoundException {
         instrumentService.saveFirstTime(instrumentMapper.convertToEntityList(instrumentDTOList));
 
         return ResponseEntity.ok(InstrumentListResponseDTO.builder()
@@ -62,7 +65,7 @@ public class InstrumentAPI implements IInstrumentAPI {
     @PutMapping("/update/{instrumentId}")
     public InstrumentResponseDTO update(@PathVariable("instrumentId") Long instrumentID,
                                         @RequestBody InstrumentDTO instrumentDTO)
-            throws InstrumentNotFoundException {
+            throws InstrumentNotFoundException, StoreNotFoundException {
         return InstrumentResponseDTO.builder()
                 .data(
                         instrumentMapper.convertToDTO(

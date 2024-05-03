@@ -8,6 +8,7 @@ import br.com.instrumental_rental.controller.dto.responses.responses.CustomerLis
 import br.com.instrumental_rental.controller.dto.responses.responses.CustomerResponseDTO;
 import br.com.instrumental_rental.controller.dto.responses.responses.DeleteResponseDTO;
 import br.com.instrumental_rental.exceptions.CustomerNotFoundException;
+import br.com.instrumental_rental.exceptions.StoreNotFoundException;
 import br.com.instrumental_rental.exceptions.WithdrawalGreaterThanBalanceException;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -23,11 +24,11 @@ public interface ICustomerAPI {
     response = CustomerResponseDTO.class)
     @ApiResponses(value = {@ApiResponse(code = 200, message = "success"),
     @ApiResponse(code =404, response = ErrorSpecificationDTO.class, message = "not found")})
-    CustomerResponseDTO add(CustomerDTO customerDTO);
+    CustomerResponseDTO add(CustomerDTO customerDTO) throws StoreNotFoundException, CustomerNotFoundException;
 
     @ApiOperation(value = "add list of Customer objects", response = CustomerListResponseDTO.class)
     @ApiResponses(value = {@ApiResponse(code = 200, message = "success")})
-    ResponseEntity<CustomerListResponseDTO> addList(List<CustomerDTO> customerDTOList);
+    ResponseEntity<CustomerListResponseDTO> addList(List<CustomerDTO> customerDTOList) throws StoreNotFoundException, CustomerNotFoundException;
 
     @ApiOperation(value = "find Customer object",
     response = CustomerResponseDTO.class)

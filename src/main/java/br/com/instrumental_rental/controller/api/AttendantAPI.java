@@ -9,6 +9,7 @@ import br.com.instrumental_rental.controller.dto.responses.responses.AttendantRe
 import br.com.instrumental_rental.controller.dto.responses.responses.DeleteResponseDTO;
 import br.com.instrumental_rental.exceptions.AttendantNotFoundException;
 import br.com.instrumental_rental.exceptions.CustomerNotFoundException;
+import br.com.instrumental_rental.exceptions.StoreNotFoundException;
 import br.com.instrumental_rental.repository.entities.Attendant;
 import br.com.instrumental_rental.service.interfaces.IAttendantService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,8 @@ public class AttendantAPI implements IAttendantAPI {
     }
 
     @PostMapping("/new")
-    public AttendantResponseDTO add(@RequestBody AttendantDTO attendantDTO) {
+    public AttendantResponseDTO add(@RequestBody AttendantDTO attendantDTO)
+            throws StoreNotFoundException, AttendantNotFoundException {
         return AttendantResponseDTO.builder()
                 .data(
                         attendantMapper.convertToDTO(
@@ -47,7 +49,7 @@ public class AttendantAPI implements IAttendantAPI {
     @PostMapping("/new_list")
     public ResponseEntity<AttendantListResponseDTO> addList(
             @RequestBody List<AttendantDTO> attendantDTOList
-    ) {
+    ) throws StoreNotFoundException, AttendantNotFoundException {
        attendantService.saveFirstTime(attendantMapper.convertToEntityList(attendantDTOList));
        return ResponseEntity.ok(
                AttendantListResponseDTO.builder()

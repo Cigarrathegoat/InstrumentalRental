@@ -11,6 +11,7 @@ import br.com.instrumental_rental.controller.dto.responses.responses.CustomerLis
 import br.com.instrumental_rental.controller.dto.responses.responses.CustomerResponseDTO;
 import br.com.instrumental_rental.controller.dto.responses.responses.DeleteResponseDTO;
 import br.com.instrumental_rental.exceptions.CustomerNotFoundException;
+import br.com.instrumental_rental.exceptions.StoreNotFoundException;
 import br.com.instrumental_rental.exceptions.WithdrawalGreaterThanBalanceException;
 import br.com.instrumental_rental.repository.entities.Customer;
 import br.com.instrumental_rental.service.interfaces.ICustomerService;
@@ -38,7 +39,8 @@ public class CustomerAPI implements ICustomerAPI {
     }
 
     @PostMapping("/add")
-    public CustomerResponseDTO add(@RequestBody CustomerDTO customerDTO) {
+    public CustomerResponseDTO add(@RequestBody CustomerDTO customerDTO)
+            throws StoreNotFoundException, CustomerNotFoundException {
 
         return CustomerResponseDTO.builder()
                 .data(
@@ -52,7 +54,8 @@ public class CustomerAPI implements ICustomerAPI {
 
     @PostMapping("/addList")
     public ResponseEntity<CustomerListResponseDTO> addList(
-            @RequestBody List<CustomerDTO> customerDTOList) {
+            @RequestBody List<CustomerDTO> customerDTOList)
+            throws StoreNotFoundException, CustomerNotFoundException {
         customerServiceAttribute.saveFirstTime(
                 customerMapperAttribute.convertToEntityList(
                         customerDTOList)

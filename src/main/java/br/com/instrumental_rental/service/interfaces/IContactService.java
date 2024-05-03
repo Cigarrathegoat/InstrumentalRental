@@ -1,6 +1,7 @@
 package br.com.instrumental_rental.service.interfaces;
 
 import br.com.instrumental_rental.exceptions.ContactNotFoundException;
+import br.com.instrumental_rental.exceptions.StoreNotFoundException;
 import br.com.instrumental_rental.repository.entities.Contact;
 
 import java.util.List;
@@ -20,4 +21,6 @@ public interface IContactService extends IService<Contact, Exception> {
     List<Contact> findContactsByNameProvided(String name) throws ContactNotFoundException;
 
     Contact findById(Long contactId) throws ContactNotFoundException;
+
+    void addToStore(Long contactId, Long storeId) throws ContactNotFoundException, StoreNotFoundException;
 }

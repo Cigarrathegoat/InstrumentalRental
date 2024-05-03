@@ -2,6 +2,7 @@ package br.com.instrumental_rental.service.impl;
 
 import br.com.instrumental_rental.exceptions.ContactNotFoundException;
 import br.com.instrumental_rental.exceptions.RentalNotFoundException;
+import br.com.instrumental_rental.exceptions.StoreNotFoundException;
 import br.com.instrumental_rental.repository.entities.Contact;
 import br.com.instrumental_rental.repository.interfaces.IContactRepository;
 import br.com.instrumental_rental.service.interfaces.IContactService;
@@ -20,15 +21,23 @@ public class ContactService implements IContactService {
 
     IContactRepository contactRepository;
 
+    IStoreService storeService;
+
     @Autowired
-    public ContactService(IContactRepository contactRepository) {
+    public ContactService(IContactRepository contactRepository, IStoreService storeService) {
         this.contactRepository = contactRepository;
+        this.storeService = storeService;
     }
 
     public Contact findById(Long contactId) throws ContactNotFoundException {
         var contact = contactRepository.findById(contactId)
                 .orElseThrow(() -> new ContactNotFoundException("C01", "Contact not found"));
         return contact;
+    }
+
+    @Override
+    public void addToStore(Long contactId, Long storeId) throws ContactNotFoundException, StoreNotFoundException {
+        storeService.findById(storeId).getContacts().add(findById(contactId));
     }
 
     @Override

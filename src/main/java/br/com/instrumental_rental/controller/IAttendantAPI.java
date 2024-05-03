@@ -8,6 +8,7 @@ import br.com.instrumental_rental.controller.dto.responses.responses.AttendantRe
 import br.com.instrumental_rental.controller.dto.responses.responses.DeleteResponseDTO;
 import br.com.instrumental_rental.exceptions.AttendantNotFoundException;
 import br.com.instrumental_rental.exceptions.CustomerNotFoundException;
+import br.com.instrumental_rental.exceptions.StoreNotFoundException;
 import br.com.instrumental_rental.repository.entities.Attendant;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -23,13 +24,13 @@ public interface IAttendantAPI {
             response = AttendantDTO.class)
     @ApiResponses(value = {@ApiResponse(code = 200, message = "success"),
             @ApiResponse(code = 404, response = ErrorSpecificationDTO.class, message = "not found")})
-    AttendantResponseDTO add(AttendantDTO attendantDTO);
+    AttendantResponseDTO add(AttendantDTO attendantDTO) throws StoreNotFoundException, AttendantNotFoundException;
 
     @ApiOperation(value = "Add list of Attendant objects",
             response = AttendantListResponseDTO.class)
     @ApiResponses(value = {@ApiResponse(code = 200, message = "success")})
     public ResponseEntity<AttendantListResponseDTO>
-    addList(@RequestBody List<AttendantDTO> attendantDTOList);
+    addList(@RequestBody List<AttendantDTO> attendantDTOList) throws StoreNotFoundException, AttendantNotFoundException;
 
     @ApiOperation(value = "find Attendant object",
             response = AttendantResponseDTO.class)
