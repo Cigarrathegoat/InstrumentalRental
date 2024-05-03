@@ -26,6 +26,20 @@ public class ApplicationExceptionHandler {
                 );
     }
 
+    @ExceptionHandler(PersonNotFoundException.class)
+    public ResponseEntity<ErrorResponseDTO> personNotFoundExceptionHandler(
+            PersonNotFoundException exception) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(ErrorResponseeDTO.builder()
+                        .data(ErrorSpecificationDTO.builder()
+                                .errorCode("400")
+                                .errorMessage(exception.getMessage()
+                                ).build()
+                        ).build()
+                );
+    }
+
+
     @ExceptionHandler(ContactNotFoundException.class)
     public ResponseEntity<ErrorResponseDTO> contactNotFoundExceptionHandler(
             ContactNotFoundException exception) {

@@ -8,6 +8,7 @@ import br.com.instrumental_rental.repository.entities.Person;
 import br.com.instrumental_rental.repository.entities.Store;
 import br.com.instrumental_rental.repository.interfaces.IContactRepository;
 import br.com.instrumental_rental.service.interfaces.IContactService;
+import br.com.instrumental_rental.service.interfaces.IPersonService;
 import br.com.instrumental_rental.service.interfaces.IRentalService;
 import br.com.instrumental_rental.service.interfaces.IStoreService;
 import lombok.extern.slf4j.Slf4j;
@@ -32,6 +33,7 @@ public class ContactService implements IContactService {
                           IPersonService personService) {
         this.contactRepository = contactRepository;
         this.storeService = storeService;
+        this.personService = personService;
     }
 
     public Contact findById(Long contactId) throws ContactNotFoundException {
