@@ -23,8 +23,4 @@ public interface IInstrumentService {
 
 
     List<Instrument> findInstrumentByMakeOrModel(String makeOrModel) throws InstrumentNotFoundException;
-
-    void addToRentals(Long instrumentId, Long rentalId) throws InstrumentNotFoundException, RentalNotFoundException;
-
-    void addToStore(Long instrumentId, Long StoreId) throws InstrumentNotFoundException, StoreNotFoundException;
 }

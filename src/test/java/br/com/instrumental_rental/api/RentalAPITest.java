@@ -52,7 +52,7 @@ public class RentalAPITest {
 
     @Test
     void saveSuccess() throws CustomerNotFoundException, AttendantNotFoundException, InstrumentNotFoundException,
-            EndDateNotAfterStartDateException, WithdrawalGreaterThanBalanceException {
+            EndDateNotAfterStartDateException, WithdrawalGreaterThanBalanceException, StoreNotFoundException, RentalNotFoundException {
         var customer = CustomerBuilder.customerBuilder();
         var attendant = AttendantBuilder.attendantBuilder();
         var instrument = InstrumentBuilder.instrumentBuilder();
@@ -71,7 +71,7 @@ public class RentalAPITest {
 
     @Test
     void saveListSuccess() throws CustomerNotFoundException, AttendantNotFoundException, InstrumentNotFoundException,
-            EndDateNotAfterStartDateException, WithdrawalGreaterThanBalanceException {
+            EndDateNotAfterStartDateException, WithdrawalGreaterThanBalanceException, StoreNotFoundException, RentalNotFoundException {
         var customer = CustomerBuilder.customerBuilder();
         var attendant = AttendantBuilder.attendantBuilder();
         var instrument = InstrumentBuilder.instrumentBuilder();
@@ -92,7 +92,7 @@ public class RentalAPITest {
 
     @Test
     void testSaveListCustomerNotFoundException() throws CustomerNotFoundException, AttendantNotFoundException,
-            InstrumentNotFoundException, EndDateNotAfterStartDateException, WithdrawalGreaterThanBalanceException {
+            InstrumentNotFoundException, EndDateNotAfterStartDateException, WithdrawalGreaterThanBalanceException, StoreNotFoundException, RentalNotFoundException {
         var customer = CustomerBuilder.customerBuilder();
         var attendant = AttendantBuilder.attendantBuilder();
         var instrument = InstrumentBuilder.instrumentBuilder();
@@ -114,7 +114,7 @@ public class RentalAPITest {
 
     @Test
     void testSaveListAttendantNotFoundException() throws CustomerNotFoundException, AttendantNotFoundException,
-            InstrumentNotFoundException, EndDateNotAfterStartDateException, WithdrawalGreaterThanBalanceException {
+            InstrumentNotFoundException, EndDateNotAfterStartDateException, WithdrawalGreaterThanBalanceException, StoreNotFoundException, RentalNotFoundException {
         var customer = CustomerBuilder.customerBuilder();
         var attendant = AttendantBuilder.attendantBuilder();
         var instrument = InstrumentBuilder.instrumentBuilder();
@@ -136,7 +136,7 @@ public class RentalAPITest {
 
     @Test
     void testSaveListInstrumentNotFoundException() throws CustomerNotFoundException, AttendantNotFoundException,
-            InstrumentNotFoundException, WithdrawalGreaterThanBalanceException, EndDateNotAfterStartDateException {
+            InstrumentNotFoundException, WithdrawalGreaterThanBalanceException, EndDateNotAfterStartDateException, StoreNotFoundException, RentalNotFoundException {
         var customer = CustomerBuilder.customerBuilder();
         var attendant = AttendantBuilder.attendantBuilder();
         var instrument = InstrumentBuilder.instrumentBuilder();
@@ -159,7 +159,7 @@ public class RentalAPITest {
 
     @Test
     void saveCustomerNotFoundException() throws CustomerNotFoundException, AttendantNotFoundException, InstrumentNotFoundException,
-            EndDateNotAfterStartDateException, WithdrawalGreaterThanBalanceException {
+            EndDateNotAfterStartDateException, WithdrawalGreaterThanBalanceException, StoreNotFoundException, RentalNotFoundException {
         var customer = CustomerBuilder.customerBuilder();
         var attendant = AttendantBuilder.attendantBuilder();
         var instrument = InstrumentBuilder.instrumentBuilder();
@@ -178,7 +178,7 @@ public class RentalAPITest {
 
     @Test
     void saveAttendantNotFoundException() throws CustomerNotFoundException, AttendantNotFoundException, InstrumentNotFoundException,
-            EndDateNotAfterStartDateException, WithdrawalGreaterThanBalanceException {
+            EndDateNotAfterStartDateException, WithdrawalGreaterThanBalanceException, StoreNotFoundException, RentalNotFoundException {
         var customer = CustomerBuilder.customerBuilder();
         var attendant = AttendantBuilder.attendantBuilder();
         var instrument = InstrumentBuilder.instrumentBuilder();
@@ -197,7 +197,7 @@ public class RentalAPITest {
 
     @Test
     void saveInstrumentNotFoundException() throws CustomerNotFoundException, AttendantNotFoundException, InstrumentNotFoundException,
-            EndDateNotAfterStartDateException, WithdrawalGreaterThanBalanceException {
+            EndDateNotAfterStartDateException, WithdrawalGreaterThanBalanceException, StoreNotFoundException, RentalNotFoundException {
         var customer = CustomerBuilder.customerBuilder();
         var attendant = AttendantBuilder.attendantBuilder();
         var instrument = InstrumentBuilder.instrumentBuilder();
@@ -217,7 +217,7 @@ public class RentalAPITest {
     @Test
     void saveWithdrawalGreaterThanBalanceException() throws CustomerNotFoundException,
             AttendantNotFoundException, InstrumentNotFoundException,
-            EndDateNotAfterStartDateException, WithdrawalGreaterThanBalanceException {
+            EndDateNotAfterStartDateException, WithdrawalGreaterThanBalanceException, StoreNotFoundException, RentalNotFoundException {
         var customer = CustomerBuilder.customerBuilder();
         var attendant = AttendantBuilder.attendantBuilder();
         var instrument = InstrumentBuilder.instrumentBuilder();
@@ -239,7 +239,7 @@ public class RentalAPITest {
     @Test
     void saveEndDateNotAfterStartDateException() throws CustomerNotFoundException,
             AttendantNotFoundException, InstrumentNotFoundException,
-            EndDateNotAfterStartDateException, WithdrawalGreaterThanBalanceException {
+            EndDateNotAfterStartDateException, WithdrawalGreaterThanBalanceException, StoreNotFoundException, RentalNotFoundException {
         var customer = CustomerBuilder.customerBuilder();
         var attendant = AttendantBuilder.attendantBuilder();
         var instrument = InstrumentBuilder.instrumentBuilder();

@@ -108,13 +108,6 @@ public class RentalService implements IRentalService {
             EndDateNotAfterStartDateException, StoreNotFoundException {
         List<Rental> savedRentals = new ArrayList<>();
         for (Rental rental : rentalList) {
-            rental.setCustomer(customerServiceAttribute.findCustomerById(rental.getCustomer()
-                    .getPersonId()));
-            customerServiceAttribute.addToRentals(rental.getCustomer().getPersonId(), rental.getRentalId());
-            rental.setInstrument(instrumentServiceAttribute.findById(rental.getInstrument().getInstrumentId()));
-            instrumentServiceAttribute.addToRentals(rental.getInstrument().getInstrumentId(), rental.getRentalId());
-            rental.setAttendant(attendantServiceAttribute.findAttendantById(rental.getAttendant().getPersonId()));
-            attendantServiceAttribute.addToRentals(rental.getAttendant().getPersonId(), rental.getRentalId());
             nonRentalAttributesUpdater(rental.getInstrument(), rental.getCustomer(),
                     rental.getAttendant(), rental);
             rentalDatesChecker(rental);
@@ -133,11 +126,8 @@ public class RentalService implements IRentalService {
 
         rental.setCustomer(customerServiceAttribute.findCustomerById(rental.getCustomer()
                 .getPersonId()));
-        customerServiceAttribute.addToRentals(rental.getCustomer().getPersonId(), rental.getRentalId());
         rental.setInstrument(instrumentServiceAttribute.findById(rental.getInstrument().getInstrumentId()));
-        instrumentServiceAttribute.addToRentals(rental.getInstrument().getInstrumentId(), rental.getRentalId());
         rental.setAttendant(attendantServiceAttribute.findAttendantById(rental.getAttendant().getPersonId()));
-        attendantServiceAttribute.addToRentals(rental.getAttendant().getPersonId(), rental.getRentalId());
             nonRentalAttributesUpdater(rental.getInstrument(), rental.getCustomer(),
                     rental.getAttendant(), rental);
             rentalDatesChecker(rental);

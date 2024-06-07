@@ -5,6 +5,8 @@ import br.com.instrumental_rental.controller.api.ContactsAPI;
 import br.com.instrumental_rental.controller.dto.responses.responses.ContactsListResponseDTO;
 import br.com.instrumental_rental.controller.dto.responses.responses.ContactsResponseDTO;
 import br.com.instrumental_rental.exceptions.ContactNotFoundException;
+import br.com.instrumental_rental.exceptions.PersonNotFoundException;
+import br.com.instrumental_rental.exceptions.StoreNotFoundException;
 import br.com.instrumental_rental.models.ContactBuilder;
 import br.com.instrumental_rental.models.ContactDTOBuilder;
 import br.com.instrumental_rental.service.interfaces.IContactService;
@@ -38,7 +40,7 @@ public class ContactsAPITest {
 
 
     @Test
-    void testAddSuccess() {
+    void testAddSuccess() throws StoreNotFoundException, PersonNotFoundException, ContactNotFoundException {
         var contactNoId = ContactBuilder.contactNoIdBuilder();
         var contactBuilder = ContactBuilder.contactBuilder();
         var contactDTONoIdBuilder = ContactDTOBuilder.contactNoIdBuilder();
@@ -73,7 +75,7 @@ public class ContactsAPITest {
      */
 
     @Test
-    void testAddListSuccess() {
+    void testAddListSuccess() throws StoreNotFoundException, PersonNotFoundException, ContactNotFoundException {
         var contactNoId = ContactBuilder.contactNoIdBuilder();
         var contactNoIdDTO = ContactDTOBuilder.contactNoIdBuilder();
         var contactBuilder = ContactBuilder.contactBuilder();

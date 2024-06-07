@@ -22,18 +22,11 @@ public class InstrumentService implements IInstrumentService {
     @Autowired
     IInstrumentRepository instrumentRepository;
 
-    @Autowired
-    IRentalService rentalService;
-
-    @Autowired
-    IStoreService storeService;
-
     @Override
     public List<Instrument> saveFirstTime(List<Instrument> instrumentList)
             throws StoreNotFoundException, InstrumentNotFoundException {
         List<Instrument> savedInstruments = new ArrayList<>();
         for (Instrument instrument : instrumentList) {
-            addToStore(instrument.getInstrumentId(), instrument.getStore().getStoreId());
             savedInstruments.add(instrumentRepository.save(instrument));
         }
         return savedInstruments;
@@ -41,7 +34,6 @@ public class InstrumentService implements IInstrumentService {
 
     @Override
     public Instrument save(Instrument instrument) throws StoreNotFoundException, InstrumentNotFoundException {
-        addToStore(instrument.getInstrumentId(), instrument.getStore().getStoreId());
         return instrumentRepository.save(instrument);
     }
 
@@ -54,18 +46,6 @@ public class InstrumentService implements IInstrumentService {
         } else {
             return instrumentSought;
         }
-    }
-
-    @Override
-    public void addToRentals(Long instrumentId, Long rentalId)
-            throws InstrumentNotFoundException, RentalNotFoundException {
-        findById(instrumentId).getRental().add(rentalService.findById(rentalId));
-    }
-
-    @Override
-    public void addToStore(Long instrumentId, Long storeId)
-            throws InstrumentNotFoundException, StoreNotFoundException {
-        storeService.findById(storeId).getInstruments().add(findById(instrumentId));
     }
 
     @Override

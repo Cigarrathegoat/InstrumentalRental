@@ -2,10 +2,7 @@ package br.com.instrumental_rental.controller.api;
 
 import br.com.instrumental_rental.Mappers.ICustomerMapper;
 import br.com.instrumental_rental.controller.ICustomerAPI;
-import br.com.instrumental_rental.controller.dto.requests.AccountBalanceDTO;
 import br.com.instrumental_rental.controller.dto.requests.CustomerDTO;
-import br.com.instrumental_rental.controller.dto.responses.errors.ErrorResponseDTO;
-import br.com.instrumental_rental.controller.dto.responses.errors.ErrorSpecificationDTO;
 import br.com.instrumental_rental.controller.dto.responses.responses.AccountBalanceResponseDTO;
 import br.com.instrumental_rental.controller.dto.responses.responses.CustomerListResponseDTO;
 import br.com.instrumental_rental.controller.dto.responses.responses.CustomerResponseDTO;
@@ -13,10 +10,8 @@ import br.com.instrumental_rental.controller.dto.responses.responses.DeleteRespo
 import br.com.instrumental_rental.exceptions.CustomerNotFoundException;
 import br.com.instrumental_rental.exceptions.StoreNotFoundException;
 import br.com.instrumental_rental.exceptions.WithdrawalGreaterThanBalanceException;
-import br.com.instrumental_rental.repository.entities.Customer;
 import br.com.instrumental_rental.service.interfaces.ICustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

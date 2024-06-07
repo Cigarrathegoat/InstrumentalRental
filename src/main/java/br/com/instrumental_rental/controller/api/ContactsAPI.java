@@ -7,6 +7,8 @@ import br.com.instrumental_rental.controller.dto.responses.responses.ContactsLis
 import br.com.instrumental_rental.controller.dto.responses.responses.ContactsResponseDTO;
 import br.com.instrumental_rental.controller.dto.responses.responses.DeleteResponseDTO;
 import br.com.instrumental_rental.exceptions.ContactNotFoundException;
+import br.com.instrumental_rental.exceptions.PersonNotFoundException;
+import br.com.instrumental_rental.exceptions.StoreNotFoundException;
 import br.com.instrumental_rental.service.interfaces.IContactService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +31,8 @@ public class ContactsAPI implements IContactAPI{
     }
 
     @PostMapping("/add")
-    public ContactsResponseDTO add(@RequestBody ContactsDTO contactsDTO) {
+    public ContactsResponseDTO add(@RequestBody ContactsDTO contactsDTO)
+            throws StoreNotFoundException, PersonNotFoundException, ContactNotFoundException {
         return ContactsResponseDTO.builder()
                 .data(
                         contactsMapper.convertToDTO(
@@ -60,7 +63,7 @@ public class ContactsAPI implements IContactAPI{
     @PostMapping("/new_list")
     public ResponseEntity<ContactsListResponseDTO> addList(
             @RequestBody List<ContactsDTO> contactsDTOList
-            ) {
+            ) throws StoreNotFoundException, PersonNotFoundException, ContactNotFoundException {
         contactService.saveFirstTime(contactsMapper.convertToEntityList(contactsDTOList));
         return ResponseEntity.ok(
                 ContactsListResponseDTO.builder()

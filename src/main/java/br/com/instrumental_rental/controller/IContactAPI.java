@@ -6,6 +6,8 @@ import br.com.instrumental_rental.controller.dto.responses.responses.ContactsLis
 import br.com.instrumental_rental.controller.dto.responses.responses.ContactsResponseDTO;
 import br.com.instrumental_rental.controller.dto.responses.responses.DeleteResponseDTO;
 import br.com.instrumental_rental.exceptions.ContactNotFoundException;
+import br.com.instrumental_rental.exceptions.PersonNotFoundException;
+import br.com.instrumental_rental.exceptions.StoreNotFoundException;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -21,13 +23,13 @@ public interface IContactAPI {
     response = ContactsResponseDTO.class)
     @ApiResponses(value = {@ApiResponse(code = 200, message = "success"),
     @ApiResponse(code = 404, response = ErrorSpecificationDTO.class, message = "not found")})
-    ContactsResponseDTO add(ContactsDTO contactsDTO);
+    ContactsResponseDTO add(ContactsDTO contactsDTO) throws StoreNotFoundException, PersonNotFoundException, ContactNotFoundException;
 
     @ApiOperation(value = "add a list of Contact objects",
     response = ContactsListResponseDTO.class)
     @ApiResponses(value = {@ApiResponse(code = 200, message = "success")})
     public ResponseEntity<ContactsListResponseDTO>
-    addList(@RequestBody List<ContactsDTO> contactsDTOList);
+    addList(@RequestBody List<ContactsDTO> contactsDTOList) throws StoreNotFoundException, PersonNotFoundException, ContactNotFoundException;
 
     @ApiOperation(value = "find API object",
     response = ContactsListResponseDTO.class)

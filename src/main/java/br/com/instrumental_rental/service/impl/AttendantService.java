@@ -23,14 +23,6 @@ public class AttendantService implements IAttendantService {
     @Autowired
     private IAttendantRepository attendantRepository;
 
-    @Autowired
-    private IRentalService rentalService;
-
-    @Autowired
-    private IStoreService storeService;
-
-
-
     @Override
     public Attendant findAttendantByNumberProvided(String numberProvided) throws AttendantNotFoundException {
         var attendantSought = attendantRepository.findAttendantByNumberProvided(numberProvided);
@@ -46,17 +38,6 @@ public class AttendantService implements IAttendantService {
                 () -> new AttendantNotFoundException("A01", "Attendant not found"));
     }
 
-    @Override
-    public void addToRentals(Long attendantId, Long rentalId) throws AttendantNotFoundException,
-            RentalNotFoundException {
-        findAttendantById(attendantId).getRentals().add(rentalService.findById(rentalId));
-    }
-
-    @Override
-    public void addToStore(Long attendantId, Long storeId)
-            throws AttendantNotFoundException, StoreNotFoundException {
-        storeService.findById(storeId).getAttendants().add(findAttendantById(attendantId));
-    }
 
 
     @Override
@@ -64,7 +45,6 @@ public class AttendantService implements IAttendantService {
             throws StoreNotFoundException, AttendantNotFoundException {
         List<Attendant> savedAttendants = new ArrayList<>();
         for (Attendant attendant : attendantList) {
-            addToStore(attendant.getPersonId(), attendant.getStore().getStoreId());
             savedAttendants.add(attendantRepository.save(attendant));
         }
         return savedAttendants;
@@ -72,7 +52,6 @@ public class AttendantService implements IAttendantService {
 
     @Override
     public Attendant save(Attendant attendant) throws StoreNotFoundException, AttendantNotFoundException {
-        addToStore(attendant.getPersonId(), attendant.getStore().getStoreId());
         return attendantRepository.save(attendant);
     }
 

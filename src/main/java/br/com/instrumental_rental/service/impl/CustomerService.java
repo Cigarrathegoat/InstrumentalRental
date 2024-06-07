@@ -27,16 +27,9 @@ public class CustomerService implements ICustomerService {
 
     private final ICustomerRepository customerRepositoryAttribute;
 
-    private final IRentalService rentalService;
-
-    private final IStoreService storeService;
-
     @Autowired
-    private CustomerService(ICustomerRepository customerRepositoryParameter,
-                            IRentalService rentalService, IStoreService storeService) {
+    private CustomerService(ICustomerRepository customerRepositoryParameter) {
         this.customerRepositoryAttribute = customerRepositoryParameter;
-        this.rentalService = rentalService;
-        this.storeService = storeService;
     }
 
     public Customer findCustomerById(Long customerId) throws CustomerNotFoundException {
@@ -47,25 +40,12 @@ public class CustomerService implements ICustomerService {
                 );
     }
 
-    @Override
-    public void addToRentals(Long customerId, Long rentalId)
-            throws CustomerNotFoundException, RentalNotFoundException {
-        findCustomerById(customerId).getRentals().add(rentalService.findById(rentalId));
-    }
-
-    @Override
-    public void addToStore(Long customerId, Long storeId)
-            throws CustomerNotFoundException, StoreNotFoundException {
-        storeService.findById(storeId).getCustomers().add(findCustomerById(customerId));
-    }
-
 
     @Override
     public List<Customer> saveFirstTime(List<Customer> customerList)
             throws StoreNotFoundException, CustomerNotFoundException {
         List<Customer> savedCustomers = new ArrayList<>();
         for (Customer customer : customerList) {
-            addToStore(customer.getPersonId(), customer.getStore().getStoreId());
             savedCustomers.add(customerRepositoryAttribute.save(customer));
         }
         return savedCustomers;
@@ -73,7 +53,6 @@ public class CustomerService implements ICustomerService {
 
     @Override
     public Customer save(Customer customer) throws StoreNotFoundException, CustomerNotFoundException {
-        addToStore(customer.getPersonId(),customer.getStore().getStoreId());
         return customerRepositoryAttribute.save(customer);
     }
 

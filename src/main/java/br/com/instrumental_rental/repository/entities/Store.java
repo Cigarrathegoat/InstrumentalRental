@@ -34,6 +34,9 @@ public class Store {
     @Column(name = "ID_STORE")
     private Long storeId;
 
+    @Column(name = "DS_NAME")
+    private String name;
+
     @Column(name = "DS_CUSTOMER")
     @OneToMany(mappedBy = "store")
     private List<Customer> customers;

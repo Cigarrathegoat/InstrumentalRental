@@ -23,9 +23,4 @@ public interface IAttendantService {
 
     Attendant findAttendantById(Long id) throws AttendantNotFoundException;
 
-    void addToRentals(Long attendantId, Long rentalId) throws AttendantNotFoundException, RentalNotFoundException;
-
-    void addToStore(Long attendantId, Long storeId) throws AttendantNotFoundException, StoreNotFoundException;
-
-
 }

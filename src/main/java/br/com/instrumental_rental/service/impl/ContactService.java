@@ -25,16 +25,10 @@ public class ContactService implements IContactService {
 
     IContactRepository contactRepository;
 
-    IStoreService storeService;
-
-    IPersonService personService;
-
     @Autowired
-    public ContactService(IContactRepository contactRepository, IStoreService storeService,
-                          IPersonService personService) {
+    public ContactService(IContactRepository contactRepository) {
         this.contactRepository = contactRepository;
-        this.storeService = storeService;
-        this.personService = personService;
+
     }
 
     public Contact findById(Long contactId) throws ContactNotFoundException {
@@ -44,28 +38,19 @@ public class ContactService implements IContactService {
     }
 
     @Override
-    public void addToPersonOrStore(Long contactId, Long personOrStoreId)
-            throws ContactNotFoundException, StoreNotFoundException, PersonNotFoundException {
-        try {
-            var person = personService.findById(personOrStoreId);
-            person.getContacts().add(findById(contactId));
-        } catch (PersonNotFoundException e) {
-            var store = storeService.findById(personOrStoreId);
-            store.getContacts().add(findById(contactId));
-        }
+    public Contact save(Contact contact) throws StoreNotFoundException,
+            PersonNotFoundException, ContactNotFoundException {
+        var savedContact =  contactRepository.save(contact);
+        return savedContact;
     }
 
     @Override
-    public Contact save(Contact contact) {
-        return contactRepository.save(contact);
-    }
-
-    @Override
-    public List<Contact> saveFirstTime(List<Contact> contactList) {
+    public List<Contact> saveFirstTime(List<Contact> contactList)
+            throws StoreNotFoundException, PersonNotFoundException,
+            ContactNotFoundException {
         List<Contact> savedContacts = new ArrayList<>();
         for (Contact contact : contactList) {
             Contact savedContact = contactRepository.save(contact);
-            savedContacts.add(savedContact);
         }
         return savedContacts;
     }
@@ -80,6 +65,8 @@ public class ContactService implements IContactService {
         var contactToUpdate = findById(contact.getContactId());
         contactToUpdate.setContactContent(contact.getContactContent());
         contactToUpdate.setContactType(contact.getContactType());
+        contactToUpdate.setPerson(contact.getPerson());
+        contactToUpdate.setStore(contact.getStore());
         contactRepository.save(contactToUpdate);
         return contactToUpdate;
     }

@@ -9,9 +9,9 @@ import java.util.List;
 
 public interface IContactService extends IService<Contact, Exception> {
 
-    Contact save (Contact contact);
+    Contact save (Contact contact) throws StoreNotFoundException, PersonNotFoundException, ContactNotFoundException;
 
-    List<Contact> saveFirstTime(List<Contact> contactList);
+    List<Contact> saveFirstTime(List<Contact> contactList) throws StoreNotFoundException, PersonNotFoundException, ContactNotFoundException;
 
     List<Contact> findAll();
 
@@ -23,6 +23,4 @@ public interface IContactService extends IService<Contact, Exception> {
 
     Contact findById(Long contactId) throws ContactNotFoundException;
 
-    void addToPersonOrStore(Long contactId, Long personOrStoreId)
-            throws ContactNotFoundException, StoreNotFoundException, PersonNotFoundException;
 }

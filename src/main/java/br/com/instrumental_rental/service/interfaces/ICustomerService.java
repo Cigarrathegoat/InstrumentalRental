@@ -32,10 +32,4 @@ public interface ICustomerService {
 
     Customer findCustomerById(Long customerId) throws CustomerNotFoundException;
 
-    void addToRentals (Long customerId, Long rentalId) throws CustomerNotFoundException,
-            RentalNotFoundException;
-
-    void addToStore(Long customerId, Long storeId) throws CustomerNotFoundException,
-            StoreNotFoundException;
-
 }
