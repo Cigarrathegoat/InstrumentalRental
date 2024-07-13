@@ -1,9 +1,6 @@
 package br.com.instrumental_rental.repository.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
@@ -14,7 +11,7 @@ import java.util.List;
 @Table(name = "TB_PERSON", schema = "instrumental_rental")
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "PERSON_TYPE", discriminatorType = DiscriminatorType.STRING)
-@SequenceGenerator(schema ="instrumentalRental", name = "SEQ_PERSON",
+@SequenceGenerator(schema ="instrumental_rental", name = "SEQ_PERSON",
         sequenceName = "SEQ_PERSON", allocationSize = 1)
 
 @Data
@@ -42,11 +39,11 @@ public class Person {
     private String driversLicenseNumber;//7 digits
 
     @Column(name = "DS_ADDRESS")
-    @OneToMany(mappedBy = "person")
+    @OneToMany(mappedBy = "person",  cascade = CascadeType.MERGE)
     private List<TheAddress> address;
 
     @Column(name = "DS_CONTACTS")
-    @OneToMany(mappedBy = "person")
+    @OneToMany(mappedBy = "person", cascade = CascadeType.PERSIST)
     private List<Contact> contacts;
 
 }

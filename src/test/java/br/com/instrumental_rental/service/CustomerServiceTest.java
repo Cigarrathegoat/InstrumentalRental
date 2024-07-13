@@ -1,6 +1,7 @@
 package br.com.instrumental_rental.service;
 
 import br.com.instrumental_rental.exceptions.CustomerNotFoundException;
+import br.com.instrumental_rental.exceptions.StoreNotFoundException;
 import br.com.instrumental_rental.exceptions.WithdrawalGreaterThanBalanceException;
 import br.com.instrumental_rental.models.CustomerBuilder;
 import br.com.instrumental_rental.repository.entities.Customer;
@@ -38,7 +39,7 @@ public class CustomerServiceTest {
         MockitoAnnotations.openMocks(this);
     }
     @Test
-    void testSaveSuccess() {
+    void testSaveSuccess() throws StoreNotFoundException, CustomerNotFoundException {
         var builder = CustomerBuilder.customerBuilder();
         var builderNoId = CustomerBuilder.customerNoIdBuilder();
         when(customerRepository.save(builderNoId)).thenReturn(builder);
@@ -47,7 +48,7 @@ public class CustomerServiceTest {
     }
 
     @Test
-    void saveFirstTimeSuccess() {
+    void saveFirstTimeSuccess() throws StoreNotFoundException, CustomerNotFoundException {
         var builder = CustomerBuilder.customerBuilder();
         var builderNoId = CustomerBuilder.customerNoIdBuilder();
         when(customerRepository.save(builderNoId)).thenReturn(builder);

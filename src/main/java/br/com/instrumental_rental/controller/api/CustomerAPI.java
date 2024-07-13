@@ -1,6 +1,7 @@
 package br.com.instrumental_rental.controller.api;
 
 import br.com.instrumental_rental.Mappers.ICustomerMapper;
+import br.com.instrumental_rental.adapters.CustomerAdapter;
 import br.com.instrumental_rental.controller.ICustomerAPI;
 import br.com.instrumental_rental.controller.dto.requests.CustomerDTO;
 import br.com.instrumental_rental.controller.dto.responses.responses.AccountBalanceResponseDTO;
@@ -41,7 +42,7 @@ public class CustomerAPI implements ICustomerAPI {
                 .data(
                         customerMapperAttribute.convertToDto(
                                 customerServiceAttribute.save(
-                                        customerMapperAttribute.convertToEntity(customerDTO)
+                                        CustomerAdapter.convertToEntity(customerDTO)
                                 )
                         )
                 ).build();

@@ -1,6 +1,8 @@
 package br.com.instrumental_rental.service;
 
 import br.com.instrumental_rental.exceptions.ContactNotFoundException;
+import br.com.instrumental_rental.exceptions.PersonNotFoundException;
+import br.com.instrumental_rental.exceptions.StoreNotFoundException;
 import br.com.instrumental_rental.models.ContactBuilder;
 import br.com.instrumental_rental.repository.entities.Contact;
 import br.com.instrumental_rental.repository.interfaces.IContactRepository;
@@ -31,7 +33,7 @@ public class ContactServiceTest {
     }
 
     @Test
-    void testSaveSuccess() {
+    void testSaveSuccess() throws StoreNotFoundException, PersonNotFoundException, ContactNotFoundException {
         var builder = ContactBuilder.contactBuilder();
         when(contactRepository.save(builder)).thenReturn(builder);
         Contact save = contactService.save(builder);
@@ -39,7 +41,7 @@ public class ContactServiceTest {
     }
 
     @Test
-    void testSaveFirstTimeSuccess() {
+    void testSaveFirstTimeSuccess() throws StoreNotFoundException, PersonNotFoundException, ContactNotFoundException {
         var builder = ContactBuilder.contactBuilder();
         var builderNoId = ContactBuilder.contactNoIdBuilder();
         when(contactRepository.save(builderNoId)).thenReturn(builder);

@@ -57,7 +57,7 @@ public class Attendant extends Person {
     @Column(name = "DS_TOTAL_COMMISSION")
     private BigDecimal totalCommission;
 
-    @ManyToOne
+    @ManyToOne( cascade = CascadeType.PERSIST)
     @JoinColumn(name = "STORE_ID")
     private Store store;
 }

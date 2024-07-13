@@ -7,6 +7,12 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
+/*
+@Table(name = "TB_STORE", schema = "instrumental_rental")
+@SequenceGenerator(schema = "instrumental_rental", name = "SEQ_STORE", sequenceName = "SEQ_STORE", allocationSize = 1)
+
+ */
+
 @Data
 @Builder
 @AllArgsConstructor

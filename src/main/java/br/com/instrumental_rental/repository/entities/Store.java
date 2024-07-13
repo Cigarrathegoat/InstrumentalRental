@@ -38,23 +38,23 @@ public class Store {
     private String name;
 
     @Column(name = "DS_CUSTOMER")
-    @OneToMany(mappedBy = "store")
+    @OneToMany(mappedBy = "store", cascade = CascadeType.PERSIST)
     private List<Customer> customers;
 
     @Column(name = "DS_ATTENDANT")
-    @OneToMany(mappedBy = "store")
+    @OneToMany(mappedBy = "store", cascade = CascadeType.PERSIST)
     private List<Attendant> attendants;
 
     @Column(name = "DS_INSTRUMENT")
-    @OneToMany(mappedBy = "store")
+    @OneToMany(mappedBy = "store",  cascade = CascadeType.MERGE)
     private List<Instrument> instruments;
 
-    @OneToOne
+    @OneToOne (cascade = CascadeType.PERSIST)
     @JoinColumn(name = "ADDRESS_ID")
     private TheAddress theAddress;
 
     @Column(name = "DS_CONTACTS")
-    @OneToMany(mappedBy = "store")
+    @OneToMany(mappedBy = "store", cascade = CascadeType.PERSIST)
     private List<Contact> contacts;
 
 

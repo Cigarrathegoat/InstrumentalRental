@@ -6,6 +6,7 @@ import br.com.instrumental_rental.controller.dto.requests.AttendantDTO;
 import br.com.instrumental_rental.controller.dto.responses.responses.AttendantListResponseDTO;
 import br.com.instrumental_rental.controller.dto.responses.responses.AttendantResponseDTO;
 import br.com.instrumental_rental.exceptions.AttendantNotFoundException;
+import br.com.instrumental_rental.exceptions.StoreNotFoundException;
 import br.com.instrumental_rental.models.AttendantBuilder;
 import br.com.instrumental_rental.models.AttendantDTOBuilder;
 import br.com.instrumental_rental.repository.entities.Attendant;
@@ -43,7 +44,7 @@ public class AttendantAPITest {
     }
 
     @Test
-    void testAddSuccess() {
+    void testAddSuccess() throws StoreNotFoundException, AttendantNotFoundException {
         var attendantNoId = AttendantBuilder.attendantBuilderNoId();
         var attendantBuilder = AttendantBuilder.attendantBuilder();
         var attendantDTONoIdBuilder = AttendantDTOBuilder.attendantDTONoIdSuccessBuilder();
@@ -56,7 +57,7 @@ public class AttendantAPITest {
     }
 
     @Test
-    void testAddListSuccess() {
+    void testAddListSuccess() throws StoreNotFoundException, AttendantNotFoundException {
         var attendantNoId = AttendantBuilder.attendantBuilderNoId();
         var attendantNoIdDTO = AttendantDTOBuilder.attendantDTONoIdSuccessBuilder();
         var attendantBuilder = AttendantBuilder.attendantBuilder();

@@ -11,4 +11,6 @@ import java.util.List;
 public class StoreListResponseDTO {
 
     public List<StoreDTO> data;
+
+    public String addListMessage;
 }

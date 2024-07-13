@@ -1,5 +1,6 @@
 package br.com.instrumental_rental.repository.entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import javax.persistence.*;
@@ -22,6 +23,7 @@ public class TheAddress {
     private Long addressId;
 
     @Column(name = "DS_STREET_NAME")
+    @JsonProperty("street")
     private String streetName;
 
     @Column(name = "DS_STREET_NUMBER")
@@ -42,11 +44,11 @@ public class TheAddress {
     @Column(name = "DS_ZIPCODE")
     private String zipCode;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "PERSON_ID")
     private Person person;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "STORE_ID")
     private Store store;
 }

@@ -6,6 +6,7 @@ import br.com.instrumental_rental.controller.dto.responses.responses.AccountBala
 import br.com.instrumental_rental.controller.dto.responses.responses.CustomerListResponseDTO;
 import br.com.instrumental_rental.controller.dto.responses.responses.CustomerResponseDTO;
 import br.com.instrumental_rental.exceptions.CustomerNotFoundException;
+import br.com.instrumental_rental.exceptions.StoreNotFoundException;
 import br.com.instrumental_rental.exceptions.WithdrawalGreaterThanBalanceException;
 import br.com.instrumental_rental.models.CustomerBuilder;
 import br.com.instrumental_rental.models.CustomerDTOBuilder;
@@ -42,7 +43,7 @@ public class CustomerAPITest {
     }
 
     @Test
-    void saveSuccess() {
+    void saveSuccess() throws StoreNotFoundException, CustomerNotFoundException {
         var customerDTONoId = CustomerDTOBuilder.customerDTONoIdBuilder();
         var customerNoId = CustomerBuilder.customerNoIdBuilder();
         var customer = CustomerBuilder.customerBuilder();
@@ -56,7 +57,7 @@ public class CustomerAPITest {
     }
 
     @Test
-    void saveListSuccess() {
+    void saveListSuccess() throws StoreNotFoundException, CustomerNotFoundException {
         var customerNoIdBuilder = CustomerBuilder.customerNoIdBuilder();
         var customerDTONoIdBuilder = CustomerDTOBuilder.customerDTONoIdBuilder();
         var customerBuilder = CustomerBuilder.customerBuilder();

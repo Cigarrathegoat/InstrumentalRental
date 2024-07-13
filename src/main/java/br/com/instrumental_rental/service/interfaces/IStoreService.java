@@ -12,4 +12,12 @@ public interface IStoreService {
     Store save(Store store) throws StoreNotFoundException;
 
     Store findById(Long storeId) throws StoreNotFoundException;
+
+    Store update(Store store) throws StoreNotFoundException;
+
+    void delete(Long storeId) throws StoreNotFoundException;
+
+    List<Store> listAll();
+
+    Store findByName(String storeName) throws StoreNotFoundException;
 }

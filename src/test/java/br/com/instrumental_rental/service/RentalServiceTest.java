@@ -56,8 +56,8 @@ public class RentalServiceTest {
 
    @Test
     void testSaveSuccess() throws CustomerNotFoundException, InstrumentNotFoundException,
-            AttendantNotFoundException, WithdrawalGreaterThanBalanceException,
-            EndDateNotAfterStartDateException {
+           AttendantNotFoundException, WithdrawalGreaterThanBalanceException,
+           EndDateNotAfterStartDateException, StoreNotFoundException, RentalNotFoundException {
        var customer = CustomerBuilder.customerBuilder();
        var instrument = InstrumentBuilder.instrumentBuilder();
        var attendant = AttendantBuilder.attendantBuilder();
@@ -156,7 +156,7 @@ public class RentalServiceTest {
     @Test
     void testSaveFirstTimeSuccess() throws CustomerNotFoundException, InstrumentNotFoundException,
             AttendantNotFoundException, WithdrawalGreaterThanBalanceException,
-            EndDateNotAfterStartDateException {
+            EndDateNotAfterStartDateException, StoreNotFoundException, RentalNotFoundException {
         var customer = CustomerBuilder.customerBuilder();
         var instrument = InstrumentBuilder.instrumentBuilder();
         var attendant = AttendantBuilder.attendantBuilder();

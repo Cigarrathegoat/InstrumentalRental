@@ -48,7 +48,7 @@ public class InstrumentServiceTest {
     }
 
     @Test
-    void testSaveFirstTimeSuccess() {
+    void testSaveFirstTimeSuccess() throws StoreNotFoundException, InstrumentNotFoundException {
         var builder = InstrumentBuilder.instrumentBuilder();
         var builderNoId = InstrumentBuilder.instrumentNoIdBuilder();
         when(instrumentRepository.save(builderNoId)).thenReturn(builder);

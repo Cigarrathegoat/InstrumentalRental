@@ -4,6 +4,7 @@ import br.com.instrumental_rental.controller.dto.requests.AccountBalanceDTO;
 import br.com.instrumental_rental.controller.dto.requests.CustomerDTO;
 import br.com.instrumental_rental.repository.entities.Customer;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 import java.math.BigDecimal;

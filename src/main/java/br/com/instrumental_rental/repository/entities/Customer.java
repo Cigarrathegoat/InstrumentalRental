@@ -23,10 +23,10 @@ public class Customer extends Person {
     @Column(name = "DS_ACCOUNT_BALANCE")
     private BigDecimal accountBalance;
 
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "customer",  cascade = CascadeType.PERSIST)
     private List<Rental> rentals;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "STORE_ID")
     private Store store;
 }

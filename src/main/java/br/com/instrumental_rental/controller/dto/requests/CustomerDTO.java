@@ -26,7 +26,7 @@ public class CustomerDTO {
     @Pattern(regexp = "^[a-zA-Z]+$", message = "only letter-type characters allowed in name field")
     private String name;
 
-    private List<TheAddress> addresses;
+    private List<TheAddress> address;
 
     private List<Contact> contacts;
 

@@ -124,6 +124,7 @@ public class RentalService implements IRentalService {
             AttendantNotFoundException, RentalNotFoundException, WithdrawalGreaterThanBalanceException,
             EndDateNotAfterStartDateException, StoreNotFoundException {
 
+
         rental.setCustomer(customerServiceAttribute.findCustomerById(rental.getCustomer()
                 .getPersonId()));
         rental.setInstrument(instrumentServiceAttribute.findById(rental.getInstrument().getInstrumentId()));

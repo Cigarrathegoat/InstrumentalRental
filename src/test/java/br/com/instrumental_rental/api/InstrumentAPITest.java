@@ -57,7 +57,7 @@ public class InstrumentAPITest {
     }
 
     @Test
-    void testAddListSuccess() {
+    void testAddListSuccess() throws StoreNotFoundException, InstrumentNotFoundException {
         var instrumentDTONoId = InstrumentDTOBuilder.instrumentDTONoIdBuilder();
         var instrumentNoId = InstrumentBuilder.instrumentNoIdBuilder();
         var instrument = InstrumentBuilder.instrumentBuilder();

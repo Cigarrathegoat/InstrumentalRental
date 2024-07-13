@@ -66,9 +66,50 @@ public class StoreService implements IStoreService {
 
     @Override
     public Store findById(Long storeId) throws StoreNotFoundException {
-        Store storeFound =  storeRepository.findById(storeId).orElseThrow(()->
-                new StoreNotFoundException( "S01", "Store not found")
+        Store storeFound = storeRepository.findById(storeId).orElseThrow(() ->
+                new StoreNotFoundException("S01", "Store not found")
         );
         return storeFound;
+    }
+
+    @Override
+    public Store update(Store store) throws StoreNotFoundException {
+        Store storeFound = findById(store.getStoreId());
+        storeFound.setName(store.getName());
+        storeFound.setAttendants(store.getAttendants());
+        storeFound.setCustomers(store.getCustomers());
+        storeFound.setInstruments(store.getInstruments());
+        storeFound.setTheAddress(store.getTheAddress());
+        storeFound.setContacts(store.getContacts());
+        save(storeFound);
+        return storeFound;
+    }
+
+    /*
+    @Override
+    public void delete(Long rentalId) throws RentalNotFoundException {
+        var rentalToDelete = findById(rentalId);
+        rentalRepositoryAttribute.delete(rentalToDelete);
+    }
+     */
+    @Override
+    public void delete(Long storeId) throws StoreNotFoundException {
+        var storeToDelete = findById(storeId);
+        storeRepository.delete(storeToDelete);
+    }
+
+    @Override
+    public List<Store> listAll() {
+        return storeRepository.findAll();
+    }
+
+    @Override
+    public Store findByName(String storeName) throws StoreNotFoundException {
+        var storeFound = storeRepository.findStoreByName(storeName);
+        if (storeFound == null) {
+            throw new StoreNotFoundException("S01", "Store not found");
+        } else {
+            return storeFound;
+        }
     }
 }

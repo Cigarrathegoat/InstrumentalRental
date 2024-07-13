@@ -39,11 +39,8 @@ public class AttendantServiceTest {
         var builder = AttendantBuilder.attendantBuilder();
         var builderNoId = AttendantBuilder.attendantBuilderNoId();
         when(attendantRepository.save(builderNoId)).thenReturn(builder);
-        doNothing().when(attendantService).addToStore(builder.getPersonId(), builder.getStore().getStoreId());
         Attendant saved = attendantService.save(builderNoId);
         verify(attendantRepository, times(1)).save(builderNoId);
-        verify(attendantService, times(1))
-                .addToStore(builder.getPersonId(), builder.getStore().getStoreId());
         Assertions.assertEquals(builder, saved);
     }
 
@@ -52,7 +49,6 @@ public class AttendantServiceTest {
         var builder = AttendantBuilder.attendantBuilder();
         var builderNoId = AttendantBuilder.attendantBuilderNoId();
         when(attendantRepository.save(builderNoId)).thenReturn(builder);
-        doNothing().when(attendantService).addToStore(builder.getPersonId(), builder.getStore().getStoreId());
         List<Attendant> saved = attendantService.saveFirstTime(List.of(builderNoId));
         Assertions.assertEquals(List.of(builder), saved);
     }

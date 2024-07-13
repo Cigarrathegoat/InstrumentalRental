@@ -25,11 +25,11 @@ public class Rental {
     @Column(name = "ID_RENTAL")
     private Long rentalId;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "CUSTOMER_ID")
     private Customer customer;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "INSTRUMENT_ID")
     private Instrument instrument;
 
@@ -42,7 +42,7 @@ public class Rental {
     @Column(name = "DS_PRICE")
     private BigDecimal price;
 
-    @ManyToOne
+    @ManyToOne( cascade = CascadeType.PERSIST)
     @JoinColumn(name = "ATTENDANT_ID")
     private Attendant attendant;
 
