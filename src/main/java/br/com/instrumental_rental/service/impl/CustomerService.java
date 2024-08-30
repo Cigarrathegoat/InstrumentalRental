@@ -51,6 +51,14 @@ public class CustomerService implements ICustomerService {
         return savedCustomers;
     }
 
+    /*
+    1. save customer
+    2. take rentalList and save all rentals (do a for on this one;
+    3. create method to updateCustomerBalance, include save in it of course (use customer.setBalance);
+    4. save instrument (customer.getRental().getInstrument(instrument));
+    5. make method to calculate commission(customer.getRental().getAttendant().setComission(comission);
+     */
+
     @Override
     public Customer save(Customer customer) throws StoreNotFoundException, CustomerNotFoundException {
         return customerRepositoryAttribute.save(customer);

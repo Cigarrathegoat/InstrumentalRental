@@ -13,7 +13,7 @@ import java.util.List;
 public interface IRentalRepository extends JpaRepository<Rental, Long> {
 
    @Query(value = "SELECT r FROM Rental r " +
-   "WHERE r.customer = :word OR r.attendant = :word OR r.instrument = :word")
+   "WHERE r.attendant.name = :word OR r.instrument.model = :word")
     List<Rental> findRentalByWord(@Param("word")String word);
 
 

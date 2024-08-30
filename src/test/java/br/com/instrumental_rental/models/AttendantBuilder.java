@@ -14,14 +14,14 @@ public class AttendantBuilder {
         return Attendant.builder().personId(1L)
                 .name("Mikey").dateOfBirth(LocalDate.of(1998, 12, 25))
                 .driversLicenseNumber("1234567").socialSecurityNumber("123456789")
-                .totalCommission(BigDecimal.valueOf(0)).store(StoreBuilder.storeBuilder())
+                .totalCommission(BigDecimal.valueOf(0))
                 .build();
     }
 
     public static Attendant attendantBuilderNoId() {
         return Attendant.builder().name("Mikey").dateOfBirth(LocalDate.of(1998, 12, 25))
                 .driversLicenseNumber("1234567").socialSecurityNumber("123456789")
-                .totalCommission(BigDecimal.valueOf(0)).store(StoreBuilder.storeBuilder())
+                .totalCommission(BigDecimal.valueOf(0))
                 .build();
     }
 }

@@ -34,21 +34,23 @@ public class RentalAPI implements IRentalAPI {
             AttendantNotFoundException, WithdrawalGreaterThanBalanceException,
             EndDateNotAfterStartDateException, StoreNotFoundException, RentalNotFoundException {
         return RentalResponseDTO.builder().data(
-                rentalMapper.convertToDTO(rentalService.save(rentalMapper.convertToEntity(rentalDTO)
+                rentalMapper.convertToDTO(rentalService.save(rentalMapper.convertToEntity(rentalDTO),
+                        rentalDTO.getCustomerId()
                         )
                 )
         ).build();
     }
 
-    @PostMapping("/add_list")
-    public ResponseEntity<RentalListResponseDTO> addList(@RequestBody List<RentalDTO> rentalListDTO)
-            throws CustomerNotFoundException, InstrumentNotFoundException,
-            AttendantNotFoundException, WithdrawalGreaterThanBalanceException,
-            EndDateNotAfterStartDateException, StoreNotFoundException, RentalNotFoundException {
-        rentalService.saveFirstTime(rentalMapper.convertToEntityList(rentalListDTO));
-        return ResponseEntity.ok(RentalListResponseDTO.builder()
-                .addListMessage("List successfully added").build());
-    }
+    /*
+    for saveFirstTime, a list of customers will be introduced, each with a rental list.
+    A list of Customer entities, each with a list of Rentals in them, is saved.
+    Now when we save customer, we save its rental list too.
+    when we save a new rental, we use the data from the rental that is the attribute of customer.
+
+    This makes it so that we have to constantly have a RentalList to look for customerIds that
+    may not exist
+     */
+
 
     @GetMapping("/find/{keyword}")
     public RentalListResponseDTO find(@PathVariable("rentalId") String keyWord) throws RentalNotFoundException {

@@ -43,9 +43,6 @@ public class StoreService implements IStoreService {
         else {
             List<Store> savedStoreList = new ArrayList<>();
             for (Store store : storeList) {
-                for (Customer customer : store.getCustomers()) customer.setStore(store);
-                for (Attendant attendant : store.getAttendants()) attendant.setStore(store);
-                for (Instrument instrument : store.getInstruments()) instrument.setStore(store);
                 storeRepository.save(store);
                 savedStoreList.add(store);
             }
@@ -57,10 +54,6 @@ public class StoreService implements IStoreService {
     @Override
     public Store save(Store store) throws StoreNotFoundException {
         if (store == null) throw new StoreNotFoundException("S01", "Store not found");
-        for (Customer customer : store.getCustomers()) customer.setStore(store);
-        for (Attendant attendant : store.getAttendants()) attendant.setStore(store);
-        for (Instrument instrument : store.getInstruments()) instrument.setStore(store);
-
         return storeRepository.save(store);
     }
 

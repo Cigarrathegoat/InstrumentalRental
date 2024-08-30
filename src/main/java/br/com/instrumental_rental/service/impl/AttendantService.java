@@ -75,7 +75,6 @@ public class AttendantService implements IAttendantService {
         attendantToUpdate.setDateOfBirth(attendant.getDateOfBirth());
         attendantToUpdate.setSocialSecurityNumber(attendant.getSocialSecurityNumber());
         attendantToUpdate.setDriversLicenseNumber(attendant.getDriversLicenseNumber());
-        attendantToUpdate.setStore(attendant.getStore());
         attendantRepository.save(attendantToUpdate);
         return attendantToUpdate;
     }

@@ -20,9 +20,9 @@ public class RentalBuilder {
     private BigDecimal attendantCommission = BigDecimal.valueOf(12);
     private Rental rentalBuilderBeforeSave = RentalBuilder.rentalBuilderBeforeSave(
             customerBuilder, attendantBuilder, instrumentBuilder, rentalStartDate, rentalEndDate);*/
-    public static Rental rentalBuilderBeforeSave(Customer customer, Instrument instrument,
+    public static Rental rentalBuilderBeforeSave(Instrument instrument,
                                                  Attendant attendant) {
-        return Rental.builder().rentalId(null).customer(customer).instrument(instrument)
+        return Rental.builder().rentalId(null).instrument(instrument)
                 .attendant(attendant).startDate(LocalDate.parse("2020-12-03",
                         DateTimeFormatter.ofPattern("yyyy-MM-dd"))).endDate(LocalDate.parse("2020-12-15",
                         DateTimeFormatter.ofPattern("yyyy-MM-dd"))).price(null).attendantCommission(null)
@@ -30,11 +30,11 @@ public class RentalBuilder {
     }
 
     /*TODO turn all id parameters into longs now*/
-    public static Rental rentalBuilder(Customer customer, Instrument instrument,
+    public static Rental rentalBuilder(Instrument instrument,
                                                 Attendant attendant) {
 
 
-        return Rental.builder().rentalId(1L).customer(customer).attendant(attendant)
+        return Rental.builder().rentalId(1L).attendant(attendant)
                 .instrument(instrument).startDate(LocalDate.parse("2020-12-01",
                         DateTimeFormatter.ofPattern("yyyy-MM-dd"))).endDate(LocalDate.parse("2020-12-03",
                         DateTimeFormatter.ofPattern("yyyy-MM-dd"))).price(BigDecimal.valueOf(120))

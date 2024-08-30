@@ -42,11 +42,16 @@ public class Instrument {
     @Column(name = "DS_AVAILABLE")
     private boolean available = true;
 
-    @OneToMany(mappedBy = "instrument", cascade = CascadeType.PERSIST)
+    /*
+    @OneToOne(cascade = CascadeType.PERSIST)
     private List<Rental> rental;
 
+     */
+
+    /*
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "STORE_ID")
     private Store store;
+     */
 
 }

@@ -13,7 +13,7 @@ public class CustomerDTOBuilder {
                 .name("Johnny")
                 .dateOfBirth(LocalDate.parse("25-08-1985",
                         DateTimeFormatter.ofPattern("dd-MM-yyyy")))
-                .addresses(null)
+                .address(null)
                 .contacts(null)
                 .build();
     }
@@ -24,7 +24,7 @@ public class CustomerDTOBuilder {
                 .name("Johnny")
                 .dateOfBirth(LocalDate.parse("25-08-1985",
                         DateTimeFormatter.ofPattern("dd-MM-yyyy")))
-                .addresses(null)
+                .address(null)
                 .contacts(null)
                 .build();
     }

@@ -101,41 +101,23 @@ public class RentalService implements IRentalService {
             // Handle the case where no instruments are found
         }*/
 /*TODO create a new Rental object, make it ony have ID*/
-    @Override
-    public List<Rental> saveFirstTime(List<Rental> rentalList) throws CustomerNotFoundException,
-            InstrumentNotFoundException, RentalNotFoundException,
-            AttendantNotFoundException, WithdrawalGreaterThanBalanceException,
-            EndDateNotAfterStartDateException, StoreNotFoundException {
-        List<Rental> savedRentals = new ArrayList<>();
-        for (Rental rental : rentalList) {
-            nonRentalAttributesUpdater(rental.getInstrument(), rental.getCustomer(),
-                    rental.getAttendant(), rental);
-            rentalDatesChecker(rental);
-            sufficientBalanceChecker(rental.getCustomer(), rental.getPrice());
 
-            Rental savedRental = rentalRepositoryAttribute.save(rental);
-            savedRentals.add(savedRental);
-        }
-        return savedRentals;
-    }
+    //TODO delete all saveFirstTime methods
 
     @Override
-    public Rental save(Rental rental) throws CustomerNotFoundException, InstrumentNotFoundException,
+    public Rental save(Rental rental, Long customerId) throws CustomerNotFoundException, InstrumentNotFoundException,
             AttendantNotFoundException, RentalNotFoundException, WithdrawalGreaterThanBalanceException,
             EndDateNotAfterStartDateException, StoreNotFoundException {
-
-
-        rental.setCustomer(customerServiceAttribute.findCustomerById(rental.getCustomer()
-                .getPersonId()));
+        var customer = customerServiceAttribute.findCustomerById(customerId);
         rental.setInstrument(instrumentServiceAttribute.findById(rental.getInstrument().getInstrumentId()));
         rental.setAttendant(attendantServiceAttribute.findAttendantById(rental.getAttendant().getPersonId()));
-            nonRentalAttributesUpdater(rental.getInstrument(), rental.getCustomer(),
+            nonRentalAttributesUpdater(rental.getInstrument(), customer,
                     rental.getAttendant(), rental);
             rentalDatesChecker(rental);
-            sufficientBalanceChecker(rental.getCustomer(), rental.getPrice());
-
-
+            sufficientBalanceChecker(customer, rental.getPrice());
             rentalRepositoryAttribute.save(rental);
+            customer.getRentals().add(rental);
+            customerServiceAttribute.save(customer);
         return rental;
     }
 
@@ -160,7 +142,6 @@ public class RentalService implements IRentalService {
     @Override
     public Rental update(Rental rental) throws RentalNotFoundException {
         var rentalToUpdate = findById(rental.getRentalId());
-        rentalToUpdate.setCustomer(rental.getCustomer());
         rentalToUpdate.setAttendant(rental.getAttendant());
         rentalToUpdate.setInstrument(rental.getInstrument());
         rentalToUpdate.setPrice(rental.getPrice());

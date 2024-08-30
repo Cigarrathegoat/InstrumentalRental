@@ -1,10 +1,6 @@
 package br.com.instrumental_rental.models;
 
 import br.com.instrumental_rental.controller.dto.requests.RentalDTO;
-import br.com.instrumental_rental.repository.entities.Attendant;
-import br.com.instrumental_rental.repository.entities.Customer;
-import br.com.instrumental_rental.repository.entities.Instrument;
-import br.com.instrumental_rental.repository.entities.Rental;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

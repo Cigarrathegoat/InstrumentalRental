@@ -23,10 +23,16 @@ public class Customer extends Person {
     @Column(name = "DS_ACCOUNT_BALANCE")
     private BigDecimal accountBalance;
 
-    @OneToMany(mappedBy = "customer",  cascade = CascadeType.PERSIST)
+    //TODO @ManyToOne doesn`t need to go on the entity, but its corresponding @OneToMany does (on the  corresponding entity)
+
+    @OneToMany(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "ID_RENTAL")
     private List<Rental> rentals;
 
+    /*
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "STORE_ID")
     private Store store;
+
+     */
 }

@@ -10,7 +10,7 @@ import java.util.List;
 @Entity
 @Table(name = "TB_PERSON", schema = "instrumental_rental")
 @Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorColumn(name = "PERSON_TYPE", discriminatorType = DiscriminatorType.STRING)
+//@DiscriminatorColumn(name = "PERSON_TYPE", discriminatorType = DiscriminatorType.STRING)
 @SequenceGenerator(schema ="instrumental_rental", name = "SEQ_PERSON",
         sequenceName = "SEQ_PERSON", allocationSize = 1)
 

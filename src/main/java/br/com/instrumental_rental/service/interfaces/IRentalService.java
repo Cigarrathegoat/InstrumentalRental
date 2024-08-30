@@ -7,11 +7,7 @@ import java.util.List;
 
 public interface IRentalService {
 
-    List<Rental> saveFirstTime(List<Rental> rentalList) throws WithdrawalGreaterThanBalanceException,
-            EndDateNotAfterStartDateException, CustomerNotFoundException, InstrumentNotFoundException,
-            AttendantNotFoundException, RentalNotFoundException, StoreNotFoundException;
-
-    Rental save(Rental rental) throws WithdrawalGreaterThanBalanceException,
+    Rental save(Rental rental,Long customerId) throws WithdrawalGreaterThanBalanceException,
             EndDateNotAfterStartDateException, CustomerNotFoundException, InstrumentNotFoundException,
             AttendantNotFoundException, RentalNotFoundException, StoreNotFoundException;
 

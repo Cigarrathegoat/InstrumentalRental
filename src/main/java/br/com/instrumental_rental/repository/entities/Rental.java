@@ -25,13 +25,19 @@ public class Rental {
     @Column(name = "ID_RENTAL")
     private Long rentalId;
 
+    /*
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "CUSTOMER_ID")
     private Customer customer;
+     */
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "INSTRUMENT_ID")
     private Instrument instrument;
+
+    @OneToOne( cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "ATTENDANT_ID")
+    private Attendant attendant;
 
     @Column(name = "DS_START_DATE")
     private LocalDate startDate;
@@ -41,10 +47,6 @@ public class Rental {
 
     @Column(name = "DS_PRICE")
     private BigDecimal price;
-
-    @ManyToOne( cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "ATTENDANT_ID")
-    private Attendant attendant;
 
     @Column(name = "ID_ATTENDANT_COMMISSION")
     private BigDecimal attendantCommission;

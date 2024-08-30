@@ -37,19 +37,23 @@ public class Store {
     @Column(name = "DS_NAME")
     private String name;
 
-    @Column(name = "DS_CUSTOMER")
-    @OneToMany(mappedBy = "store", cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "CUSTOMER_ID")
+    @OneToMany(cascade = CascadeType.PERSIST)
     private List<Customer> customers;
 
-    @Column(name = "DS_ATTENDANT")
-    @OneToMany(mappedBy = "store", cascade = CascadeType.PERSIST)
+    //TODO the strong entity doesn't need to have the weak entity in it, but the weak entity
+    //TODO needs to have the strong entity as an attribute in it
+    @JoinColumn(name = "ATTENDANT_ID")
+   @OneToMany(cascade = CascadeType.PERSIST)
     private List<Attendant> attendants;
 
-    @Column(name = "DS_INSTRUMENT")
-    @OneToMany(mappedBy = "store",  cascade = CascadeType.MERGE)
+    //TODO find out what`s wrong here
+    @ManyToMany(cascade = CascadeType.MERGE)
+    @JoinTable(name = "STORE_INSTRUMENT", joinColumns = @JoinColumn(name = "ID_STORE"),
+            inverseJoinColumns = @JoinColumn(name = "ID_INSTRUMENT"))
     private List<Instrument> instruments;
 
-    @OneToOne (cascade = CascadeType.PERSIST)
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "ADDRESS_ID")
     private TheAddress theAddress;
 
